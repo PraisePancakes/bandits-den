@@ -1,0 +1,6 @@
+[submodule "Circ"]
+	path = Circ
+	url = https://github.com/PraisePancakes/Circ
+[submodule "SnakeECS"]
+	path = SnakeECS
+	url = https://github.com/PraisePancakes/SnakeECS
