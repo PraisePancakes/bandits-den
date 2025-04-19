@@ -174,6 +174,6 @@ namespace snek
         {
             return alloc;
         }
-        ~world() {};
+        ~world() = default;
     };
 }

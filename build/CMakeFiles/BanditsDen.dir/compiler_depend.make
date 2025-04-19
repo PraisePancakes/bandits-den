@@ -51,6 +51,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/include/c++/13.2.0/bits/ios_base.h \
   C:/mingw64/include/c++/13.2.0/bits/istream.tcc \
   C:/mingw64/include/c++/13.2.0/bits/iterator_concepts.h \
+  C:/mingw64/include/c++/13.2.0/bits/list.tcc \
   C:/mingw64/include/c++/13.2.0/bits/locale_classes.h \
   C:/mingw64/include/c++/13.2.0/bits/locale_classes.tcc \
   C:/mingw64/include/c++/13.2.0/bits/locale_facets.h \
@@ -92,6 +93,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/include/c++/13.2.0/bits/stl_iterator.h \
   C:/mingw64/include/c++/13.2.0/bits/stl_iterator_base_funcs.h \
   C:/mingw64/include/c++/13.2.0/bits/stl_iterator_base_types.h \
+  C:/mingw64/include/c++/13.2.0/bits/stl_list.h \
   C:/mingw64/include/c++/13.2.0/bits/stl_pair.h \
   C:/mingw64/include/c++/13.2.0/bits/stl_queue.h \
   C:/mingw64/include/c++/13.2.0/bits/stl_raw_storage_iter.h \
@@ -138,6 +140,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/include/c++/13.2.0/iostream \
   C:/mingw64/include/c++/13.2.0/istream \
   C:/mingw64/include/c++/13.2.0/limits \
+  C:/mingw64/include/c++/13.2.0/list \
   C:/mingw64/include/c++/13.2.0/memory \
   C:/mingw64/include/c++/13.2.0/new \
   C:/mingw64/include/c++/13.2.0/numbers \
@@ -215,7 +218,9 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/x86_64-w64-mingw32/include/vadefs.h \
   C:/mingw64/x86_64-w64-mingw32/include/wchar.h \
   C:/mingw64/x86_64-w64-mingw32/include/wctype.h \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/app_observer.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/application.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/square.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/types.hpp
 
@@ -296,6 +301,8 @@ C:/mingw64/include/c++/13.2.0/bits/algorithmfwd.h:
 
 C:/mingw64/include/c++/13.2.0/bits/charconv.h:
 
+C:/mingw64/include/c++/13.2.0/bits/list.tcc:
+
 C:/mingw64/include/c++/13.2.0/bits/ios_base.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/pthread_signal.h:
@@ -303,8 +310,6 @@ C:/mingw64/x86_64-w64-mingw32/include/pthread_signal.h:
 C:/mingw64/include/c++/13.2.0/bits/alloc_traits.h:
 
 C:/mingw64/include/c++/13.2.0/bits/allocated_ptr.h:
-
-C:/mingw64/include/c++/13.2.0/bits/ostream_insert.h:
 
 C:/mingw64/include/c++/13.2.0/bits/allocator.h:
 
@@ -386,6 +391,8 @@ C:/mingw64/include/c++/13.2.0/bits/shared_ptr_atomic.h:
 
 C:/mingw64/include/c++/13.2.0/bits/memory_resource.h:
 
+C:/mingw64/include/c++/13.2.0/bits/ostream_insert.h:
+
 C:/mingw64/include/c++/13.2.0/bits/stl_uninitialized.h:
 
 C:/mingw64/include/c++/13.2.0/bits/postypes.h:
@@ -441,6 +448,8 @@ C:/mingw64/include/c++/13.2.0/bits/stl_iterator_base_funcs.h:
 C:/mingw64/include/c++/13.2.0/string_view:
 
 C:/mingw64/include/c++/13.2.0/bits/stl_iterator_base_types.h:
+
+C:/mingw64/include/c++/13.2.0/bits/stl_list.h:
 
 C:/mingw64/include/c++/13.2.0/bits/stl_pair.h:
 
@@ -528,6 +537,8 @@ C:/mingw64/include/c++/13.2.0/istream:
 
 C:/mingw64/include/c++/13.2.0/limits:
 
+C:/mingw64/include/c++/13.2.0/list:
+
 C:/mingw64/include/c++/13.2.0/memory:
 
 C:/mingw64/include/c++/13.2.0/new:
@@ -614,6 +625,8 @@ C:/mingw64/x86_64-w64-mingw32/include/errno.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/limits.h:
 
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/square.hpp:
+
 C:/mingw64/x86_64-w64-mingw32/include/locale.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/process.h:
@@ -647,6 +660,8 @@ C:/mingw64/x86_64-w64-mingw32/include/time.h:
 C:/mingw64/x86_64-w64-mingw32/include/vadefs.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/wctype.h:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/app_observer.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/application.hpp:
 

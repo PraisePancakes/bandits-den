@@ -1,9 +1,9 @@
 #pragma once
 #include "raylib.h"
 
-namespace bden::layer::components
+namespace bden::gamelayer::components
 {
-    class SquareComponent
+    struct SquareComponent
     {
         int width;
         int height;

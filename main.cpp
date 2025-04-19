@@ -7,7 +7,7 @@ const int h = 960;
 
 int main()
 {
-    bden::layer::application a(w, h, "BanditsDen", FLAG_WINDOW_RESIZABLE);
+    bden::applicationlayer::application a(w, h, "BanditsDen", FLAG_WINDOW_RESIZABLE);
     a.run();
 
     return 0;
