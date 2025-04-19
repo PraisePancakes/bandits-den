@@ -5,7 +5,12 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   _deps/raylib-src/src/raylib.h \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/core/storage/sparse_set.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/debug/debug.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/entity.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/light_view.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/traits.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/world.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/world_policy.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/snakeecs.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/traits/snek_traits.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_descriptor.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_list.hpp \
@@ -210,10 +215,9 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/x86_64-w64-mingw32/include/vadefs.h \
   C:/mingw64/x86_64-w64-mingw32/include/wchar.h \
   C:/mingw64/x86_64-w64-mingw32/include/wctype.h \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/entity.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/light_view.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/world.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/world_policy.hpp
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/application.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/types.hpp
 
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/traits.hpp:
@@ -228,10 +232,6 @@ C:/mingw64/include/c++/13.2.0/bits/atomic_wait.h:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/main.cpp:
 
-C:/mingw64/include/c++/13.2.0/bits/align.h:
-
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_list.hpp:
-
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/world_policy.hpp:
 
 C:/mingw64/include/c++/13.2.0/bits/hashtable_policy.h:
@@ -244,6 +244,24 @@ C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h:
 
 _deps/raylib-src/src/raylib.h:
 
+C:/mingw64/include/c++/13.2.0/bits/istream.tcc:
+
+C:/mingw64/include/c++/13.2.0/bits/unordered_map.h:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/snakeecs.hpp:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/entity.hpp:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/light_view.hpp:
+
+C:/mingw64/include/c++/13.2.0/ext/atomicity.h:
+
+C:/mingw64/include/c++/13.2.0/bits/new_allocator.h:
+
+C:/mingw64/include/c++/13.2.0/backward/binders.h:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/world.hpp:
+
 C:/mingw64/include/c++/13.2.0/bits/move.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/stdarg.h:
@@ -253,6 +271,10 @@ C:/mingw64/x86_64-w64-mingw32/include/_mingw_secapi.h:
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/traits/snek_traits.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_descriptor.hpp:
+
+C:/mingw64/include/c++/13.2.0/bits/align.h:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_list.hpp:
 
 C:/mingw64/include/c++/13.2.0/bits/memoryfwd.h:
 
@@ -268,21 +290,11 @@ C:/mingw64/include/c++/13.2.0/backward/auto_ptr.h:
 
 C:/mingw64/include/c++/13.2.0/bits/atomic_base.h:
 
-C:/mingw64/include/c++/13.2.0/ext/atomicity.h:
-
-C:/mingw64/include/c++/13.2.0/bits/new_allocator.h:
-
-C:/mingw64/include/c++/13.2.0/backward/binders.h:
-
 C:/mingw64/include/c++/13.2.0/bit:
 
 C:/mingw64/include/c++/13.2.0/bits/algorithmfwd.h:
 
 C:/mingw64/include/c++/13.2.0/bits/charconv.h:
-
-C:/mingw64/include/c++/13.2.0/bits/stl_uninitialized.h:
-
-C:/mingw64/include/c++/13.2.0/bits/postypes.h:
 
 C:/mingw64/include/c++/13.2.0/bits/ios_base.h:
 
@@ -298,15 +310,11 @@ C:/mingw64/include/c++/13.2.0/bits/allocator.h:
 
 C:/mingw64/include/c++/13.2.0/bits/basic_ios.h:
 
-C:/mingw64/include/c++/13.2.0/bits/range_access.h:
-
 C:/mingw64/x86_64-w64-mingw32/include/pthread_unistd.h:
 
 C:/mingw64/include/c++/13.2.0/bits/basic_ios.tcc:
 
 C:/mingw64/include/c++/13.2.0/bits/invoke.h:
-
-C:/mingw64/include/c++/13.2.0/bits/ptr_traits.h:
 
 C:/mingw64/include/c++/13.2.0/debug/debug.h:
 
@@ -338,9 +346,9 @@ C:/mingw64/include/c++/13.2.0/bits/cxxabi_init_exception.h:
 
 C:/mingw64/include/c++/13.2.0/bits/deque.tcc:
 
-C:/mingw64/include/c++/13.2.0/bits/enable_special_members.h:
-
 C:/mingw64/include/c++/13.2.0/bits/ranges_algobase.h:
+
+C:/mingw64/include/c++/13.2.0/bits/enable_special_members.h:
 
 C:/mingw64/include/c++/13.2.0/bits/exception_defines.h:
 
@@ -362,8 +370,6 @@ C:/mingw64/include/c++/13.2.0/bits/functexcept.h:
 
 C:/mingw64/include/c++/13.2.0/bits/hash_bytes.h:
 
-C:/mingw64/include/c++/13.2.0/bits/istream.tcc:
-
 C:/mingw64/include/c++/13.2.0/bits/stl_algobase.h:
 
 C:/mingw64/include/c++/13.2.0/bits/iterator_concepts.h:
@@ -374,13 +380,21 @@ C:/mingw64/include/c++/13.2.0/bits/locale_facets.h:
 
 C:/mingw64/include/c++/13.2.0/bits/locale_facets.tcc:
 
-C:/mingw64/include/c++/13.2.0/bits/predefined_ops.h:
-
 C:/mingw64/include/c++/13.2.0/bits/max_size_type.h:
 
 C:/mingw64/include/c++/13.2.0/bits/shared_ptr_atomic.h:
 
 C:/mingw64/include/c++/13.2.0/bits/memory_resource.h:
+
+C:/mingw64/include/c++/13.2.0/bits/stl_uninitialized.h:
+
+C:/mingw64/include/c++/13.2.0/bits/postypes.h:
+
+C:/mingw64/include/c++/13.2.0/bits/predefined_ops.h:
+
+C:/mingw64/include/c++/13.2.0/bits/ptr_traits.h:
+
+C:/mingw64/include/c++/13.2.0/bits/range_access.h:
 
 C:/mingw64/include/c++/13.2.0/bits/ranges_base.h:
 
@@ -449,8 +463,6 @@ C:/mingw64/include/c++/13.2.0/bits/stringfwd.h:
 C:/mingw64/include/c++/13.2.0/bits/uniform_int_dist.h:
 
 C:/mingw64/include/c++/13.2.0/bits/unique_ptr.h:
-
-C:/mingw64/include/c++/13.2.0/bits/unordered_map.h:
 
 C:/mingw64/include/c++/13.2.0/bits/uses_allocator.h:
 
@@ -636,8 +648,8 @@ C:/mingw64/x86_64-w64-mingw32/include/vadefs.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/wctype.h:
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/entity.hpp:
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/application.hpp:
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/light_view.hpp:
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp:
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/world.hpp:
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/types.hpp:
