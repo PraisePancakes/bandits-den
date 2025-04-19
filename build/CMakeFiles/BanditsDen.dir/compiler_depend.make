@@ -3,6 +3,8 @@
 
 CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/main.cpp \
   _deps/raylib-src/src/raylib.h \
+  _deps/raylib-src/src/raymath.h \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/types.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/core/storage/sparse_set.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/debug/debug.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/entity.hpp \
@@ -80,6 +82,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/include/c++/13.2.0/bits/shared_ptr.h \
   C:/mingw64/include/c++/13.2.0/bits/shared_ptr_atomic.h \
   C:/mingw64/include/c++/13.2.0/bits/shared_ptr_base.h \
+  C:/mingw64/include/c++/13.2.0/bits/specfun.h \
   C:/mingw64/include/c++/13.2.0/bits/std_abs.h \
   C:/mingw64/include/c++/13.2.0/bits/std_function.h \
   C:/mingw64/include/c++/13.2.0/bits/std_mutex.h \
@@ -114,6 +117,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/include/c++/13.2.0/cctype \
   C:/mingw64/include/c++/13.2.0/cerrno \
   C:/mingw64/include/c++/13.2.0/clocale \
+  C:/mingw64/include/c++/13.2.0/cmath \
   C:/mingw64/include/c++/13.2.0/compare \
   C:/mingw64/include/c++/13.2.0/concepts \
   C:/mingw64/include/c++/13.2.0/cstddef \
@@ -141,6 +145,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/include/c++/13.2.0/istream \
   C:/mingw64/include/c++/13.2.0/limits \
   C:/mingw64/include/c++/13.2.0/list \
+  C:/mingw64/include/c++/13.2.0/math.h \
   C:/mingw64/include/c++/13.2.0/memory \
   C:/mingw64/include/c++/13.2.0/new \
   C:/mingw64/include/c++/13.2.0/numbers \
@@ -155,6 +160,18 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/include/c++/13.2.0/string \
   C:/mingw64/include/c++/13.2.0/string_view \
   C:/mingw64/include/c++/13.2.0/system_error \
+  C:/mingw64/include/c++/13.2.0/tr1/bessel_function.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/beta_function.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/ell_integral.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/exp_integral.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/gamma.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/hypergeometric.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/legendre_function.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/modified_bessel_func.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/poly_hermite.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/poly_laguerre.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/riemann_zeta.tcc \
+  C:/mingw64/include/c++/13.2.0/tr1/special_function_util.h \
   C:/mingw64/include/c++/13.2.0/tuple \
   C:/mingw64/include/c++/13.2.0/type_traits \
   C:/mingw64/include/c++/13.2.0/typeinfo \
@@ -194,6 +211,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/x86_64-w64-mingw32/include/limits.h \
   C:/mingw64/x86_64-w64-mingw32/include/locale.h \
   C:/mingw64/x86_64-w64-mingw32/include/malloc.h \
+  C:/mingw64/x86_64-w64-mingw32/include/math.h \
   C:/mingw64/x86_64-w64-mingw32/include/process.h \
   C:/mingw64/x86_64-w64-mingw32/include/pthread.h \
   C:/mingw64/x86_64-w64-mingw32/include/pthread_compat.h \
@@ -221,13 +239,9 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/app_observer.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/application.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/square.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/types.hpp
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/transform.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp
 
-
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/traits.hpp:
-
-C:/mingw64/include/c++/13.2.0/bits/localefwd.h:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/core/storage/sparse_set.hpp:
 
@@ -249,6 +263,20 @@ C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h:
 
 _deps/raylib-src/src/raylib.h:
 
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/light_view.hpp:
+
+C:/mingw64/include/c++/13.2.0/bits/exception_defines.h:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/types.hpp:
+
+C:/mingw64/include/c++/13.2.0/bits/erase_if.h:
+
+C:/mingw64/include/c++/13.2.0/bits/hash_bytes.h:
+
+C:/mingw64/include/c++/13.2.0/bits/requires_hosted.h:
+
+_deps/raylib-src/src/raymath.h:
+
 C:/mingw64/include/c++/13.2.0/bits/istream.tcc:
 
 C:/mingw64/include/c++/13.2.0/bits/unordered_map.h:
@@ -257,7 +285,9 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/sn
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/entity.hpp:
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/light_view.hpp:
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/traits.hpp:
+
+C:/mingw64/include/c++/13.2.0/bits/localefwd.h:
 
 C:/mingw64/include/c++/13.2.0/ext/atomicity.h:
 
@@ -281,6 +311,8 @@ C:/mingw64/include/c++/13.2.0/bits/align.h:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_list.hpp:
 
+C:/mingw64/include/c++/13.2.0/tr1/poly_hermite.tcc:
+
 C:/mingw64/include/c++/13.2.0/bits/memoryfwd.h:
 
 C:/mingw64/include/c++/13.2.0/ostream:
@@ -289,13 +321,13 @@ C:/mingw64/include/c++/13.2.0/bits/atomic_lockfree_defines.h:
 
 C:/mingw64/include/c++/13.2.0/array:
 
-C:/mingw64/include/c++/13.2.0/bits/node_handle.h:
-
 C:/mingw64/include/c++/13.2.0/backward/auto_ptr.h:
 
 C:/mingw64/include/c++/13.2.0/bits/atomic_base.h:
 
 C:/mingw64/include/c++/13.2.0/bit:
+
+C:/mingw64/include/c++/13.2.0/tr1/beta_function.tcc:
 
 C:/mingw64/include/c++/13.2.0/bits/algorithmfwd.h:
 
@@ -337,6 +369,10 @@ C:/mingw64/include/c++/13.2.0/bits/concept_check.h:
 
 C:/mingw64/include/c++/13.2.0/bits/functional_hash.h:
 
+C:/mingw64/x86_64-w64-mingw32/include/math.h:
+
+C:/mingw64/include/c++/13.2.0/tr1/legendre_function.tcc:
+
 C:/mingw64/include/c++/13.2.0/bits/cpp_type_traits.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/wchar.h:
@@ -355,15 +391,9 @@ C:/mingw64/include/c++/13.2.0/bits/ranges_algobase.h:
 
 C:/mingw64/include/c++/13.2.0/bits/enable_special_members.h:
 
-C:/mingw64/include/c++/13.2.0/bits/exception_defines.h:
-
-C:/mingw64/include/c++/13.2.0/bits/erase_if.h:
-
 C:/mingw64/include/c++/13.2.0/bits/exception.h:
 
 C:/mingw64/include/c++/13.2.0/bits/exception_ptr.h:
-
-C:/mingw64/include/c++/13.2.0/bits/ostream.tcc:
 
 C:/mingw64/include/c++/13.2.0/bits/stl_raw_storage_iter.h:
 
@@ -372,8 +402,6 @@ C:/mingw64/include/c++/13.2.0/bits/locale_classes.h:
 C:/mingw64/include/c++/13.2.0/x86_64-w64-mingw32/bits/ctype_base.h:
 
 C:/mingw64/include/c++/13.2.0/bits/functexcept.h:
-
-C:/mingw64/include/c++/13.2.0/bits/hash_bytes.h:
 
 C:/mingw64/include/c++/13.2.0/bits/stl_algobase.h:
 
@@ -390,6 +418,10 @@ C:/mingw64/include/c++/13.2.0/bits/max_size_type.h:
 C:/mingw64/include/c++/13.2.0/bits/shared_ptr_atomic.h:
 
 C:/mingw64/include/c++/13.2.0/bits/memory_resource.h:
+
+C:/mingw64/include/c++/13.2.0/bits/node_handle.h:
+
+C:/mingw64/include/c++/13.2.0/bits/ostream.tcc:
 
 C:/mingw64/include/c++/13.2.0/bits/ostream_insert.h:
 
@@ -411,13 +443,13 @@ C:/mingw64/include/c++/13.2.0/bits/ranges_uninitialized.h:
 
 C:/mingw64/include/c++/13.2.0/bits/ranges_util.h:
 
-C:/mingw64/include/c++/13.2.0/bits/requires_hosted.h:
-
 C:/mingw64/include/c++/13.2.0/bits/shared_ptr.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdio_s.h:
 
 C:/mingw64/include/c++/13.2.0/bits/shared_ptr_base.h:
+
+C:/mingw64/include/c++/13.2.0/bits/specfun.h:
 
 C:/mingw64/include/c++/13.2.0/bits/std_abs.h:
 
@@ -489,6 +521,8 @@ C:/mingw64/include/c++/13.2.0/cerrno:
 
 C:/mingw64/include/c++/13.2.0/clocale:
 
+C:/mingw64/include/c++/13.2.0/cmath:
+
 C:/mingw64/include/c++/13.2.0/compare:
 
 C:/mingw64/include/c++/13.2.0/concepts:
@@ -539,6 +573,8 @@ C:/mingw64/include/c++/13.2.0/limits:
 
 C:/mingw64/include/c++/13.2.0/list:
 
+C:/mingw64/include/c++/13.2.0/math.h:
+
 C:/mingw64/include/c++/13.2.0/memory:
 
 C:/mingw64/include/c++/13.2.0/new:
@@ -565,13 +601,33 @@ C:/mingw64/include/c++/13.2.0/string:
 
 C:/mingw64/include/c++/13.2.0/system_error:
 
+C:/mingw64/include/c++/13.2.0/unordered_map:
+
+C:/mingw64/include/c++/13.2.0/tr1/bessel_function.tcc:
+
+C:/mingw64/include/c++/13.2.0/tr1/exp_integral.tcc:
+
+C:/mingw64/include/c++/13.2.0/tr1/ell_integral.tcc:
+
+C:/mingw64/include/c++/13.2.0/tr1/gamma.tcc:
+
+C:/mingw64/include/c++/13.2.0/tr1/hypergeometric.tcc:
+
+C:/mingw64/lib/gcc/x86_64-w64-mingw32/13.2.0/include/syslimits.h:
+
+C:/mingw64/include/c++/13.2.0/tr1/modified_bessel_func.tcc:
+
+C:/mingw64/include/c++/13.2.0/tr1/poly_laguerre.tcc:
+
+C:/mingw64/include/c++/13.2.0/tr1/riemann_zeta.tcc:
+
+C:/mingw64/include/c++/13.2.0/tr1/special_function_util.h:
+
 C:/mingw64/include/c++/13.2.0/tuple:
 
 C:/mingw64/include/c++/13.2.0/type_traits:
 
 C:/mingw64/include/c++/13.2.0/typeinfo:
-
-C:/mingw64/include/c++/13.2.0/unordered_map:
 
 C:/mingw64/include/c++/13.2.0/vector:
 
@@ -598,8 +654,6 @@ C:/mingw64/lib/gcc/x86_64-w64-mingw32/13.2.0/include/mm_malloc.h:
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/13.2.0/include/stdarg.h:
 
 C:/mingw64/lib/gcc/x86_64-w64-mingw32/13.2.0/include/stdint.h:
-
-C:/mingw64/lib/gcc/x86_64-w64-mingw32/13.2.0/include/syslimits.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/_mingw_mac.h:
 
@@ -665,6 +719,6 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/app_observer.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/application.hpp:
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp:
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/transform.hpp:
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/types.hpp:
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp:

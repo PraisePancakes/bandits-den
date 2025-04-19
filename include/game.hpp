@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "../vendor/SnakeECS/snakeecs/snakeecs.hpp"
 #include "components/square.hpp"
+#include "components/transform.hpp"
 #include "app_observer.hpp"
 
 namespace bden::gamelayer
@@ -10,7 +11,7 @@ namespace bden::gamelayer
 
     namespace world
     {
-        using component_list = snek::component_list<components::SquareComponent>;
+        using component_list = snek::component_list<components::SquareComponent, components::TransformComponent>;
         using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
     }
 
@@ -27,7 +28,36 @@ namespace bden::gamelayer
             auto p = world.spawn();
             components::SquareComponent square{w, h, x, y, c};
             world.bind<components::SquareComponent>(p, square);
+            world.bind<components::TransformComponent>(p, Vector2(x, y), Vector2(0, 0));
             return p;
+        };
+#define PLAYER_SPEED 10
+        void system_input()
+        {
+            auto &sc = world.get<components::SquareComponent>(player);
+            auto &tc = world.get<components::TransformComponent>(player);
+
+            if (IsKeyDown(KEY_W))
+            {
+            }
+            if (IsKeyDown(KEY_A))
+            {
+            }
+            if (IsKeyDown(KEY_S))
+            {
+            }
+            if (IsKeyDown(KEY_D))
+            {
+            }
+        };
+
+        void system_updateables()
+        {
+            auto updateables = world.view<components::SquareComponent, components::TransformComponent>();
+            updateables.for_each([](components::SquareComponent &s, components::TransformComponent &t)
+                                 {
+                s.x = t.pos.x;
+                s.y = t.pos.y; });
         };
 
         void system_drawables()
@@ -49,6 +79,12 @@ namespace bden::gamelayer
 
                  };
 
+        void update()
+        {
+            system_input();
+            system_updateables();
+        };
+
         void render()
         {
             BeginDrawing();
@@ -58,6 +94,7 @@ namespace bden::gamelayer
         };
         void loop()
         {
+            update();
             render();
         };
         ~game() {};

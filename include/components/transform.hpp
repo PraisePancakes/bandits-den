@@ -6,6 +6,8 @@ namespace bden::gamelayer::components
     {
         Vector2 pos;
         Vector2 vel;
+        TransformComponent(Vector2 pos, Vector2 vel) : pos(pos), vel(vel) {};
+        ~TransformComponent() {};
     };
 
 }
