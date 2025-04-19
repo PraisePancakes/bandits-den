@@ -149,43 +149,63 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: \
  C:/mingw64/include/c++/13.2.0/bits/ostream.tcc \
  C:/mingw64/include/c++/13.2.0/istream \
  C:/mingw64/include/c++/13.2.0/bits/istream.tcc \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGLoader.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/SnakeECS/snakeecs/ecs/world.hpp \
  C:/mingw64/include/c++/13.2.0/vector \
  C:/mingw64/include/c++/13.2.0/bits/stl_uninitialized.h \
  C:/mingw64/include/c++/13.2.0/bits/stl_vector.h \
  C:/mingw64/include/c++/13.2.0/bits/stl_bvector.h \
  C:/mingw64/include/c++/13.2.0/bits/vector.tcc \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/archive.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/interp.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/expressions.hpp \
- C:/mingw64/include/c++/13.2.0/any \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/lexer.hpp \
- C:/mingw64/include/c++/13.2.0/fstream \
- C:/mingw64/include/c++/13.2.0/bits/codecvt.h \
- C:/mingw64/include/c++/13.2.0/x86_64-w64-mingw32/bits/basic_file.h \
- C:/mingw64/include/c++/13.2.0/x86_64-w64-mingw32/bits/c++io.h \
- C:/mingw64/include/c++/13.2.0/bits/fstream.tcc \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/common.hpp \
- C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/circ-vend/Circ/include/debug.hpp \
- C:/mingw64/include/c++/13.2.0/map \
- C:/mingw64/include/c++/13.2.0/bits/stl_tree.h \
- C:/mingw64/include/c++/13.2.0/ext/aligned_buffer.h \
- C:/mingw64/include/c++/13.2.0/bits/node_handle.h \
- C:/mingw64/include/c++/13.2.0/bits/stl_map.h \
- C:/mingw64/include/c++/13.2.0/bits/stl_multimap.h \
- C:/mingw64/include/c++/13.2.0/bits/erase_if.h \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/env.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/rdparser.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/error_log.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/utils.hpp \
+ C:/mingw64/include/c++/13.2.0/array \
+ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_list.hpp \
  C:/mingw64/include/c++/13.2.0/cstdint \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/13.2.0/include/stdint.h \
  C:/mingw64/x86_64-w64-mingw32/include/stdint.h \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/statements.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/circfmt.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/circ-vend/Circ/include/CFGINTERP/type_schema.hpp \
- C:/mingw64/include/c++/13.2.0/sstream \
- C:/mingw64/include/c++/13.2.0/bits/sstream.tcc \
+ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/core/storage/sparse_set.hpp \
+ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_descriptor.hpp \
+ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/traits.hpp \
+ C:/mingw64/include/c++/13.2.0/limits \
+ C:/mingw64/include/c++/13.2.0/memory \
+ C:/mingw64/include/c++/13.2.0/bits/stl_tempbuf.h \
+ C:/mingw64/include/c++/13.2.0/bits/stl_raw_storage_iter.h \
+ C:/mingw64/include/c++/13.2.0/bits/align.h \
+ C:/mingw64/include/c++/13.2.0/bits/unique_ptr.h \
+ C:/mingw64/include/c++/13.2.0/bits/shared_ptr.h \
+ C:/mingw64/include/c++/13.2.0/bits/shared_ptr_base.h \
+ C:/mingw64/include/c++/13.2.0/bits/allocated_ptr.h \
+ C:/mingw64/include/c++/13.2.0/ext/aligned_buffer.h \
+ C:/mingw64/include/c++/13.2.0/ext/concurrence.h \
+ C:/mingw64/include/c++/13.2.0/bits/shared_ptr_atomic.h \
+ C:/mingw64/include/c++/13.2.0/bits/atomic_base.h \
+ C:/mingw64/include/c++/13.2.0/bits/atomic_lockfree_defines.h \
+ C:/mingw64/include/c++/13.2.0/bits/atomic_wait.h \
+ C:/mingw64/include/c++/13.2.0/bits/std_mutex.h \
+ C:/mingw64/include/c++/13.2.0/backward/auto_ptr.h \
+ C:/mingw64/include/c++/13.2.0/bits/ranges_uninitialized.h \
+ C:/mingw64/include/c++/13.2.0/bits/ranges_algobase.h \
+ C:/mingw64/include/c++/13.2.0/pstl/glue_memory_defs.h \
+ C:/mingw64/include/c++/13.2.0/pstl/execution_defs.h \
+ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/debug/debug.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/SnakeECS/snakeecs/ecs/world_policy.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/SnakeECS/snakeecs/ecs/entity.hpp \
+ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/traits/snek_traits.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\vendor/SnakeECS/snakeecs/ecs/light_view.hpp \
+ C:/mingw64/include/c++/13.2.0/functional \
+ C:/mingw64/include/c++/13.2.0/bits/std_function.h \
+ C:/mingw64/include/c++/13.2.0/unordered_map \
+ C:/mingw64/include/c++/13.2.0/bits/unordered_map.h \
+ C:/mingw64/include/c++/13.2.0/bits/hashtable.h \
+ C:/mingw64/include/c++/13.2.0/bits/hashtable_policy.h \
+ C:/mingw64/include/c++/13.2.0/bits/enable_special_members.h \
+ C:/mingw64/include/c++/13.2.0/bits/node_handle.h \
+ C:/mingw64/include/c++/13.2.0/bits/erase_if.h \
+ C:/mingw64/include/c++/13.2.0/bits/stl_algo.h \
+ C:/mingw64/include/c++/13.2.0/bits/algorithmfwd.h \
+ C:/mingw64/include/c++/13.2.0/bits/stl_heap.h \
+ C:/mingw64/include/c++/13.2.0/bits/uniform_int_dist.h \
+ C:/mingw64/include/c++/13.2.0/queue C:/mingw64/include/c++/13.2.0/deque \
+ C:/mingw64/include/c++/13.2.0/bits/stl_deque.h \
+ C:/mingw64/include/c++/13.2.0/bits/deque.tcc \
+ C:/mingw64/include/c++/13.2.0/bits/stl_queue.h \
  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/build/_deps/raylib-src/src/raylib.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/13.2.0/include/stdarg.h \
  C:/mingw64/x86_64-w64-mingw32/include/stdarg.h \
