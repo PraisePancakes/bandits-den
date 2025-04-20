@@ -6,10 +6,11 @@
 #include "components/transform.hpp"
 #include "app_observer.hpp"
 #include <cmath>
+#include "rlgl.h"
 
 namespace bden::gamelayer
 {
-
+    using namespace components;
     namespace world
     {
         using component_list = snek::component_list<components::SquareComponent, components::TransformComponent>;
@@ -24,19 +25,20 @@ namespace bden::gamelayer
         using WorldType = snek::world<world::configuration_policy>;
         WorldType world;
         WorldType::entity_type player;
-        WorldType::entity_type spawn_player(int w, int h, int x, int y, Color c)
+        WorldType::entity_type spawn_player(float w, float h, float x, float y, Color c)
         {
             auto p = world.spawn();
-            components::SquareComponent square{w, h, x, y, c};
-            world.bind<components::SquareComponent>(p, square);
-            world.bind<components::TransformComponent>(p, Vector2(x, y), Vector2(0, 0));
+            SquareComponent square{w, h, x, y, c, 0.0};
+            world.bind<SquareComponent>(p, square);
+            world.bind<TransformComponent>(p, Vector2(x, y), Vector2(0, 0), 0.0);
             return p;
         };
 #define PLAYER_SPEED 5
         void system_input_player_keys()
         {
-            auto &sc = world.get<components::SquareComponent>(player);
-            auto &vel = world.get<components::TransformComponent>(player).vel;
+            // update players velocity/movement
+            auto &sc = world.get<SquareComponent>(player);
+            auto &vel = world.get<TransformComponent>(player).vel;
             vel.x = 0;
             vel.y = 0;
             // dir
@@ -69,28 +71,42 @@ namespace bden::gamelayer
             vel.y *= PLAYER_SPEED;
         }
 
+        void system_input_player_mouse()
+        {
+            auto &tc = world.get<TransformComponent>(player);
+            auto &ang = tc.ang;
+
+            rlPushMatrix();
+            float rot = ((int)(++ang) % 360);
+            rlRotatef(rot, tc.pos.x, tc.pos.y, 0);
+            rlPopMatrix();
+        };
+
         void system_input()
         {
             system_input_player_keys();
+            system_input_player_mouse();
         };
 
         void system_updateables()
         {
-            auto updateables = world.view<components::SquareComponent, components::TransformComponent>();
-            updateables.for_each([](components::SquareComponent &s, components::TransformComponent &t)
+            auto updateables = world.view<SquareComponent, TransformComponent>();
+            updateables.for_each([](SquareComponent &s, TransformComponent &t)
                                  {
                 t.pos.x += t.vel.x;
                 t.pos.y += t.vel.y;
-
-                s.x = t.pos.x;
-                s.y = t.pos.y; });
+                s.ang = t.ang;
+                s.rect.x = t.pos.x;
+                s.rect.y = t.pos.y; });
         };
 
         void system_drawables()
         {
-            auto drawables = world.view<components::SquareComponent>();
-            drawables.for_each([](components::SquareComponent &c)
-                               { DrawRectangle(c.x, c.y, c.width, c.height, c.color); });
+            auto drawables = world.view<SquareComponent>();
+            drawables.for_each([this](SquareComponent &c)
+                               {
+                                   // DrawRectangle(c.x, c.y, c.width, c.height, c.color);
+                                   DrawRectanglePro({c.rect.x, c.rect.y, c.rect.width, c.rect.height}, {c.rect.width / 2, c.rect.height / 2}, c.ang, c.color); });
         };
 
         void update_application_metadata(int w, int h) override

@@ -5,13 +5,11 @@ namespace bden::gamelayer::components
 {
     struct SquareComponent
     {
-        int width;
-        int height;
-        int x;
-        int y;
+        Rectangle rect;
         Color color;
+        float ang;
         SquareComponent() = default;
-        SquareComponent(int w, int h, int x, int y, Color c) : width(w), height(h), x(x), y(y), color(c) {};
+        SquareComponent(float w, float h, float x, float y, Color c, float ang) : rect(x, y, w, h), color(c), ang(ang) {};
         ~SquareComponent() = default;
     };
 }

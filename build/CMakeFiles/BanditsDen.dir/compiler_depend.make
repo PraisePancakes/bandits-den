@@ -3,6 +3,7 @@
 
 CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/main.cpp \
   _deps/raylib-src/src/raylib.h \
+  _deps/raylib-src/src/rlgl.h \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/types.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/core/storage/sparse_set.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/debug/debug.hpp \
@@ -241,11 +242,11 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp
 
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/traits.hpp:
-
-C:/mingw64/include/c++/13.2.0/bits/localefwd.h:
-
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/core/storage/sparse_set.hpp:
+
+C:/mingw64/x86_64-w64-mingw32/include/ctype.h:
+
+_deps/raylib-src/src/rlgl.h:
 
 C:/mingw64/include/c++/13.2.0/bits/nested_exception.h:
 
@@ -281,6 +282,10 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/sn
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/entity.hpp:
 
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/traits.hpp:
+
+C:/mingw64/include/c++/13.2.0/bits/localefwd.h:
+
 C:/mingw64/include/c++/13.2.0/ext/atomicity.h:
 
 C:/mingw64/include/c++/13.2.0/bits/new_allocator.h:
@@ -312,8 +317,6 @@ C:/mingw64/include/c++/13.2.0/ostream:
 C:/mingw64/include/c++/13.2.0/bits/atomic_lockfree_defines.h:
 
 C:/mingw64/include/c++/13.2.0/array:
-
-C:/mingw64/include/c++/13.2.0/bits/node_handle.h:
 
 C:/mingw64/include/c++/13.2.0/backward/auto_ptr.h:
 
@@ -414,6 +417,8 @@ C:/mingw64/include/c++/13.2.0/bits/max_size_type.h:
 C:/mingw64/include/c++/13.2.0/bits/shared_ptr_atomic.h:
 
 C:/mingw64/include/c++/13.2.0/bits/memory_resource.h:
+
+C:/mingw64/include/c++/13.2.0/bits/node_handle.h:
 
 C:/mingw64/include/c++/13.2.0/bits/ostream.tcc:
 
@@ -666,8 +671,6 @@ C:/mingw64/x86_64-w64-mingw32/include/corecrt_startup.h:
 C:/mingw64/x86_64-w64-mingw32/include/corecrt_stdio_config.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h:
-
-C:/mingw64/x86_64-w64-mingw32/include/ctype.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/errno.h:
 
