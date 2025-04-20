@@ -74,11 +74,19 @@ namespace bden::gamelayer
         void system_input_player_mouse()
         {
             auto &tc = world.get<TransformComponent>(player);
+            auto &sc = world.get<SquareComponent>(player);
             auto &ang = tc.ang;
+            const float x = tc.pos.x;
+            const float y = tc.pos.y;
+            const Vector2 mouse_pos = GetMousePosition();
+            const Vector2 changed = {x - mouse_pos.x, y - mouse_pos.y};
+            float rad = atan2(changed.x, changed.y);
+            float deg = (rad * 180.0) / PI;
 
+            ang = -deg;
             rlPushMatrix();
-            float rot = ((int)(++ang) % 360);
-            rlRotatef(rot, tc.pos.x, tc.pos.y, 0);
+
+            rlRotatef(ang, x, y, 0);
             rlPopMatrix();
         };
 
