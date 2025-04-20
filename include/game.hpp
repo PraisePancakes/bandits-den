@@ -33,11 +33,10 @@ namespace bden::gamelayer
             return p;
         };
 #define PLAYER_SPEED 5
-        void system_input()
+        void system_input_player_keys()
         {
             auto &sc = world.get<components::SquareComponent>(player);
             auto &vel = world.get<components::TransformComponent>(player).vel;
-            auto &pos = world.get<components::TransformComponent>(player).pos;
             vel.x = 0;
             vel.y = 0;
             // dir
@@ -57,7 +56,6 @@ namespace bden::gamelayer
             {
                 vel.x += 1;
             }
-
             // normalize velocity vector
             auto mag = std::sqrt(vel.x * vel.x + vel.y * vel.y);
 
@@ -66,18 +64,14 @@ namespace bden::gamelayer
                 vel.x = (vel.x / mag);
                 vel.y = (vel.y / mag);
             }
-
             // apply speed to the velocity
             vel.x *= PLAYER_SPEED;
             vel.y *= PLAYER_SPEED;
+        }
 
-            // update position
-            pos.x += vel.x;
-            pos.y += vel.y;
-
-            // update square
-            sc.x = pos.x;
-            sc.y = pos.y;
+        void system_input()
+        {
+            system_input_player_keys();
         };
 
         void system_updateables()
@@ -85,6 +79,9 @@ namespace bden::gamelayer
             auto updateables = world.view<components::SquareComponent, components::TransformComponent>();
             updateables.for_each([](components::SquareComponent &s, components::TransformComponent &t)
                                  {
+                t.pos.x += t.vel.x;
+                t.pos.y += t.vel.y;
+
                 s.x = t.pos.x;
                 s.y = t.pos.y; });
         };
