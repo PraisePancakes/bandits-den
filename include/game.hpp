@@ -4,6 +4,7 @@
 #include "../vendor/SnakeECS/snakeecs/snakeecs.hpp"
 #include "components/square.hpp"
 #include "components/transform.hpp"
+#include "components/circle.hpp"
 #include "app_observer.hpp"
 #include <cmath>
 #include "rlgl.h"
@@ -13,9 +14,10 @@ namespace bden::gamelayer
     using namespace components;
     namespace world
     {
-        using component_list = snek::component_list<components::SquareComponent, components::TransformComponent>;
+        using component_list = snek::component_list<components::SquareComponent, components::TransformComponent, components::CircleComponent>;
         using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
     }
+    // TODO create glow effect for entites
 
     class game final : public applicationlayer::application_observer
     {
@@ -25,12 +27,15 @@ namespace bden::gamelayer
         using WorldType = snek::world<world::configuration_policy>;
         WorldType world;
         WorldType::entity_type player;
-        WorldType::entity_type spawn_player(float w, float h, float x, float y, Color c)
+        WorldType::entity_type spawn_player(float w, float h, float x, float y, Color player_color, Color glow_color)
         {
             auto p = world.spawn();
-            SquareComponent square{w, h, x, y, c, 0.0};
+
+            SquareComponent square{w, h, x, y, player_color, 0.0};
             world.bind<SquareComponent>(p, square);
             world.bind<TransformComponent>(p, Vector2(x, y), Vector2(0, 0), 0.0);
+            world.bind<CircleComponent>(p, square.rect.width, glow_color);
+
             return p;
         };
 #define PLAYER_SPEED 5
@@ -85,7 +90,6 @@ namespace bden::gamelayer
 
             ang = -deg;
             rlPushMatrix();
-
             rlRotatef(ang, x, y, 0);
             rlPopMatrix();
         };
@@ -110,11 +114,13 @@ namespace bden::gamelayer
 
         void system_drawables()
         {
-            auto drawables = world.view<SquareComponent>();
-            drawables.for_each([this](SquareComponent &c)
+            auto drawables = world.view<SquareComponent, CircleComponent>();
+            drawables.for_each([this](SquareComponent &c, CircleComponent &cc)
                                {
                                    // DrawRectangle(c.x, c.y, c.width, c.height, c.color);
-                                   DrawRectanglePro({c.rect.x, c.rect.y, c.rect.width, c.rect.height}, {c.rect.width / 2, c.rect.height / 2}, c.ang, c.color); });
+                                   
+                                   DrawRectanglePro({c.rect.x, c.rect.y, c.rect.width, c.rect.height}, {c.rect.width / 2, c.rect.height / 2}, c.ang, c.color); 
+                                   DrawCircle(c.rect.x, c.rect.y, cc.radius, cc.color); });
         };
 
         void update_application_metadata(int w, int h) override
@@ -125,7 +131,7 @@ namespace bden::gamelayer
         };
 
     public:
-        game() : player(spawn_player(100, 100, 500, 500, RED)) {
+        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})) {
 
                  };
 
