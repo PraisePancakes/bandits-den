@@ -5,6 +5,7 @@
 #include "components/square.hpp"
 #include "components/transform.hpp"
 #include "app_observer.hpp"
+#include <cmath>
 
 namespace bden::gamelayer
 {
@@ -31,24 +32,52 @@ namespace bden::gamelayer
             world.bind<components::TransformComponent>(p, Vector2(x, y), Vector2(0, 0));
             return p;
         };
-#define PLAYER_SPEED 10
+#define PLAYER_SPEED 5
         void system_input()
         {
             auto &sc = world.get<components::SquareComponent>(player);
-            auto &tc = world.get<components::TransformComponent>(player);
-
+            auto &vel = world.get<components::TransformComponent>(player).vel;
+            auto &pos = world.get<components::TransformComponent>(player).pos;
+            vel.x = 0;
+            vel.y = 0;
+            // dir
             if (IsKeyDown(KEY_W))
             {
+                vel.y -= 1;
             }
             if (IsKeyDown(KEY_A))
             {
+                vel.x -= 1;
             }
             if (IsKeyDown(KEY_S))
             {
+                vel.y += 1;
             }
             if (IsKeyDown(KEY_D))
             {
+                vel.x += 1;
             }
+
+            // normalize velocity vector
+            auto mag = std::sqrt(vel.x * vel.x + vel.y * vel.y);
+
+            if (mag != 0.0)
+            {
+                vel.x = (vel.x / mag);
+                vel.y = (vel.y / mag);
+            }
+
+            // apply speed to the velocity
+            vel.x *= PLAYER_SPEED;
+            vel.y *= PLAYER_SPEED;
+
+            // update position
+            pos.x += vel.x;
+            pos.y += vel.y;
+
+            // update square
+            sc.x = pos.x;
+            sc.y = pos.y;
         };
 
         void system_updateables()
