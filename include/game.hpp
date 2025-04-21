@@ -57,7 +57,7 @@ namespace bden::gamelayer
             return p;
         };
 #define PLAYER_SPEED 5
-        void system_input_player_keys()
+        void system_updateables_input_player_keys()
         {
             // update players velocity/movement
             auto &sc = world.get<SquareComponent>(player);
@@ -94,7 +94,7 @@ namespace bden::gamelayer
             vel.y *= PLAYER_SPEED;
         }
 
-        void system_input_player_mouse()
+        void system_updateables_input_player_mouse()
         {
             auto &tc = world.get<TransformComponent>(player);
             auto &sc = world.get<SquareComponent>(player);
@@ -112,13 +112,13 @@ namespace bden::gamelayer
             rlPopMatrix();
         };
 
-        void system_input()
+        void system_updateables_input()
         {
-            system_input_player_keys();
-            system_input_player_mouse();
+            system_updateables_input_player_keys();
+            system_updateables_input_player_mouse();
         };
 
-        void system_updateables()
+        void system_updateables_position()
         {
             auto updateables = world.view<SquareComponent, TransformComponent>();
             updateables.for_each([](SquareComponent &s, TransformComponent &t)
@@ -128,7 +128,10 @@ namespace bden::gamelayer
                 s.ang = t.ang;
                 s.rect.x = t.pos.x;
                 s.rect.y = t.pos.y; });
+        }
 
+        void system_updateables_collider()
+        {
             auto pcr = world.get<ColliderComponent>(player).radius;
             auto ptc = world.get<TransformComponent>(player);
             auto collideables = world.view<ColliderComponent, TransformComponent>();
@@ -146,6 +149,13 @@ namespace bden::gamelayer
                                             //determine from where collision occurs
                                         }
                                     } });
+        };
+
+        void system_updateables()
+        {
+            system_updateables_input();
+            system_updateables_position();
+            system_updateables_collider();
         };
 
         void system_drawables()
@@ -172,7 +182,6 @@ namespace bden::gamelayer
 
         void update()
         {
-            system_input();
             system_updateables();
         };
 
