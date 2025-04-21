@@ -5,6 +5,7 @@
 #include "components/square.hpp"
 #include "components/transform.hpp"
 #include "components/circle.hpp"
+#include "components/collider.hpp"
 #include "app_observer.hpp"
 #include <cmath>
 #include "rlgl.h"
@@ -14,7 +15,11 @@ namespace bden::gamelayer
     using namespace components;
     namespace world
     {
-        using component_list = snek::component_list<components::SquareComponent, components::TransformComponent, components::CircleComponent>;
+        using component_list = snek::component_list<components::SquareComponent,
+                                                    components::TransformComponent,
+                                                    components::CircleComponent,
+                                                    components::ColliderComponent>;
+
         using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
     }
     // TODO create glow effect for entites
@@ -27,15 +32,28 @@ namespace bden::gamelayer
         using WorldType = snek::world<world::configuration_policy>;
         WorldType world;
         WorldType::entity_type player;
+        WorldType::entity_type test;
+
         WorldType::entity_type spawn_player(float w, float h, float x, float y, Color player_color, Color glow_color)
         {
             auto p = world.spawn();
-
             SquareComponent square{w, h, x, y, player_color, 0.0};
             world.bind<SquareComponent>(p, square);
             world.bind<TransformComponent>(p, Vector2(x, y), Vector2(0, 0), 0.0);
             world.bind<CircleComponent>(p, square.rect.width, glow_color);
+            world.bind<ColliderComponent>(p, square.rect.width);
 
+            return p;
+        };
+
+        WorldType::entity_type spawn_test(float w, float h, float x, float y, Color test_color, Color glow_color)
+        {
+            auto p = world.spawn();
+            SquareComponent square{w, h, x, y, test_color, 0.0};
+            world.bind<SquareComponent>(p, square);
+            world.bind<TransformComponent>(p, Vector2(x, y), Vector2(0, 0), 0.0);
+            world.bind<CircleComponent>(p, square.rect.width, glow_color);
+            world.bind<ColliderComponent>(p, square.rect.width);
             return p;
         };
 #define PLAYER_SPEED 5
@@ -110,6 +128,24 @@ namespace bden::gamelayer
                 s.ang = t.ang;
                 s.rect.x = t.pos.x;
                 s.rect.y = t.pos.y; });
+
+            auto pcr = world.get<ColliderComponent>(player).radius;
+            auto ptc = world.get<TransformComponent>(player);
+            auto collideables = world.view<ColliderComponent, TransformComponent>();
+            collideables.for_each([this, &ptc, &pcr](u64 id, ColliderComponent &c, TransformComponent &tc)
+                                  {
+                                    if(id != this->player) {
+                                        auto r = c.radius;
+                                        float xsquared = (tc.pos.x - ptc.pos.x) * (tc.pos.x - ptc.pos.x);
+                                        float ysquared = (tc.pos.y - ptc.pos.y) * (tc.pos.y - ptc.pos.y);
+                                        float dist = std::sqrt(xsquared + ysquared);
+                                        bool collided = dist < pcr + r;
+
+                                        if(collided) {
+                                            std::cout << "collided" << std::endl;
+                                            //determine from where collision occurs
+                                        }
+                                    } });
         };
 
         void system_drawables()
@@ -123,15 +159,14 @@ namespace bden::gamelayer
                                    DrawCircle(c.rect.x, c.rect.y, cc.radius, cc.color); });
         };
 
-        void update_application_metadata(int w, int h) override
+        void update_app_listener(int w, int h) override
         {
-            std::cout << "updated app data from listener";
             screen_width = w;
             screen_height = h;
         };
 
     public:
-        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})) {
+        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})), test(spawn_test(100, 100, 500, 500, BLUE, {253, 76, 167, 47})) {
 
                  };
 

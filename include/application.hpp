@@ -61,7 +61,7 @@ namespace bden::applicationlayer
         {
             for (auto &o : observers)
             {
-                o->update_application_metadata(win_width, win_height);
+                o->update_app_listener(win_width, win_height);
             }
         };
         ~application() = default;
