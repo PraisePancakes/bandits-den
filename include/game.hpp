@@ -132,8 +132,8 @@ namespace bden::gamelayer
 
         void system_updateables_collider()
         {
-            auto pcr = world.get<ColliderComponent>(player).radius;
-            auto ptc = world.get<TransformComponent>(player);
+            auto &pcr = world.get<ColliderComponent>(player).radius;
+            auto &ptc = world.get<TransformComponent>(player);
             auto collideables = world.view<ColliderComponent, TransformComponent>();
             collideables.for_each([this, &ptc, &pcr](u64 id, ColliderComponent &c, TransformComponent &tc)
                                   {
@@ -143,11 +143,16 @@ namespace bden::gamelayer
                                         float ysquared = (tc.pos.y - ptc.pos.y) * (tc.pos.y - ptc.pos.y);
                                         float dist = std::sqrt(xsquared + ysquared);
                                         bool collided = dist < pcr + r;
-
+                                      
+                                        
                                         if(collided) {
-                                            std::cout << "collided" << std::endl;
-                                            //determine from where collision occurs
+                                            std::cout << "collided" << std::endl; 
+                                            ptc.pos.x += -ptc.vel.x;
+                                            ptc.pos.y += -ptc.vel.y;
+                                          
                                         }
+                                            
+                                        
                                     } });
         };
 
@@ -176,7 +181,7 @@ namespace bden::gamelayer
         };
 
     public:
-        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})), test(spawn_test(100, 100, 500, 500, BLUE, {253, 76, 167, 47})) {
+        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})), test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})) {
 
                  };
 
