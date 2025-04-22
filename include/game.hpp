@@ -6,6 +6,7 @@
 #include "components/transform.hpp"
 #include "components/circle.hpp"
 #include "components/collider.hpp"
+#include "components/triangle.hpp"
 #include "app_observer.hpp"
 #include <cmath>
 #include "rlgl.h"
@@ -18,7 +19,8 @@ namespace bden::gamelayer
         using component_list = snek::component_list<components::SquareComponent,
                                                     components::TransformComponent,
                                                     components::CircleComponent,
-                                                    components::ColliderComponent>;
+                                                    components::ColliderComponent,
+                                                    components::TriangleComponent>;
 
         using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
     }
@@ -40,8 +42,11 @@ namespace bden::gamelayer
             SquareComponent square{w, h, x, y, player_color, 0.0};
             world.bind<SquareComponent>(p, square);
             world.bind<TransformComponent>(p, Vector2(x, y), Vector2(0, 0), 0.0);
-            world.bind<CircleComponent>(p, square.rect.width, glow_color);
+            const auto c = world.bind<CircleComponent>(p, square.rect.width, glow_color);
             world.bind<ColliderComponent>(p, square.rect.width);
+            world.bind<TriangleComponent>(p, Vector2(square.rect.x, square.rect.y - 40.f),
+                                          Vector2(square.rect.x - square.rect.width / 4, square.rect.y - 25.0f),
+                                          Vector2(square.rect.x + square.rect.width / 4, square.rect.y - 25.0f), GREEN);
 
             return p;
         };
@@ -54,13 +59,13 @@ namespace bden::gamelayer
             world.bind<TransformComponent>(p, Vector2(x, y), Vector2(0, 0), 0.0);
             world.bind<CircleComponent>(p, square.rect.width, glow_color);
             world.bind<ColliderComponent>(p, square.rect.width);
+
             return p;
         };
 #define PLAYER_SPEED 5
         void system_updateables_input_player_keys()
         {
             // update players velocity/movement
-            auto &sc = world.get<SquareComponent>(player);
             auto &vel = world.get<TransformComponent>(player).vel;
             vel.x = 0;
             vel.y = 0;
@@ -143,16 +148,10 @@ namespace bden::gamelayer
                                         float ysquared = (tc.pos.y - ptc.pos.y) * (tc.pos.y - ptc.pos.y);
                                         float dist = std::sqrt(xsquared + ysquared);
                                         bool collided = dist < pcr + r;
-                                      
-                                        
                                         if(collided) {
-                                            std::cout << "collided" << std::endl; 
                                             ptc.pos.x += -ptc.vel.x;
                                             ptc.pos.y += -ptc.vel.y;
-                                          
                                         }
-                                            
-                                        
                                     } });
         };
 
@@ -165,13 +164,14 @@ namespace bden::gamelayer
 
         void system_drawables()
         {
-            auto drawables = world.view<SquareComponent, CircleComponent>();
-            drawables.for_each([this](SquareComponent &c, CircleComponent &cc)
-                               {
+            auto drawable_entities = world.view<SquareComponent, CircleComponent>();
+            drawable_entities.for_each([this](SquareComponent &c, CircleComponent &cc)
+                                       {
                                    // DrawRectangle(c.x, c.y, c.width, c.height, c.color);
-                                   
-                                   DrawRectanglePro({c.rect.x, c.rect.y, c.rect.width, c.rect.height}, {c.rect.width / 2, c.rect.height / 2}, c.ang, c.color); 
-                                   DrawCircle(c.rect.x, c.rect.y, cc.radius, cc.color); });
+                                   DrawCircleGradient(c.rect.x, c.rect.y, cc.radius, WHITE, cc.color);
+                                   DrawRectanglePro({c.rect.x, c.rect.y, c.rect.width, c.rect.height}, {c.rect.width / 2, c.rect.height / 2}, c.ang, c.color); });
+            auto player_arrow = world.get<TriangleComponent>(player);
+            DrawTriangle(player_arrow.point1, player_arrow.point2, player_arrow.point3, player_arrow.color);
         };
 
         void update_app_listener(int w, int h) override

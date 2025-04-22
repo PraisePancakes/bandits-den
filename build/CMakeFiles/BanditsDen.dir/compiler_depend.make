@@ -241,6 +241,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/collider.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/square.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/transform.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/triangle.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp
 
 
@@ -723,5 +724,7 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/circle.h
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/collider.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/transform.hpp:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/triangle.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp:
