@@ -238,9 +238,8 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/app_observer.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/application.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/circle.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/collider.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/rigidbody.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/square.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/transform.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/triangle.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp
 
@@ -643,6 +642,8 @@ C:/mingw64/include/c++/13.2.0/x86_64-w64-mingw32/bits/cpu_defines.h:
 
 C:/mingw64/include/c++/13.2.0/x86_64-w64-mingw32/bits/ctype_inline.h:
 
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/rigidbody.hpp:
+
 C:/mingw64/include/c++/13.2.0/x86_64-w64-mingw32/bits/error_constants.h:
 
 C:/mingw64/include/c++/13.2.0/x86_64-w64-mingw32/bits/gthr-default.h:
@@ -720,10 +721,6 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/app_observer.hpp:
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/application.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/circle.hpp:
-
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/collider.hpp:
-
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/transform.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/triangle.hpp:
 

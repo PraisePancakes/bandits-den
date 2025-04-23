@@ -3,9 +3,8 @@
 #include "raylib.h"
 #include "../vendor/SnakeECS/snakeecs/snakeecs.hpp"
 #include "components/square.hpp"
-#include "components/transform.hpp"
+#include "components/rigidbody.hpp"
 #include "components/circle.hpp"
-#include "components/collider.hpp"
 #include "components/triangle.hpp"
 #include "app_observer.hpp"
 #include <cmath>
@@ -17,9 +16,8 @@ namespace bden::gamelayer
     namespace world
     {
         using component_list = snek::component_list<components::SquareComponent,
-                                                    components::TransformComponent,
+                                                    components::RigidBodyComponent,
                                                     components::CircleComponent,
-                                                    components::ColliderComponent,
                                                     components::TriangleComponent>;
 
         using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
@@ -41,9 +39,12 @@ namespace bden::gamelayer
             auto p = world.spawn();
             SquareComponent square{w, h, x, y, player_color, 0.0};
             world.bind<SquareComponent>(p, square);
-            world.bind<TransformComponent>(p, Vector2(x, y), Vector2(0, 0), 0.0);
+            Transform player_transform{};
+            player_transform.translation.x = x;
+            player_transform.translation.y = y;
+
             const auto c = world.bind<CircleComponent>(p, square.rect.width, glow_color);
-            world.bind<ColliderComponent>(p, square.rect.width);
+            world.bind<RigidBodyComponent>(p, player_transform, Vector2(0, 0), c.radius);
             world.bind<TriangleComponent>(p, Vector2(square.rect.x, square.rect.y - 40.f),
                                           Vector2(square.rect.x - square.rect.width / 4, square.rect.y - 25.0f),
                                           Vector2(square.rect.x + square.rect.width / 4, square.rect.y - 25.0f), GREEN);
@@ -53,20 +54,22 @@ namespace bden::gamelayer
 
         WorldType::entity_type spawn_test(float w, float h, float x, float y, Color test_color, Color glow_color)
         {
-            auto p = world.spawn();
+            auto test = world.spawn();
             SquareComponent square{w, h, x, y, test_color, 0.0};
-            world.bind<SquareComponent>(p, square);
-            world.bind<TransformComponent>(p, Vector2(x, y), Vector2(0, 0), 0.0);
-            world.bind<CircleComponent>(p, square.rect.width, glow_color);
-            world.bind<ColliderComponent>(p, square.rect.width);
+            world.bind<SquareComponent>(test, square);
+            Transform test_transform{};
+            test_transform.translation.x = x;
+            test_transform.translation.y = y;
 
-            return p;
+            auto c = world.bind<CircleComponent>(test, square.rect.width, glow_color);
+            world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius);
+            return test;
         };
 #define PLAYER_SPEED 5
         void system_updateables_input_player_keys()
         {
             // update players velocity/movement
-            auto &vel = world.get<TransformComponent>(player).vel;
+            auto &vel = world.get<RigidBodyComponent>(player).velocity;
             vel.x = 0;
             vel.y = 0;
             // dir
@@ -101,11 +104,11 @@ namespace bden::gamelayer
 
         void system_updateables_input_player_mouse()
         {
-            auto &tc = world.get<TransformComponent>(player);
+            auto &tc = world.get<RigidBodyComponent>(player).transform;
             auto &sc = world.get<SquareComponent>(player);
-            auto &ang = tc.ang;
-            const float x = tc.pos.x;
-            const float y = tc.pos.y;
+            auto &ang = tc.rotation.x;
+            const float x = tc.translation.x;
+            const float y = tc.translation.y;
             const Vector2 mouse_pos = GetMousePosition();
             const Vector2 changed = {x - mouse_pos.x, y - mouse_pos.y};
             float rad = atan2(changed.x, changed.y);
@@ -125,32 +128,31 @@ namespace bden::gamelayer
 
         void system_updateables_position()
         {
-            auto updateables = world.view<SquareComponent, TransformComponent>();
-            updateables.for_each([](SquareComponent &s, TransformComponent &t)
+            auto updateables = world.view<SquareComponent, RigidBodyComponent>();
+            updateables.for_each([](SquareComponent &s, RigidBodyComponent &t)
                                  {
-                t.pos.x += t.vel.x;
-                t.pos.y += t.vel.y;
-                s.ang = t.ang;
-                s.rect.x = t.pos.x;
-                s.rect.y = t.pos.y; });
+                t.transform.translation.x += t.velocity.x;
+                t.transform.translation.y += t.velocity.y;
+                s.ang = t.transform.rotation.x;
+                s.rect.x = t.transform.translation.x;
+                s.rect.y = t.transform.translation.y; });
         }
 
         void system_updateables_collider()
         {
-            auto &pcr = world.get<ColliderComponent>(player).radius;
-            auto &ptc = world.get<TransformComponent>(player);
-            auto collideables = world.view<ColliderComponent, TransformComponent>();
-            collideables.for_each([this, &ptc, &pcr](u64 id, ColliderComponent &c, TransformComponent &tc)
+            auto &prb = world.get<RigidBodyComponent>(player);
+            auto collideables = world.view<RigidBodyComponent>();
+            collideables.for_each([this, &prb](u64 id, RigidBodyComponent &rb)
                                   {
                                     if(id != this->player) {
-                                        auto r = c.radius;
-                                        float xsquared = (tc.pos.x - ptc.pos.x) * (tc.pos.x - ptc.pos.x);
-                                        float ysquared = (tc.pos.y - ptc.pos.y) * (tc.pos.y - ptc.pos.y);
+                                        auto r = rb.collision_radius;
+                                        float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
+                                        float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
                                         float dist = std::sqrt(xsquared + ysquared);
-                                        bool collided = dist < pcr + r;
+                                        bool collided = dist < prb.collision_radius + r;
                                         if(collided) {
-                                            ptc.pos.x += -ptc.vel.x;
-                                            ptc.pos.y += -ptc.vel.y;
+                                            prb.transform.translation.x += -prb.velocity.x;
+                                            prb.transform.translation.y += -prb.velocity.y;
                                         }
                                     } });
         };
