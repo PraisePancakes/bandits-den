@@ -113,11 +113,12 @@ namespace bden::gamelayer
             auto &tc = world.get<RigidBodyComponent>(player).transform;
             auto &sc = world.get<SquareComponent>(player);
             auto &ang = tc.rotation.x;
-            const float x = tc.translation.x;
-            const float y = tc.translation.y;
             const Vector2 mouse_pos = GetMousePosition();
-            const Vector2 changed = {x - mouse_pos.x, y - mouse_pos.y};
-            float rad = atan2(changed.x, changed.y);
+            const Vector2 screen_mouse = GetScreenToWorld2D(mouse_pos, camera);
+            const float x = screen_mouse.x - tc.translation.x;
+            const float y = screen_mouse.y - tc.translation.y;
+
+            float rad = atan2(x, y);
             float deg = (rad * 180.0) / PI;
 
             ang = -deg;
