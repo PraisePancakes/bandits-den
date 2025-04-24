@@ -6,7 +6,7 @@
 #include "components/rigidbody.hpp"
 #include "components/circle.hpp"
 #include "components/health.hpp"
-
+#include "raymath.h"
 #include "app_observer.hpp"
 #include <cmath>
 #include "rlgl.h"
@@ -36,10 +36,14 @@ namespace bden::gamelayer
         WorldType::entity_type test;
         Camera2D camera{};
 
-        void system_updateables_camera()
+        void system_updateables_camera(float dt)
         {
+            const float LERP_FACTOR = 5;
             const auto &ptc = world.get<RigidBodyComponent>(player).transform;
-            camera.target = {ptc.translation.x, ptc.translation.y};
+            auto lerpx = Lerp(camera.target.x, ptc.translation.x, dt * LERP_FACTOR);
+            auto lerpy = Lerp(camera.target.y, ptc.translation.y, dt * LERP_FACTOR);
+
+            camera.target = {lerpx, lerpy};
             camera.offset = {screen_width / 2.0f, screen_height / 2.0f};
             camera.rotation = 0.0f;
             camera.zoom = 1.0f;
@@ -89,7 +93,7 @@ namespace bden::gamelayer
             world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius);
             return test;
         };
-#define PLAYER_SPEED 5
+#define PLAYER_SPEED 250
         void system_updateables_input_player_keys()
         {
             // update players velocity/movement
@@ -151,23 +155,23 @@ namespace bden::gamelayer
             system_updateables_input_player_mouse();
         };
 
-        void system_updateables_position()
+        void system_updateables_position(float dt)
         {
             auto updateables = world.view<SquareComponent, RigidBodyComponent>();
-            updateables.for_each([](SquareComponent &s, RigidBodyComponent &t)
+            updateables.for_each([&dt](SquareComponent &s, RigidBodyComponent &t)
                                  {
-                t.transform.translation.x += t.velocity.x;
-                t.transform.translation.y += t.velocity.y;
+                t.transform.translation.x += (t.velocity.x * dt);
+                t.transform.translation.y += (t.velocity.y * dt);
                 s.ang = t.transform.rotation.x;
                 s.rect.x = t.transform.translation.x;
                 s.rect.y = t.transform.translation.y; });
         }
 
-        void system_updateables_collider()
+        void system_updateables_collider(float dt)
         {
             auto &prb = world.get<RigidBodyComponent>(player);
             auto collideables = world.view<RigidBodyComponent>();
-            collideables.for_each([this, &prb](u64 id, RigidBodyComponent &rb)
+            collideables.for_each([this, &prb, &dt](u64 id, RigidBodyComponent &rb)
                                   {
                                     if(id != this->player) {
                                         auto r = rb.collision_radius;
@@ -176,18 +180,18 @@ namespace bden::gamelayer
                                         float dist = std::sqrt(xsquared + ysquared);
                                         bool collided = dist < prb.collision_radius + r;
                                         if(collided) {
-                                            prb.transform.translation.x += -prb.velocity.x;
-                                            prb.transform.translation.y += -prb.velocity.y;
+                                            prb.transform.translation.x += (-prb.velocity.x * dt);
+                                            prb.transform.translation.y += (-prb.velocity.y * dt);
                                         }
                                     } });
         };
 
-        void system_updateables()
+        void system_updateables(float dt)
         {
             system_updateables_input();
-            system_updateables_position();
-            system_updateables_collider();
-            system_updateables_camera();
+            system_updateables_position(dt);
+            system_updateables_collider(dt);
+            system_updateables_camera(dt);
             system_updateables_health();
         };
 
@@ -228,9 +232,9 @@ namespace bden::gamelayer
 
                  };
 
-        void update()
+        void update(float dt)
         {
-            system_updateables();
+            system_updateables(dt);
         };
 
         void render()
@@ -244,7 +248,8 @@ namespace bden::gamelayer
         };
         void loop()
         {
-            update();
+            float dt = GetFrameTime();
+            update(dt);
             render();
         };
         ~game() {};

@@ -3,6 +3,7 @@
 
 CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/main.cpp \
   _deps/raylib-src/src/raylib.h \
+  _deps/raylib-src/src/raymath.h \
   _deps/raylib-src/src/rlgl.h \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/types.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/core/storage/sparse_set.hpp \
@@ -145,6 +146,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/include/c++/13.2.0/istream \
   C:/mingw64/include/c++/13.2.0/limits \
   C:/mingw64/include/c++/13.2.0/list \
+  C:/mingw64/include/c++/13.2.0/math.h \
   C:/mingw64/include/c++/13.2.0/memory \
   C:/mingw64/include/c++/13.2.0/new \
   C:/mingw64/include/c++/13.2.0/numbers \
@@ -268,13 +270,17 @@ C:/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h:
 
 _deps/raylib-src/src/raylib.h:
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/light_view.hpp:
-
 C:/mingw64/include/c++/13.2.0/bits/exception_defines.h:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/types.hpp:
 
 C:/mingw64/include/c++/13.2.0/bits/erase_if.h:
+
+C:/mingw64/include/c++/13.2.0/bits/hash_bytes.h:
+
+C:/mingw64/include/c++/13.2.0/bits/requires_hosted.h:
+
+_deps/raylib-src/src/raymath.h:
 
 C:/mingw64/include/c++/13.2.0/bits/istream.tcc:
 
@@ -284,13 +290,11 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/sn
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/entity.hpp:
 
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/light_view.hpp:
+
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/traits.hpp:
 
 C:/mingw64/include/c++/13.2.0/bits/localefwd.h:
-
-C:/mingw64/include/c++/13.2.0/ext/atomicity.h:
-
-C:/mingw64/include/c++/13.2.0/bits/new_allocator.h:
 
 C:/mingw64/include/c++/13.2.0/backward/binders.h:
 
@@ -402,8 +406,6 @@ C:/mingw64/include/c++/13.2.0/x86_64-w64-mingw32/bits/ctype_base.h:
 
 C:/mingw64/include/c++/13.2.0/bits/functexcept.h:
 
-C:/mingw64/include/c++/13.2.0/bits/hash_bytes.h:
-
 C:/mingw64/include/c++/13.2.0/bits/stl_algobase.h:
 
 C:/mingw64/include/c++/13.2.0/bits/iterator_concepts.h:
@@ -419,6 +421,10 @@ C:/mingw64/include/c++/13.2.0/bits/max_size_type.h:
 C:/mingw64/include/c++/13.2.0/bits/shared_ptr_atomic.h:
 
 C:/mingw64/include/c++/13.2.0/bits/memory_resource.h:
+
+C:/mingw64/include/c++/13.2.0/ext/atomicity.h:
+
+C:/mingw64/include/c++/13.2.0/bits/new_allocator.h:
 
 C:/mingw64/include/c++/13.2.0/bits/node_handle.h:
 
@@ -443,8 +449,6 @@ C:/mingw64/include/c++/13.2.0/bits/ranges_cmp.h:
 C:/mingw64/include/c++/13.2.0/bits/ranges_uninitialized.h:
 
 C:/mingw64/include/c++/13.2.0/bits/ranges_util.h:
-
-C:/mingw64/include/c++/13.2.0/bits/requires_hosted.h:
 
 C:/mingw64/include/c++/13.2.0/bits/shared_ptr.h:
 
@@ -575,6 +579,8 @@ C:/mingw64/include/c++/13.2.0/istream:
 C:/mingw64/include/c++/13.2.0/limits:
 
 C:/mingw64/include/c++/13.2.0/list:
+
+C:/mingw64/include/c++/13.2.0/math.h:
 
 C:/mingw64/include/c++/13.2.0/memory:
 

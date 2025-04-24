@@ -218,11 +218,8 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/rigidbody.hpp \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/circle.hpp \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/health.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/app_observer.hpp \
- C:/mingw64/include/c++/13.2.0/list \
- C:/mingw64/include/c++/13.2.0/bits/stl_list.h \
- C:/mingw64/include/c++/13.2.0/bits/list.tcc \
- C:/mingw64/include/c++/13.2.0/cmath \
+ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/build/_deps/raylib-src/src/raymath.h \
+ C:/mingw64/include/c++/13.2.0/math.h C:/mingw64/include/c++/13.2.0/cmath \
  C:/mingw64/x86_64-w64-mingw32/include/math.h \
  C:/mingw64/include/c++/13.2.0/bits/specfun.h \
  C:/mingw64/include/c++/13.2.0/tr1/gamma.tcc \
@@ -237,4 +234,8 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: \
  C:/mingw64/include/c++/13.2.0/tr1/poly_hermite.tcc \
  C:/mingw64/include/c++/13.2.0/tr1/poly_laguerre.tcc \
  C:/mingw64/include/c++/13.2.0/tr1/riemann_zeta.tcc \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/app_observer.hpp \
+ C:/mingw64/include/c++/13.2.0/list \
+ C:/mingw64/include/c++/13.2.0/bits/stl_list.h \
+ C:/mingw64/include/c++/13.2.0/bits/list.tcc \
  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/build/_deps/raylib-src/src/rlgl.h

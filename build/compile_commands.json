@@ -1,7 +1,7 @@
 [
 {
   "directory": "C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/build",
-  "command": "C:\\mingw64\\bin\\g++.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP @CMakeFiles/BanditsDen.dir/includes_CXX.rsp -g -std=gnu++20 -Wall -Wextra -Wpedantic -Werror -Wno-unused-parameter -Wno-unused-variable -o CMakeFiles\\BanditsDen.dir\\main.cpp.obj -c C:\\Users\\aryas\\OneDrive\\Desktop\\CPPGames\\Bandits-den\\main.cpp",
+  "command": "C:\\mingw64\\bin\\g++.exe -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP @CMakeFiles/BanditsDen.dir/includes_CXX.rsp -g -std=gnu++20 -Wall -Wextra -Wpedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-missing-field-initializers -o CMakeFiles\\BanditsDen.dir\\main.cpp.obj -c C:\\Users\\aryas\\OneDrive\\Desktop\\CPPGames\\Bandits-den\\main.cpp",
   "file": "C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/main.cpp",
   "output": "CMakeFiles/BanditsDen.dir/main.cpp.obj"
 },
