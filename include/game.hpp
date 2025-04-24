@@ -5,7 +5,7 @@
 #include "components/square.hpp"
 #include "components/rigidbody.hpp"
 #include "components/circle.hpp"
-#include "components/triangle.hpp"
+
 #include "app_observer.hpp"
 #include <cmath>
 #include "rlgl.h"
@@ -17,8 +17,7 @@ namespace bden::gamelayer
     {
         using component_list = snek::component_list<components::SquareComponent,
                                                     components::RigidBodyComponent,
-                                                    components::CircleComponent,
-                                                    components::TriangleComponent>;
+                                                    components::CircleComponent>;
 
         using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
     }
@@ -26,13 +25,23 @@ namespace bden::gamelayer
 
     class game final : public applicationlayer::application_observer
     {
-        int screen_width;
-        int screen_height;
+        int screen_width = 0;
+        int screen_height = 0;
 
         using WorldType = snek::world<world::configuration_policy>;
         WorldType world;
         WorldType::entity_type player;
         WorldType::entity_type test;
+        Camera2D camera{};
+
+        void system_updateables_camera()
+        {
+            const auto &ptc = world.get<RigidBodyComponent>(player).transform;
+            camera.target = {ptc.translation.x, ptc.translation.y};
+            camera.offset = {screen_width / 2.0f, screen_height / 2.0f};
+            camera.rotation = 0.0f;
+            camera.zoom = 1.0f;
+        };
 
         WorldType::entity_type spawn_player(float w, float h, float x, float y, Color player_color, Color glow_color)
         {
@@ -45,9 +54,6 @@ namespace bden::gamelayer
 
             const auto c = world.bind<CircleComponent>(p, square.rect.width, glow_color);
             world.bind<RigidBodyComponent>(p, player_transform, Vector2(0, 0), c.radius);
-            world.bind<TriangleComponent>(p, Vector2(square.rect.x, square.rect.y - 40.f),
-                                          Vector2(square.rect.x - square.rect.width / 4, square.rect.y - 25.0f),
-                                          Vector2(square.rect.x + square.rect.width / 4, square.rect.y - 25.0f), GREEN);
 
             return p;
         };
@@ -162,6 +168,7 @@ namespace bden::gamelayer
             system_updateables_input();
             system_updateables_position();
             system_updateables_collider();
+            system_updateables_camera();
         };
 
         void system_drawables()
@@ -172,8 +179,6 @@ namespace bden::gamelayer
                                    // DrawRectangle(c.x, c.y, c.width, c.height, c.color);
                                    DrawCircleGradient(c.rect.x, c.rect.y, cc.radius, WHITE, cc.color);
                                    DrawRectanglePro({c.rect.x, c.rect.y, c.rect.width, c.rect.height}, {c.rect.width / 2, c.rect.height / 2}, c.ang, c.color); });
-            auto player_arrow = world.get<TriangleComponent>(player);
-            DrawTriangle(player_arrow.point1, player_arrow.point2, player_arrow.point3, player_arrow.color);
         };
 
         void update_app_listener(int w, int h) override
@@ -196,7 +201,9 @@ namespace bden::gamelayer
         {
             BeginDrawing();
             ClearBackground(BLACK);
+            BeginMode2D(camera);
             system_drawables();
+            EndMode2D();
             EndDrawing();
         };
         void loop()

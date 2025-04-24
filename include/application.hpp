@@ -42,17 +42,13 @@ namespace bden::applicationlayer
 
         void run()
         {
-            int prev_width = win_width;
-            int prev_height = win_height;
 
             while (!WindowShouldClose()) // Detect window close button or ESC key
             {
-                if (GetScreenWidth() != prev_width || GetScreenHeight() != prev_height)
-                {
-                    prev_width = GetScreenWidth();
-                    prev_height = GetScreenHeight();
-                    notify();
-                }
+                int prev_width = GetScreenWidth();
+                int prev_height = GetScreenHeight();
+                notify();
+
                 game->loop();
             }
         };
