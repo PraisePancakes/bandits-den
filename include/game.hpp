@@ -5,6 +5,7 @@
 #include "components/square.hpp"
 #include "components/rigidbody.hpp"
 #include "components/circle.hpp"
+#include "components/health.hpp"
 
 #include "app_observer.hpp"
 #include <cmath>
@@ -17,6 +18,7 @@ namespace bden::gamelayer
     {
         using component_list = snek::component_list<components::SquareComponent,
                                                     components::RigidBodyComponent,
+                                                    components::HealthComponent,
                                                     components::CircleComponent>;
 
         using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
@@ -42,6 +44,18 @@ namespace bden::gamelayer
             camera.rotation = 0.0f;
             camera.zoom = 1.0f;
         };
+        void system_updateables_health()
+        {
+            static const auto health_bottom_space = 50;
+            auto updateables = world.view<SquareComponent, RigidBodyComponent, HealthComponent>();
+            updateables.for_each([this](WorldType::entity_type e, const SquareComponent &sqc, const RigidBodyComponent &rbc, HealthComponent &hc)
+                                 {
+                                    hc.health_bar.x = rbc.transform.translation.x - (sqc.rect.width / 2);
+                                    hc.health_bar.y = rbc.transform.translation.y - (sqc.rect.height / 2) - health_bottom_space;
+                if(hc.hit_points <= 0) {
+                        this->world.kill(e);
+                }; });
+        }
 
         WorldType::entity_type spawn_player(float w, float h, float x, float y, Color player_color, Color glow_color)
         {
@@ -53,6 +67,10 @@ namespace bden::gamelayer
             player_transform.translation.y = y;
 
             const auto c = world.bind<CircleComponent>(p, square.rect.width, glow_color);
+            Vector2 health_bar_pos(player_transform.translation.x, player_transform.translation.y - c.radius);
+            Vector2 health_bar_size(w, 15.f);
+            Rectangle health_bar_rect(health_bar_pos.x, health_bar_pos.y, health_bar_size.x, health_bar_size.y);
+            world.bind<HealthComponent>(p, 100, health_bar_rect);
             world.bind<RigidBodyComponent>(p, player_transform, Vector2(0, 0), c.radius);
 
             return p;
@@ -113,10 +131,10 @@ namespace bden::gamelayer
             auto &tc = world.get<RigidBodyComponent>(player).transform;
             auto &sc = world.get<SquareComponent>(player);
             auto &ang = tc.rotation.x;
-            const Vector2 mouse_pos = GetMousePosition();
-            const Vector2 screen_mouse = GetScreenToWorld2D(mouse_pos, camera);
-            const float x = screen_mouse.x - tc.translation.x;
-            const float y = screen_mouse.y - tc.translation.y;
+            const Vector2 abs_mouse_pos = GetMousePosition();
+            const Vector2 rel_screen_mouse = GetScreenToWorld2D(abs_mouse_pos, camera);
+            const float x = rel_screen_mouse.x - tc.translation.x;
+            const float y = rel_screen_mouse.y - tc.translation.y;
 
             float rad = atan2(x, y);
             float deg = (rad * 180.0) / PI;
@@ -170,9 +188,10 @@ namespace bden::gamelayer
             system_updateables_position();
             system_updateables_collider();
             system_updateables_camera();
+            system_updateables_health();
         };
 
-        void system_drawables()
+        void system_drawables_shapes()
         {
             auto drawable_entities = world.view<SquareComponent, CircleComponent>();
             drawable_entities.for_each([this](SquareComponent &c, CircleComponent &cc)
@@ -180,6 +199,22 @@ namespace bden::gamelayer
                                    // DrawRectangle(c.x, c.y, c.width, c.height, c.color);
                                    DrawCircleGradient(c.rect.x, c.rect.y, cc.radius, WHITE, cc.color);
                                    DrawRectanglePro({c.rect.x, c.rect.y, c.rect.width, c.rect.height}, {c.rect.width / 2, c.rect.height / 2}, c.ang, c.color); });
+        };
+
+        void system_drawables_health()
+        {
+            auto drawable_entities = world.view<HealthComponent>();
+            drawable_entities.for_each([](const HealthComponent &hc)
+                                       {
+                                         
+                                        DrawRectangleLines(hc.health_bar.x, hc.health_bar.y, hc.health_bar.width + 1, hc.health_bar.height + 1, BEIGE);
+                                        DrawRectangleRec(hc.health_bar, GREEN); });
+        };
+
+        void system_drawables()
+        {
+            system_drawables_shapes();
+            system_drawables_health();
         };
 
         void update_app_listener(int w, int h) override

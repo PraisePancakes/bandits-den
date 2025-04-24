@@ -238,6 +238,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/app_observer.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/application.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/circle.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/health.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/rigidbody.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/square.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp
@@ -720,5 +721,7 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/app_observer.hpp:
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/application.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/circle.hpp:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/health.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp:

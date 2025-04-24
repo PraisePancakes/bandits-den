@@ -217,6 +217,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/square.hpp \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/rigidbody.hpp \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/circle.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/health.hpp \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/app_observer.hpp \
  C:/mingw64/include/c++/13.2.0/list \
  C:/mingw64/include/c++/13.2.0/bits/stl_list.h \
