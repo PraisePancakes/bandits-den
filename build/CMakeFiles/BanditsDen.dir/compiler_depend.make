@@ -17,6 +17,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/traits/snek_traits.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_descriptor.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_list.hpp \
+  C:/mingw64/include/c++/13.2.0/algorithm \
   C:/mingw64/include/c++/13.2.0/array \
   C:/mingw64/include/c++/13.2.0/backward/auto_ptr.h \
   C:/mingw64/include/c++/13.2.0/backward/binders.h \
@@ -73,6 +74,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/include/c++/13.2.0/bits/predefined_ops.h \
   C:/mingw64/include/c++/13.2.0/bits/ptr_traits.h \
   C:/mingw64/include/c++/13.2.0/bits/range_access.h \
+  C:/mingw64/include/c++/13.2.0/bits/ranges_algo.h \
   C:/mingw64/include/c++/13.2.0/bits/ranges_algobase.h \
   C:/mingw64/include/c++/13.2.0/bits/ranges_base.h \
   C:/mingw64/include/c++/13.2.0/bits/ranges_cmp.h \
@@ -152,6 +154,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/mingw64/include/c++/13.2.0/numbers \
   C:/mingw64/include/c++/13.2.0/ostream \
   C:/mingw64/include/c++/13.2.0/pstl/execution_defs.h \
+  C:/mingw64/include/c++/13.2.0/pstl/glue_algorithm_defs.h \
   C:/mingw64/include/c++/13.2.0/pstl/glue_memory_defs.h \
   C:/mingw64/include/c++/13.2.0/pstl/pstl_config.h \
   C:/mingw64/include/c++/13.2.0/queue \
@@ -253,8 +256,6 @@ C:/mingw64/x86_64-w64-mingw32/include/ctype.h:
 
 _deps/raylib-src/src/rlgl.h:
 
-C:/mingw64/include/c++/13.2.0/bits/nested_exception.h:
-
 C:/mingw64/include/c++/13.2.0/bits/atomic_wait.h:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/main.cpp:
@@ -314,6 +315,10 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ut
 C:/mingw64/include/c++/13.2.0/bits/align.h:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/utils/type_list.hpp:
+
+C:/mingw64/include/c++/13.2.0/ios:
+
+C:/mingw64/include/c++/13.2.0/algorithm:
 
 C:/mingw64/include/c++/13.2.0/tr1/poly_hermite.tcc:
 
@@ -423,6 +428,8 @@ C:/mingw64/include/c++/13.2.0/bits/shared_ptr_atomic.h:
 
 C:/mingw64/include/c++/13.2.0/bits/memory_resource.h:
 
+C:/mingw64/include/c++/13.2.0/bits/nested_exception.h:
+
 C:/mingw64/include/c++/13.2.0/ext/atomicity.h:
 
 C:/mingw64/include/c++/13.2.0/bits/new_allocator.h:
@@ -442,6 +449,8 @@ C:/mingw64/include/c++/13.2.0/bits/predefined_ops.h:
 C:/mingw64/include/c++/13.2.0/bits/ptr_traits.h:
 
 C:/mingw64/include/c++/13.2.0/bits/range_access.h:
+
+C:/mingw64/include/c++/13.2.0/bits/ranges_algo.h:
 
 C:/mingw64/include/c++/13.2.0/bits/ranges_base.h:
 
@@ -569,8 +578,6 @@ C:/mingw64/include/c++/13.2.0/functional:
 
 C:/mingw64/include/c++/13.2.0/initializer_list:
 
-C:/mingw64/include/c++/13.2.0/ios:
-
 C:/mingw64/include/c++/13.2.0/iosfwd:
 
 C:/mingw64/include/c++/13.2.0/iostream:
@@ -590,6 +597,8 @@ C:/mingw64/include/c++/13.2.0/new:
 C:/mingw64/include/c++/13.2.0/numbers:
 
 C:/mingw64/include/c++/13.2.0/pstl/execution_defs.h:
+
+C:/mingw64/include/c++/13.2.0/pstl/glue_algorithm_defs.h:
 
 C:/mingw64/include/c++/13.2.0/pstl/glue_memory_defs.h:
 

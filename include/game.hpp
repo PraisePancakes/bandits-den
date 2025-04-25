@@ -9,6 +9,7 @@
 #include "raymath.h"
 #include "app_observer.hpp"
 #include "components/agro.hpp"
+#include "algorithm"
 #include <cmath>
 #include "rlgl.h"
 
@@ -109,8 +110,7 @@ namespace bden::gamelayer
         {
             // update players velocity/movement
             auto &vel = world.get<RigidBodyComponent>(player).velocity;
-            vel.x = 0;
-            vel.y = 0;
+
             // dir
             if (IsKeyDown(KEY_W))
             {
@@ -172,9 +172,10 @@ namespace bden::gamelayer
                                         bool collided = dist < prb.collision_radius + ac.aggro_radius;
                                        
                                     if(collided) {
-                                        auto player_screen_pos = Vector2(prb.transform.translation.x, prb.transform.translation.y);
-                                        float x =  player_screen_pos.x - rb.transform.translation.x ;
-                                        float y = player_screen_pos.y - rb.transform.translation.y ;
+                                        //rotate
+                                        auto player_pos = Vector2(prb.transform.translation.x, prb.transform.translation.y);
+                                        float x =  player_pos.x - rb.transform.translation.x ;
+                                        float y = player_pos.y - rb.transform.translation.y ;
                                         auto &ang = rb.transform.rotation.x;
                                         float rad = atan2(x, y);
                                         float deg = (rad * 180.0) / PI;
@@ -183,6 +184,32 @@ namespace bden::gamelayer
                                         rlPushMatrix();
                                         rlRotatef(ang, x, y, 0);
                                         rlPopMatrix();
+
+                                        //move
+                                    
+                                       if(x > 0) {
+                                            rb.velocity.x = 1;
+                                       } else if(x < 0) {
+                                        rb.velocity.x = -1;
+                                       }
+                                       if(y > 0) {
+                                        rb.velocity.y = 1;
+                                       } else {
+                                        rb.velocity.y = -1;
+                                       }
+
+                                       auto mag = std::sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y  * rb.velocity.y );
+
+                                       if (mag != 0.0)
+                                       {
+                                        rb.velocity.x = (rb.velocity.x / mag);
+                                        rb.velocity.y = (rb.velocity.y / mag);
+                                       }
+                                    rb.velocity.x *= PLAYER_SPEED;
+                                    rb.velocity.y *= PLAYER_SPEED;
+
+
+
 
                                         
                                     } });
@@ -197,8 +224,12 @@ namespace bden::gamelayer
             auto updateables = world.view<SquareComponent, RigidBodyComponent>();
             updateables.for_each([&dt](SquareComponent &s, RigidBodyComponent &t)
                                  {
-                t.transform.translation.x += (t.velocity.x * dt);
-                t.transform.translation.y += (t.velocity.y * dt);
+                                    float oldxvel = t.velocity.x;
+                                    float oldyvel = t.velocity.y;
+                                    t.velocity.x = 0;
+                                    t.velocity.y = 0;
+                t.transform.translation.x += (oldxvel * dt);
+                t.transform.translation.y += (oldyvel * dt);
                 s.ang = t.transform.rotation.x;
                 s.rect.x = t.transform.translation.x;
                 s.rect.y = t.transform.translation.y; });

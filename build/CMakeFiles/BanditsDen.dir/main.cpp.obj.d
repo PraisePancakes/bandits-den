@@ -239,4 +239,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: \
  C:/mingw64/include/c++/13.2.0/bits/stl_list.h \
  C:/mingw64/include/c++/13.2.0/bits/list.tcc \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/agro.hpp \
+ C:/mingw64/include/c++/13.2.0/algorithm \
+ C:/mingw64/include/c++/13.2.0/bits/ranges_algo.h \
+ C:/mingw64/include/c++/13.2.0/pstl/glue_algorithm_defs.h \
  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/build/_deps/raylib-src/src/rlgl.h
