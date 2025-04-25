@@ -8,6 +8,7 @@
 #include "components/health.hpp"
 #include "raymath.h"
 #include "app_observer.hpp"
+#include "components/agro.hpp"
 #include <cmath>
 #include "rlgl.h"
 
@@ -19,7 +20,14 @@ namespace bden::gamelayer
         using component_list = snek::component_list<components::SquareComponent,
                                                     components::RigidBodyComponent,
                                                     components::HealthComponent,
-                                                    components::CircleComponent>;
+                                                    components::CircleComponent,
+                                                    components::AggroComponent>;
+
+        enum class TagEnum : u64
+        {
+            TAG_PLAYER,
+            TAG_ENEMIES,
+        } Tags;
 
         using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
     }
@@ -56,6 +64,8 @@ namespace bden::gamelayer
                                  {
                                     hc.health_bar.x = rbc.transform.translation.x - (sqc.rect.width / 2);
                                     hc.health_bar.y = rbc.transform.translation.y - (sqc.rect.height / 2) - health_bottom_space;
+                                    hc.health_bar.width -= (int)hc.health_bar.width % (int)hc.hit_points ;
+                                   
                 if(hc.hit_points <= 0) {
                         this->world.kill(e);
                 }; });
@@ -63,7 +73,7 @@ namespace bden::gamelayer
 
         WorldType::entity_type spawn_player(float w, float h, float x, float y, Color player_color, Color glow_color)
         {
-            auto p = world.spawn();
+            auto p = world.spawn((WorldType::entity_type)world::TagEnum::TAG_PLAYER);
             SquareComponent square{w, h, x, y, player_color, 0.0};
             world.bind<SquareComponent>(p, square);
             Transform player_transform{};
@@ -82,12 +92,13 @@ namespace bden::gamelayer
 
         WorldType::entity_type spawn_test(float w, float h, float x, float y, Color test_color, Color glow_color)
         {
-            auto test = world.spawn();
+            auto test = world.spawn((WorldType::entity_type)world::TagEnum::TAG_ENEMIES);
             SquareComponent square{w, h, x, y, test_color, 0.0};
             world.bind<SquareComponent>(test, square);
             Transform test_transform{};
             test_transform.translation.x = x;
             test_transform.translation.y = y;
+            world.bind<AggroComponent>(test, w * 2, false);
 
             auto c = world.bind<CircleComponent>(test, square.rect.width, glow_color);
             world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius);
@@ -148,13 +159,39 @@ namespace bden::gamelayer
             rlRotatef(ang, x, y, 0);
             rlPopMatrix();
         };
+        void system_updateables_aggro()
+        {
+            auto updateables = world.view<RigidBodyComponent, AggroComponent>();
+            auto prb = world.get<RigidBodyComponent>(player);
 
+            updateables.for_each([&prb, this](RigidBodyComponent &rb, AggroComponent &ac)
+                                 {
+                                        float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
+                                        float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
+                                        float dist = std::sqrt(xsquared + ysquared);
+                                        bool collided = dist < prb.collision_radius + ac.aggro_radius;
+                                       
+                                    if(collided) {
+                                        auto player_screen_pos = Vector2(prb.transform.translation.x, prb.transform.translation.y);
+                                        float x =  player_screen_pos.x - rb.transform.translation.x ;
+                                        float y = player_screen_pos.y - rb.transform.translation.y ;
+                                        auto &ang = rb.transform.rotation.x;
+                                        float rad = atan2(x, y);
+                                        float deg = (rad * 180.0) / PI;
+                                       
+                                        ang = -deg;
+                                        rlPushMatrix();
+                                        rlRotatef(ang, x, y, 0);
+                                        rlPopMatrix();
+
+                                        
+                                    } });
+        };
         void system_updateables_input()
         {
             system_updateables_input_player_keys();
             system_updateables_input_player_mouse();
         };
-
         void system_updateables_position(float dt)
         {
             auto updateables = world.view<SquareComponent, RigidBodyComponent>();
@@ -182,6 +219,7 @@ namespace bden::gamelayer
                                         if(collided) {
                                             prb.transform.translation.x += (-prb.velocity.x * dt);
                                             prb.transform.translation.y += (-prb.velocity.y * dt);
+                                            world.get<HealthComponent>(player).hit_points--;
                                         }
                                     } });
         };
@@ -193,26 +231,37 @@ namespace bden::gamelayer
             system_updateables_collider(dt);
             system_updateables_camera(dt);
             system_updateables_health();
+            system_updateables_aggro();
         };
 
         void system_drawables_shapes()
         {
             auto drawable_entities = world.view<SquareComponent, CircleComponent>();
-            drawable_entities.for_each([this](SquareComponent &c, CircleComponent &cc)
+            drawable_entities.for_each([this](SquareComponent &sc, CircleComponent &cc)
                                        {
                                    // DrawRectangle(c.x, c.y, c.width, c.height, c.color);
-                                   DrawCircleGradient(c.rect.x, c.rect.y, cc.radius, WHITE, cc.color);
-                                   DrawRectanglePro({c.rect.x, c.rect.y, c.rect.width, c.rect.height}, {c.rect.width / 2, c.rect.height / 2}, c.ang, c.color); });
+                                   DrawCircleGradient(sc.rect.x, sc.rect.y, cc.radius, WHITE, cc.color);
+                                   DrawRectanglePro({sc.rect.x, sc.rect.y, sc.rect.width, sc.rect.height}, {sc.rect.width / 2, sc.rect.height / 2}, sc.ang, sc.color); });
+        };
+
+        Color get_health_color(float hp)
+        {
+            if (hp >= 50 && hp < 75)
+                return YELLOW;
+            else if (hp < 50 && hp >= 0)
+                return RED;
+            return GREEN;
         };
 
         void system_drawables_health()
         {
             auto drawable_entities = world.view<HealthComponent>();
-            drawable_entities.for_each([](const HealthComponent &hc)
+            drawable_entities.for_each([this](const HealthComponent &hc)
                                        {
                                          
                                         DrawRectangleLines(hc.health_bar.x, hc.health_bar.y, hc.health_bar.width + 1, hc.health_bar.height + 1, BEIGE);
-                                        DrawRectangleRec(hc.health_bar, GREEN); });
+                                        
+                                        DrawRectangleRec(hc.health_bar, get_health_color(hc.hit_points)); });
         };
 
         void system_drawables()
@@ -252,6 +301,6 @@ namespace bden::gamelayer
             update(dt);
             render();
         };
-        ~game() {};
+        ~game() = default;
     };
 };

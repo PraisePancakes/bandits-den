@@ -29,6 +29,7 @@ namespace snek
         std::queue<entity_type> entity_store;
         std::vector<entity_type, allocator_type> entities;
         std::vector<snek::storage::polymorphic_sparse_set *> _component_pools;
+        std::unordered_map<entity_type, std::vector<entity_type>> _tagged_entities;
 
         allocator_type alloc;
 
@@ -57,9 +58,35 @@ namespace snek
             }
 
             entities.push_back(id);
+            _tagged_entities[-1].push_back(id);
 
             return id;
         };
+
+        [[nodiscard]] entity_type spawn(entity_type tag)
+        {
+            entity_type id = world_policy::generate_entity_id();
+            bool overflowed = (id >= snek::traits::tombstone_t<entity_type>::null_v);
+
+            if (overflowed) [[unlikely]]
+            {
+                // first check if the store is not empty
+                if (!entity_store.empty())
+                {
+                    // retrieve the front entity
+                    id = entity_store.front();
+                    // pop strictly the front element
+                    entity_store.pop();
+                };
+                // if its empty then no choice but to continue the ring of id's so back to 0 we go
+            }
+
+            entities.push_back(id);
+            _tagged_entities[tag].push_back(id);
+
+            return id;
+        };
+
         [[nodiscard]] bool contains(entity_type id)
         {
             return id < entities.size() &&
@@ -103,6 +130,11 @@ namespace snek
             return (has<T>(e) && has<U>(e) && (has<Args>(e) && ...));
         }
 
+        std::vector<entity_type> get_tagged_entities(entity_type tag) const
+        {
+            return this->_tagged_entities.at(tag);
+        }
+
         template <typename C, typename... Args>
         C &bind(entity_type e, Args &&...args)
         {
@@ -125,6 +157,7 @@ namespace snek
             }
             ss->insert(e, *component);
             _component_pools[c_id] = ss;
+
             return *component;
         }
 
