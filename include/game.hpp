@@ -10,6 +10,7 @@
 #include "app_observer.hpp"
 #include "components/agro.hpp"
 #include "algorithm"
+#include <string>
 #include <cmath>
 #include "rlgl.h"
 
@@ -207,11 +208,6 @@ namespace bden::gamelayer
                                        }
                                     rb.velocity.x *= PLAYER_SPEED;
                                     rb.velocity.y *= PLAYER_SPEED;
-
-
-
-
-                                        
                                     } });
         };
         void system_updateables_input()
@@ -292,6 +288,7 @@ namespace bden::gamelayer
                                          
                                         DrawRectangleLines(hc.health_bar.x, hc.health_bar.y, hc.health_bar.width + 1, hc.health_bar.height + 1, BEIGE);
                                         
+                                        DrawText(TextFormat("%d", hc.hit_points), hc.health_bar.x + hc.health_bar.width, hc.health_bar.y, 12, WHITE);
                                         DrawRectangleRec(hc.health_bar, get_health_color(hc.hit_points)); });
         };
 
