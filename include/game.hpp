@@ -111,7 +111,8 @@ namespace bden::gamelayer
         {
             // update players velocity/movement
             auto &vel = world.get<RigidBodyComponent>(player).velocity;
-
+            vel.x = 0;
+            vel.y = 0;
             // dir
             if (IsKeyDown(KEY_W))
             {
@@ -239,12 +240,10 @@ namespace bden::gamelayer
             auto updateables = world.view<SquareComponent, RigidBodyComponent>();
             updateables.for_each([&dt](SquareComponent &s, RigidBodyComponent &t)
                                  {
-                                    float oldxvel = t.velocity.x;
-                                    float oldyvel = t.velocity.y;
-                                    t.velocity.x = 0;
-                                    t.velocity.y = 0;
-                t.transform.translation.x += (oldxvel * dt);
-                t.transform.translation.y += (oldyvel * dt);
+                                    float xvel = t.velocity.x;
+                                    float yvel = t.velocity.y;
+                t.transform.translation.x += (xvel * dt);
+                t.transform.translation.y += (yvel * dt);
                 s.ang = t.transform.rotation.x;
                 s.rect.x = t.transform.translation.x;
                 s.rect.y = t.transform.translation.y; });
@@ -267,7 +266,7 @@ namespace bden::gamelayer
                                             prb.transform.translation.y += (-prb.velocity.y * dt);
                                             rb.transform.translation.x += (-rb.velocity.x * dt);
                                             rb.transform.translation.y += (-rb.velocity.y * dt);
-                                            world.get<HealthComponent>(player).hit_points--;
+                                           //test :: world.get<HealthComponent>(player).hit_points--;
                                         }
                                     } });
         };
@@ -279,7 +278,7 @@ namespace bden::gamelayer
             system_updateables_collider(dt);
             system_updateables_camera(dt);
             system_updateables_health();
-            system_updateables_aggro();
+            // system_updateables_aggro();
         };
 
         void system_drawables_shapes()
