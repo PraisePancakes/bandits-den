@@ -172,25 +172,9 @@ namespace bden::gamelayer
                                         float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
                                         float dist = std::sqrt(xsquared + ysquared);
                                         bool aggroed = dist < prb.collision_radius + ac.aggro_radius;
-                                       
+                                        rb.velocity.x = 0;
+                                        rb.velocity.y = 0;
                                     if(aggroed) {
- 
-                                        /*
-                                               auto r = rb.collision_radius;
-                                        float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
-                                        float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
-                                        float dist = std::sqrt(xsquared + ysquared);
-                                        bool collided = dist < prb.collision_radius + r;
-                                        if(collided) {
-                                            prb.transform.translation.x += (-prb.velocity.x * dt);
-                                            prb.transform.translation.y += (-prb.velocity.y * dt);
-                                            rb.transform.translation.x += (-rb.velocity.x * dt);
-                                            rb.transform.translation.y += (-rb.velocity.y * dt);
-                                            world.get<HealthComponent>(player).hit_points--;
-                                        }
-                                        */
-                                        //rotate
-                                      
                                         auto player_pos = Vector2(prb.transform.translation.x, prb.transform.translation.y);
                                         float x =  player_pos.x - rb.transform.translation.x ;
                                         float y = player_pos.y - rb.transform.translation.y ;
@@ -224,8 +208,8 @@ namespace bden::gamelayer
                                             rb.velocity.x = (rb.velocity.x / mag);
                                             rb.velocity.y = (rb.velocity.y / mag);
                                            }
-                                        rb.velocity.x *= PLAYER_SPEED;
-                                        rb.velocity.y *= PLAYER_SPEED;
+                                        rb.velocity.x *= PLAYER_SPEED / 2;
+                                        rb.velocity.y *= PLAYER_SPEED / 2;
                                         }
                                       
                                     } });
@@ -278,7 +262,7 @@ namespace bden::gamelayer
             system_updateables_collider(dt);
             system_updateables_camera(dt);
             system_updateables_health();
-            // system_updateables_aggro();
+            system_updateables_aggro();
         };
 
         void system_drawables_shapes()
