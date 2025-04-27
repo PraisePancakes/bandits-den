@@ -188,17 +188,9 @@ namespace bden::gamelayer
                                         rlPopMatrix();
 
                                         //move
-                                    
-                                            if(x > 0) {
-                                                rb.velocity.x += 1;
-                                           } else if(x < 0) {
-                                            rb.velocity.x -= 1;
-                                           }
-                                           if(y > 0) {
-                                            rb.velocity.y += 1;
-                                           } else {
-                                            rb.velocity.y -= 1;
-                                           }
+                                            rb.velocity.x += (x > 0 ? 1 : -1);
+                                            rb.velocity.y += (y > 0 ? 1 : -1);
+                                         
     
                                            auto mag = std::sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y  * rb.velocity.y );
     
