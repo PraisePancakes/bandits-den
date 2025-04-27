@@ -188,8 +188,7 @@ namespace bden::gamelayer
                                         rlPopMatrix();
 
                                         //move
-                                        bool collided = dist < prb.collision_radius + rb.collision_radius;
-                                        if(!collided) {
+                                    
                                             if(x > 0) {
                                                 rb.velocity.x += 1;
                                            } else if(x < 0) {
@@ -210,7 +209,7 @@ namespace bden::gamelayer
                                            }
                                         rb.velocity.x *= PLAYER_SPEED / 2;
                                         rb.velocity.y *= PLAYER_SPEED / 2;
-                                        }
+                                     
                                       
                                     } });
         };
