@@ -170,10 +170,26 @@ namespace bden::gamelayer
                                         float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
                                         float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
                                         float dist = std::sqrt(xsquared + ysquared);
-                                        bool collided = dist < prb.collision_radius + ac.aggro_radius;
+                                        bool aggroed = dist < prb.collision_radius + ac.aggro_radius;
                                        
-                                    if(collided) {
+                                    if(aggroed) {
+ 
+                                        /*
+                                               auto r = rb.collision_radius;
+                                        float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
+                                        float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
+                                        float dist = std::sqrt(xsquared + ysquared);
+                                        bool collided = dist < prb.collision_radius + r;
+                                        if(collided) {
+                                            prb.transform.translation.x += (-prb.velocity.x * dt);
+                                            prb.transform.translation.y += (-prb.velocity.y * dt);
+                                            rb.transform.translation.x += (-rb.velocity.x * dt);
+                                            rb.transform.translation.y += (-rb.velocity.y * dt);
+                                            world.get<HealthComponent>(player).hit_points--;
+                                        }
+                                        */
                                         //rotate
+                                      
                                         auto player_pos = Vector2(prb.transform.translation.x, prb.transform.translation.y);
                                         float x =  player_pos.x - rb.transform.translation.x ;
                                         float y = player_pos.y - rb.transform.translation.y ;
@@ -187,27 +203,30 @@ namespace bden::gamelayer
                                         rlPopMatrix();
 
                                         //move
-                                    
-                                       if(x > 0) {
-                                            rb.velocity.x = 1;
-                                       } else if(x < 0) {
-                                        rb.velocity.x = -1;
-                                       }
-                                       if(y > 0) {
-                                        rb.velocity.y = 1;
-                                       } else {
-                                        rb.velocity.y = -1;
-                                       }
-
-                                       auto mag = std::sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y  * rb.velocity.y );
-
-                                       if (mag != 0.0)
-                                       {
-                                        rb.velocity.x = (rb.velocity.x / mag);
-                                        rb.velocity.y = (rb.velocity.y / mag);
-                                       }
-                                    rb.velocity.x *= PLAYER_SPEED;
-                                    rb.velocity.y *= PLAYER_SPEED;
+                                        bool collided = dist < prb.collision_radius + rb.collision_radius;
+                                        if(!collided) {
+                                            if(x > 0) {
+                                                rb.velocity.x += 1;
+                                           } else if(x < 0) {
+                                            rb.velocity.x -= 1;
+                                           }
+                                           if(y > 0) {
+                                            rb.velocity.y += 1;
+                                           } else {
+                                            rb.velocity.y -= 1;
+                                           }
+    
+                                           auto mag = std::sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y  * rb.velocity.y );
+    
+                                           if (mag != 0.0)
+                                           {
+                                            rb.velocity.x = (rb.velocity.x / mag);
+                                            rb.velocity.y = (rb.velocity.y / mag);
+                                           }
+                                        rb.velocity.x *= PLAYER_SPEED;
+                                        rb.velocity.y *= PLAYER_SPEED;
+                                        }
+                                      
                                     } });
         };
         void system_updateables_input()
@@ -246,6 +265,8 @@ namespace bden::gamelayer
                                         if(collided) {
                                             prb.transform.translation.x += (-prb.velocity.x * dt);
                                             prb.transform.translation.y += (-prb.velocity.y * dt);
+                                            rb.transform.translation.x += (-rb.velocity.x * dt);
+                                            rb.transform.translation.y += (-rb.velocity.y * dt);
                                             world.get<HealthComponent>(player).hit_points--;
                                         }
                                     } });
@@ -285,9 +306,7 @@ namespace bden::gamelayer
             auto drawable_entities = world.view<HealthComponent>();
             drawable_entities.for_each([this](const HealthComponent &hc)
                                        {
-                                         
                                         DrawRectangleLines(hc.health_bar.x, hc.health_bar.y, hc.health_bar.width + 1, hc.health_bar.height + 1, BEIGE);
-                                        
                                         DrawText(TextFormat("%d", hc.hit_points), hc.health_bar.x + hc.health_bar.width, hc.health_bar.y, 12, WHITE);
                                         DrawRectangleRec(hc.health_bar, get_health_color(hc.hit_points)); });
         };
