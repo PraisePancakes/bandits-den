@@ -188,10 +188,8 @@ namespace bden::gamelayer
                                         rlPopMatrix();
 
                                         //move
-                                            rb.velocity.x += (x > 0 ? 1 : -1);
-                                            rb.velocity.y += (y > 0 ? 1 : -1);
-                                         
-    
+                                           rb.velocity.x += (x > 0 ? 1 : -1);
+                                           rb.velocity.y += (y > 0 ? 1 : -1);
                                            auto mag = std::sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y  * rb.velocity.y );
     
                                            if (mag != 0.0)
@@ -241,7 +239,7 @@ namespace bden::gamelayer
                                             prb.transform.translation.y += (-prb.velocity.y * dt);
                                             rb.transform.translation.x += (-rb.velocity.x * dt);
                                             rb.transform.translation.y += (-rb.velocity.y * dt);
-                                           //test :: world.get<HealthComponent>(player).hit_points--;
+                                           
                                         }
                                     } });
         };
@@ -281,7 +279,7 @@ namespace bden::gamelayer
             drawable_entities.for_each([this](const HealthComponent &hc)
                                        {
                                         DrawRectangleLines(hc.health_bar.x, hc.health_bar.y, hc.health_bar.width + 1, hc.health_bar.height + 1, BEIGE);
-                                        DrawText(TextFormat("%d", hc.hit_points), hc.health_bar.x + hc.health_bar.width, hc.health_bar.y, 12, WHITE);
+                                        DrawText(TextFormat("%d", hc.hit_points), hc.health_bar.x + hc.health_bar.width + 5, hc.health_bar.y, 20, WHITE);
                                         DrawRectangleRec(hc.health_bar, get_health_color(hc.hit_points)); });
         };
 
