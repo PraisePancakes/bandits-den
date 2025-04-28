@@ -44,12 +44,14 @@ namespace bden::gamelayer
         WorldType world;
         WorldType::entity_type player;
         WorldType::entity_type test;
+        std::vector<WorldType::entity_type> to_delete;
         Camera2D camera{};
 
         void system_updateables_camera(float dt)
         {
             const float LERP_FACTOR = 5;
-            const auto &ptc = world.get<RigidBodyComponent>(player).transform;
+            auto &rb = world.get_ref<RigidBodyComponent>(player);
+            const auto &ptc = rb.transform;
             auto lerpx = Lerp(camera.target.x, ptc.translation.x, dt * LERP_FACTOR);
             auto lerpy = Lerp(camera.target.y, ptc.translation.y, dt * LERP_FACTOR);
 
@@ -58,6 +60,16 @@ namespace bden::gamelayer
             camera.rotation = 0.0f;
             camera.zoom = 1.0f;
         };
+
+        void system_updateables_delete_entities()
+        {
+            for (auto &e : to_delete)
+            {
+                world.kill(e);
+            }
+            to_delete.clear();
+        }
+
         void system_updateables_health()
         {
             static const auto health_bottom_space = 50;
@@ -68,8 +80,9 @@ namespace bden::gamelayer
                                     hc.health_bar.y = rbc.transform.translation.y - (sqc.rect.height / 2) - health_bottom_space;
                                     hc.health_bar.width -= (int)hc.health_bar.width % (int)hc.hit_points ;
                                    
-                if(hc.hit_points <= 0) {
-                        this->world.kill(e);
+                if(hc.hit_points <= 1) {
+                 
+                       this->to_delete.push_back(e);
                 }; });
         }
 
@@ -110,7 +123,9 @@ namespace bden::gamelayer
         void system_updateables_input_player_keys()
         {
             // update players velocity/movement
-            auto &vel = world.get<RigidBodyComponent>(player).velocity;
+            auto &rb = world.get_ref<RigidBodyComponent>(player);
+
+            auto &vel = rb.velocity;
             vel.x = 0;
             vel.y = 0;
             // dir
@@ -145,8 +160,10 @@ namespace bden::gamelayer
 
         void system_updateables_input_player_mouse()
         {
-            auto &tc = world.get<RigidBodyComponent>(player).transform;
-            auto &sc = world.get<SquareComponent>(player);
+            auto &rb = world.get_ref<RigidBodyComponent>(player);
+            auto &sc = world.get_ref<SquareComponent>(player);
+
+            auto &tc = rb.transform;
             auto &ang = tc.rotation.x;
             const Vector2 abs_mouse_pos = GetMousePosition();
             const Vector2 rel_screen_mouse = GetScreenToWorld2D(abs_mouse_pos, camera);
@@ -164,10 +181,11 @@ namespace bden::gamelayer
         void system_updateables_aggro()
         {
             auto updateables = world.view<RigidBodyComponent, AggroComponent>();
-            auto prb = world.get<RigidBodyComponent>(player);
+            auto &prb = world.get_ref<RigidBodyComponent>(player);
 
             updateables.for_each([&prb, this](RigidBodyComponent &rb, AggroComponent &ac)
                                  {
+                                
                                         float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
                                         float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
                                         float dist = std::sqrt(xsquared + ysquared);
@@ -224,7 +242,8 @@ namespace bden::gamelayer
 
         void system_updateables_collider(float dt)
         {
-            auto &prb = world.get<RigidBodyComponent>(player);
+            auto &prb = world.get_ref<RigidBodyComponent>(player);
+
             auto collideables = world.view<RigidBodyComponent>();
             collideables.for_each([this, &prb, &dt](u64 id, RigidBodyComponent &rb)
                                   {
@@ -239,27 +258,34 @@ namespace bden::gamelayer
                                             prb.transform.translation.y += (-prb.velocity.y * dt);
                                             rb.transform.translation.x += (-rb.velocity.x * dt);
                                             rb.transform.translation.y += (-rb.velocity.y * dt);
-                                           
+                                      
+                                           world.get_ref<HealthComponent>(player).hit_points--;
                                         }
                                     } });
         };
 
         void system_updateables(float dt)
         {
+            if (!world.contains(player))
+                return;
+
             system_updateables_input();
             system_updateables_position(dt);
             system_updateables_collider(dt);
             system_updateables_camera(dt);
             system_updateables_health();
             system_updateables_aggro();
+            system_updateables_delete_entities();
         };
 
         void system_drawables_shapes()
         {
             auto drawable_entities = world.view<SquareComponent, CircleComponent>();
-            drawable_entities.for_each([this](SquareComponent &sc, CircleComponent &cc)
+            drawable_entities.for_each([this](WorldType::entity_type e, SquareComponent &sc, CircleComponent &cc)
                                        {
+                                      
                                    // DrawRectangle(c.x, c.y, c.width, c.height, c.color);
+                                   if(!world.contains(e)) return;
                                    DrawCircleGradient(sc.rect.x, sc.rect.y, cc.radius, WHITE, cc.color);
                                    DrawRectanglePro({sc.rect.x, sc.rect.y, sc.rect.width, sc.rect.height}, {sc.rect.width / 2, sc.rect.height / 2}, sc.ang, sc.color); });
         };
@@ -276,8 +302,9 @@ namespace bden::gamelayer
         void system_drawables_health()
         {
             auto drawable_entities = world.view<HealthComponent>();
-            drawable_entities.for_each([this](const HealthComponent &hc)
+            drawable_entities.for_each([this](WorldType::entity_type e, const HealthComponent &hc)
                                        {
+                                        if (!world.contains(e)) return;
                                         DrawRectangleLines(hc.health_bar.x, hc.health_bar.y, hc.health_bar.width + 1, hc.health_bar.height + 1, BEIGE);
                                         DrawText(TextFormat("%d", hc.hit_points), hc.health_bar.x + hc.health_bar.width + 5, hc.health_bar.y, 20, WHITE);
                                         DrawRectangleRec(hc.health_bar, get_health_color(hc.hit_points)); });
@@ -302,11 +329,13 @@ namespace bden::gamelayer
 
         void update(float dt)
         {
+
             system_updateables(dt);
         };
 
         void render()
         {
+
             BeginDrawing();
             ClearBackground(BLACK);
             BeginMode2D(camera);
@@ -316,8 +345,10 @@ namespace bden::gamelayer
         };
         void loop()
         {
+
             float dt = GetFrameTime();
             update(dt);
+
             render();
         };
         ~game() = default;

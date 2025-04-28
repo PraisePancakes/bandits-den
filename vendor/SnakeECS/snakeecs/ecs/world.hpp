@@ -168,12 +168,21 @@ namespace snek
         }
 
         template <typename C>
-        C &get(entity_type e)
+        C &get_ref(entity_type e)
         {
             SNEK_ASSERT(world_policy::template is_valid_component<C>(), "C must be a registered component. ");
             size_t c_id = world_policy::template get_component_type_id<C>();
             auto ss = static_cast<snek::storage::sparse_set<C> *>(_component_pools[c_id]);
             return ss->get_ref(e);
+        }
+
+        template <typename C>
+        C *get(entity_type e)
+        {
+            SNEK_ASSERT(world_policy::template is_valid_component<C>(), "C must be a registered component. ");
+            size_t c_id = world_policy::template get_component_type_id<C>();
+            auto ss = static_cast<snek::storage::sparse_set<C> *>(_component_pools[c_id]);
+            return ss->get(e);
         }
 
         [[nodiscard]] size_t size() const noexcept
@@ -183,6 +192,9 @@ namespace snek
 
         void kill(entity_type e)
         {
+            if (!contains(e))
+                return;
+
             entity_store.push(e);
             entities[e] = snek::traits::tombstone_t<entity_type>::null_v;
 
