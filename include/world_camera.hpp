@@ -10,16 +10,17 @@ namespace bden::gamelayer
     using namespace internal;
     using namespace components;
 
+    template <typename WorldPolicy>
     class world_camera final
     {
         Camera2D cam{};
         int screen_width = 0;
         int screen_height = 0;
 
-        snek::world<configuration_policy> &world;
+        snek::world<WorldPolicy> &world;
 
     public:
-        world_camera(snek::world<configuration_policy> &w) : world(w) {};
+        world_camera(snek::world<WorldPolicy> &w) : world(w) {};
 
         void update_app_listener(int w, int h)
         {
@@ -27,10 +28,10 @@ namespace bden::gamelayer
             screen_height = h;
         }
 
-        void update(float dt, configuration_policy::entity_type player)
+        void update(float dt, WorldPolicy::entity_type player)
         {
             const float LERP_FACTOR = 5;
-            auto &rb = world.get_ref<RigidBodyComponent>(player);
+            auto &rb = world.template get_ref<RigidBodyComponent>(player);
             const auto &ptc = rb.transform;
             auto lerpx = Lerp(cam.target.x, ptc.translation.x, dt * LERP_FACTOR);
             auto lerpy = Lerp(cam.target.y, ptc.translation.y, dt * LERP_FACTOR);

@@ -25,7 +25,7 @@ namespace bden::gamelayer
         WorldType::entity_type player;
         WorldType::entity_type test;
         std::vector<WorldType::entity_type> to_delete;
-        world_camera world_cam;
+        world_camera<WorldType::world_policy> world_cam;
         int screen_width = 0;
         int screen_height = 0;
 
