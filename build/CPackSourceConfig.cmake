@@ -25,7 +25,7 @@ set(CPACK_IGNORE_FILES "/CVS/;/\\.svn/;/\\.bzr/;/\\.hg/;/\\.git/;\\.swp\$;\\.#;/
 set(CPACK_INNOSETUP_ARCHITECTURE "x64")
 set(CPACK_INSTALLED_DIRECTORIES "C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den;/")
 set(CPACK_INSTALL_CMAKE_PROJECTS "")
-set(CPACK_INSTALL_PREFIX "C:/Program Files (x86)/Project")
+set(CPACK_INSTALL_PREFIX "C:/Program Files (x86)/BanditsDen")
 set(CPACK_MODULE_PATH "C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/build/_deps/raylib-src/cmake")
 set(CPACK_NSIS_DISPLAY_NAME "raylib 5.5.0")
 set(CPACK_NSIS_INSTALLER_ICON_CODE "")
