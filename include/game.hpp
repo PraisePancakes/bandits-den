@@ -1,14 +1,10 @@
 #pragma once
 #include <iostream>
 #include "raylib.h"
-#include "../vendor/SnakeECS/snakeecs/snakeecs.hpp"
-#include "components/square.hpp"
-#include "components/rigidbody.hpp"
-#include "components/circle.hpp"
-#include "components/health.hpp"
+#include "internal.hpp"
 #include "raymath.h"
 #include "app_observer.hpp"
-#include "components/agro.hpp"
+#include "camera.hpp"
 #include "algorithm"
 #include <string>
 #include <cmath>
@@ -17,49 +13,21 @@
 namespace bden::gamelayer
 {
     using namespace components;
-    namespace world
-    {
-        using component_list = snek::component_list<components::SquareComponent,
-                                                    components::RigidBodyComponent,
-                                                    components::HealthComponent,
-                                                    components::CircleComponent,
-                                                    components::AggroComponent>;
+    using namespace internal;
 
-        enum class TagEnum : u64
-        {
-            TAG_PLAYER,
-            TAG_ENEMIES,
-        } Tags;
-
-        using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
-    }
     // TODO create glow effect for entites
 
     class game final : public applicationlayer::application_observer
     {
-        int screen_width = 0;
-        int screen_height = 0;
 
-        using WorldType = snek::world<world::configuration_policy>;
+        using WorldType = snek::world<configuration_policy>;
         WorldType world;
         WorldType::entity_type player;
         WorldType::entity_type test;
         std::vector<WorldType::entity_type> to_delete;
-        Camera2D camera{};
-
-        void system_updateables_camera(float dt)
-        {
-            const float LERP_FACTOR = 5;
-            auto &rb = world.get_ref<RigidBodyComponent>(player);
-            const auto &ptc = rb.transform;
-            auto lerpx = Lerp(camera.target.x, ptc.translation.x, dt * LERP_FACTOR);
-            auto lerpy = Lerp(camera.target.y, ptc.translation.y, dt * LERP_FACTOR);
-
-            camera.target = {lerpx, lerpy};
-            camera.offset = {screen_width / 2.0f, screen_height / 2.0f};
-            camera.rotation = 0.0f;
-            camera.zoom = 1.0f;
-        };
+        camera player_cam;
+        int screen_width = 0;
+        int screen_height = 0;
 
         void system_updateables_delete_entities()
         {
@@ -88,7 +56,7 @@ namespace bden::gamelayer
 
         WorldType::entity_type spawn_player(float w, float h, float x, float y, Color player_color, Color glow_color)
         {
-            auto p = world.spawn((WorldType::entity_type)world::TagEnum::TAG_PLAYER);
+            auto p = world.spawn((WorldType::entity_type)TagEnum::TAG_PLAYER);
             SquareComponent square{w, h, x, y, player_color, 0.0};
             world.bind<SquareComponent>(p, square);
             Transform player_transform{};
@@ -107,7 +75,7 @@ namespace bden::gamelayer
 
         WorldType::entity_type spawn_test(float w, float h, float x, float y, Color test_color, Color glow_color)
         {
-            auto test = world.spawn((WorldType::entity_type)world::TagEnum::TAG_ENEMIES);
+            auto test = world.spawn((WorldType::entity_type)TagEnum::TAG_ENEMIES);
             SquareComponent square{w, h, x, y, test_color, 0.0};
             world.bind<SquareComponent>(test, square);
             Transform test_transform{};
@@ -158,6 +126,13 @@ namespace bden::gamelayer
             vel.y *= PLAYER_SPEED;
         }
 
+        void update_app_listener(int w, int h) override
+        {
+            screen_width = w;
+            screen_height = h;
+            player_cam.update_app_listener(w, h);
+        }
+
         void system_updateables_input_player_mouse()
         {
             auto &rb = world.get_ref<RigidBodyComponent>(player);
@@ -166,7 +141,7 @@ namespace bden::gamelayer
             auto &tc = rb.transform;
             auto &ang = tc.rotation.x;
             const Vector2 abs_mouse_pos = GetMousePosition();
-            const Vector2 rel_screen_mouse = GetScreenToWorld2D(abs_mouse_pos, camera);
+            const Vector2 rel_screen_mouse = GetScreenToWorld2D(abs_mouse_pos, player_cam.get_camera());
             const float x = rel_screen_mouse.x - tc.translation.x;
             const float y = rel_screen_mouse.y - tc.translation.y;
 
@@ -272,7 +247,7 @@ namespace bden::gamelayer
             system_updateables_input();
             system_updateables_position(dt);
             system_updateables_collider(dt);
-            system_updateables_camera(dt);
+            player_cam.update(dt, player);
             system_updateables_health();
             system_updateables_aggro();
             system_updateables_delete_entities();
@@ -316,14 +291,8 @@ namespace bden::gamelayer
             system_drawables_health();
         };
 
-        void update_app_listener(int w, int h) override
-        {
-            screen_width = w;
-            screen_height = h;
-        };
-
     public:
-        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})), test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})) {
+        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})), test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})), player_cam(world) {
 
                  };
 
@@ -338,7 +307,7 @@ namespace bden::gamelayer
 
             BeginDrawing();
             ClearBackground(BLACK);
-            BeginMode2D(camera);
+            BeginMode2D(player_cam.get_camera());
             system_drawables();
             EndMode2D();
             EndDrawing();

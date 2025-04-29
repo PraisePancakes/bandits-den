@@ -3,6 +3,7 @@
 #include <iostream>
 #include "raylib.h"
 #include "game.hpp"
+#include "camera.hpp"
 #include "app_observer.hpp"
 #include <list>
 

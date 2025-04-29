@@ -159,6 +159,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/13.2.0/include/stdint.h \
  C:/mingw64/x86_64-w64-mingw32/include/stdint.h \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/game.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/internal.hpp \
  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/snakeecs.hpp \
  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/ecs/entity.hpp \
  C:/mingw64/include/c++/13.2.0/limits \
@@ -218,6 +219,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/rigidbody.hpp \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/circle.hpp \
  C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/health.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/agro.hpp \
  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/build/_deps/raylib-src/src/raymath.h \
  C:/mingw64/include/c++/13.2.0/math.h C:/mingw64/include/c++/13.2.0/cmath \
  C:/mingw64/x86_64-w64-mingw32/include/math.h \
@@ -238,8 +240,8 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: \
  C:/mingw64/include/c++/13.2.0/list \
  C:/mingw64/include/c++/13.2.0/bits/stl_list.h \
  C:/mingw64/include/c++/13.2.0/bits/list.tcc \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/components/agro.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/camera.hpp \
+ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/build/_deps/raylib-src/src/rlgl.h \
  C:/mingw64/include/c++/13.2.0/algorithm \
  C:/mingw64/include/c++/13.2.0/bits/ranges_algo.h \
- C:/mingw64/include/c++/13.2.0/pstl/glue_algorithm_defs.h \
- C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/build/_deps/raylib-src/src/rlgl.h
+ C:/mingw64/include/c++/13.2.0/pstl/glue_algorithm_defs.h
