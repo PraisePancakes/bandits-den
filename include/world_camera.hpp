@@ -10,7 +10,7 @@ namespace bden::gamelayer
     using namespace internal;
     using namespace components;
 
-    class camera final
+    class world_camera final
     {
         Camera2D cam{};
         int screen_width = 0;
@@ -19,7 +19,7 @@ namespace bden::gamelayer
         snek::world<configuration_policy> &world;
 
     public:
-        camera(snek::world<configuration_policy> &w) : world(w) {};
+        world_camera(snek::world<configuration_policy> &w) : world(w) {};
 
         void update_app_listener(int w, int h)
         {
