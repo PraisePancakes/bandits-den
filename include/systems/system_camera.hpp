@@ -26,7 +26,6 @@ namespace bden::gamelayer::systems
         {
             screen_width = w;
             screen_height = h;
-           
         }
 
         void update(float dt, WorldPolicy::entity_type player)

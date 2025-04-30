@@ -5,6 +5,9 @@
 #include "raymath.h"
 #include "app_observer.hpp"
 #include "systems/system_camera.hpp"
+#include "systems/system_physics.hpp"
+#include "systems/system_input.hpp"
+
 #include "algorithm"
 #include <string>
 #include <cmath>
@@ -26,6 +29,8 @@ namespace bden::gamelayer
         WorldType::entity_type test;
         std::vector<WorldType::entity_type> to_delete;
         systems::CameraManager<WorldType::world_policy> camera_system;
+        systems::PhysicsManager<WorldType::world_policy> physics_system;
+        systems::InputManager<WorldType::world_policy> input_system;
         int screen_width = 0;
         int screen_height = 0;
 
@@ -90,40 +95,6 @@ namespace bden::gamelayer
 #define PLAYER_SPEED 250
         void system_updateables_input_player_keys()
         {
-            // update players velocity/movement
-            auto &rb = world.get_ref<RigidBodyComponent>(player);
-
-            auto &vel = rb.velocity;
-            vel.x = 0;
-            vel.y = 0;
-            // dir
-            if (IsKeyDown(KEY_W))
-            {
-                vel.y -= 1;
-            }
-            if (IsKeyDown(KEY_A))
-            {
-                vel.x -= 1;
-            }
-            if (IsKeyDown(KEY_S))
-            {
-                vel.y += 1;
-            }
-            if (IsKeyDown(KEY_D))
-            {
-                vel.x += 1;
-            }
-            // normalize velocity vector
-            auto mag = std::sqrt(vel.x * vel.x + vel.y * vel.y);
-
-            if (mag != 0.0)
-            {
-                vel.x = (vel.x / mag);
-                vel.y = (vel.y / mag);
-            }
-            // apply speed to the velocity
-            vel.x *= PLAYER_SPEED;
-            vel.y *= PLAYER_SPEED;
         }
 
         void update_app_listener(int w, int h) override
@@ -133,26 +104,6 @@ namespace bden::gamelayer
             camera_system.update_app_listener(w, h);
         }
 
-        void system_updateables_input_player_mouse()
-        {
-            auto &rb = world.get_ref<RigidBodyComponent>(player);
-            auto &sc = world.get_ref<SquareComponent>(player);
-
-            auto &tc = rb.transform;
-            auto &ang = tc.rotation.x;
-            const Vector2 abs_mouse_pos = GetMousePosition();
-            const Vector2 rel_screen_mouse = GetScreenToWorld2D(abs_mouse_pos, camera_system.get_camera());
-            const float x = rel_screen_mouse.x - tc.translation.x;
-            const float y = rel_screen_mouse.y - tc.translation.y;
-
-            float rad = atan2(x, y);
-            float deg = (rad * 180.0) / PI;
-
-            ang = -deg;
-            rlPushMatrix();
-            rlRotatef(ang, x, y, 0);
-            rlPopMatrix();
-        };
         void system_updateables_aggro()
         {
             auto updateables = world.view<RigidBodyComponent, AggroComponent>();
@@ -196,58 +147,16 @@ namespace bden::gamelayer
                                       
                                     } });
         };
-        void system_updateables_input()
-        {
-            system_updateables_input_player_keys();
-            system_updateables_input_player_mouse();
-        };
-        void system_updateables_position(float dt)
-        {
-            auto updateables = world.view<SquareComponent, RigidBodyComponent>();
-            updateables.for_each([&dt](SquareComponent &s, RigidBodyComponent &t)
-                                 {
-                                    float xvel = t.velocity.x;
-                                    float yvel = t.velocity.y;
-                t.transform.translation.x += (xvel * dt);
-                t.transform.translation.y += (yvel * dt);
-                s.ang = t.transform.rotation.x;
-                s.rect.x = t.transform.translation.x;
-                s.rect.y = t.transform.translation.y; });
-        }
-
-        void system_updateables_collider(float dt)
-        {
-            auto &prb = world.get_ref<RigidBodyComponent>(player);
-
-            auto collideables = world.view<RigidBodyComponent>();
-            collideables.for_each([this, &prb, &dt](u64 id, RigidBodyComponent &rb)
-                                  {
-                                    if(id != this->player) {
-                                        auto r = rb.collision_radius;
-                                        float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
-                                        float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
-                                        float dist = std::sqrt(xsquared + ysquared);
-                                        bool collided = dist < prb.collision_radius + r;
-                                        if(collided) {
-                                            prb.transform.translation.x += (-prb.velocity.x * dt);
-                                            prb.transform.translation.y += (-prb.velocity.y * dt);
-                                            rb.transform.translation.x += (-rb.velocity.x * dt);
-                                            rb.transform.translation.y += (-rb.velocity.y * dt);
-                                      
-                                           world.get_ref<HealthComponent>(player).hit_points--;
-                                        }
-                                    } });
-        };
 
         void system_updateables(float dt)
         {
             if (!world.contains(player))
                 return;
 
-            system_updateables_input();
-            system_updateables_position(dt);
-            system_updateables_collider(dt);
+            physics_system.update(dt, player);
             camera_system.update(dt, player);
+            // TO DO separate player speed and camera system from input system
+            input_system.update(player, camera_system, PLAYER_SPEED);
             system_updateables_health();
             system_updateables_aggro();
             system_updateables_delete_entities();
@@ -292,13 +201,16 @@ namespace bden::gamelayer
         };
 
     public:
-        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})), test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})), camera_system(world) {
+        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
+                 test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
+                 camera_system(world),
+                 physics_system(world),
+                 input_system(world) {
 
                  };
 
         void update(float dt)
         {
-
             system_updateables(dt);
         };
 
