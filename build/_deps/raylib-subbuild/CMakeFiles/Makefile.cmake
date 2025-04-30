@@ -7,10 +7,8 @@ set(CMAKE_DEPENDS_GENERATOR "MinGW Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "C:/Users/aryas/Downloads/cmake-3.28.0-rc5-windows-x86_64/cmake-3.28.0-rc5-windows-x86_64/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake"
   "C:/Users/aryas/Downloads/cmake-3.28.0-rc5-windows-x86_64/cmake-3.28.0-rc5-windows-x86_64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake"
   "C:/Users/aryas/Downloads/cmake-3.28.0-rc5-windows-x86_64/cmake-3.28.0-rc5-windows-x86_64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake"
-  "C:/Users/aryas/Downloads/cmake-3.28.0-rc5-windows-x86_64/cmake-3.28.0-rc5-windows-x86_64/share/cmake-3.28/Modules/CMakeSystem.cmake.in"
   "C:/Users/aryas/Downloads/cmake-3.28.0-rc5-windows-x86_64/cmake-3.28.0-rc5-windows-x86_64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake"
   "C:/Users/aryas/Downloads/cmake-3.28.0-rc5-windows-x86_64/cmake-3.28.0-rc5-windows-x86_64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake"
   "C:/Users/aryas/Downloads/cmake-3.28.0-rc5-windows-x86_64/cmake-3.28.0-rc5-windows-x86_64/share/cmake-3.28/Modules/ExternalProject.cmake"
@@ -38,7 +36,6 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
-  "CMakeFiles/3.28.0-rc5/CMakeSystem.cmake"
   "raylib-populate-prefix/tmp/raylib-populate-mkdirs.cmake"
   "raylib-populate-prefix/src/raylib-populate-stamp/download-raylib-populate.cmake"
   "raylib-populate-prefix/src/raylib-populate-stamp/extract-raylib-populate.cmake"

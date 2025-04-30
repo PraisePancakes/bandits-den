@@ -249,7 +249,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/square.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/internal.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/world_camera.hpp
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_camera.hpp
 
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/core/storage/sparse_set.hpp:
@@ -614,6 +614,8 @@ C:/mingw64/include/c++/13.2.0/stdexcept:
 
 C:/mingw64/include/c++/13.2.0/stdlib.h:
 
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_camera.hpp:
+
 C:/mingw64/include/c++/13.2.0/streambuf:
 
 C:/mingw64/include/c++/13.2.0/string:
@@ -747,5 +749,3 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/health.h
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/internal.hpp:
-
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/world_camera.hpp:

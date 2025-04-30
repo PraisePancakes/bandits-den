@@ -4,7 +4,7 @@
 #include "internal.hpp"
 #include "raymath.h"
 #include "app_observer.hpp"
-#include "world_camera.hpp"
+#include "systems/system_camera.hpp"
 #include "algorithm"
 #include <string>
 #include <cmath>
@@ -25,7 +25,7 @@ namespace bden::gamelayer
         WorldType::entity_type player;
         WorldType::entity_type test;
         std::vector<WorldType::entity_type> to_delete;
-        world_camera<WorldType::world_policy> world_cam;
+        systems::CameraManager<WorldType::world_policy> camera_system;
         int screen_width = 0;
         int screen_height = 0;
 
@@ -130,7 +130,7 @@ namespace bden::gamelayer
         {
             screen_width = w;
             screen_height = h;
-            world_cam.update_app_listener(w, h);
+            camera_system.update_app_listener(w, h);
         }
 
         void system_updateables_input_player_mouse()
@@ -141,7 +141,7 @@ namespace bden::gamelayer
             auto &tc = rb.transform;
             auto &ang = tc.rotation.x;
             const Vector2 abs_mouse_pos = GetMousePosition();
-            const Vector2 rel_screen_mouse = GetScreenToWorld2D(abs_mouse_pos, world_cam.get_camera());
+            const Vector2 rel_screen_mouse = GetScreenToWorld2D(abs_mouse_pos, camera_system.get_camera());
             const float x = rel_screen_mouse.x - tc.translation.x;
             const float y = rel_screen_mouse.y - tc.translation.y;
 
@@ -247,7 +247,7 @@ namespace bden::gamelayer
             system_updateables_input();
             system_updateables_position(dt);
             system_updateables_collider(dt);
-            world_cam.update(dt, player);
+            camera_system.update(dt, player);
             system_updateables_health();
             system_updateables_aggro();
             system_updateables_delete_entities();
@@ -292,7 +292,7 @@ namespace bden::gamelayer
         };
 
     public:
-        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})), test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})), world_cam(world) {
+        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})), test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})), camera_system(world) {
 
                  };
 
@@ -307,7 +307,7 @@ namespace bden::gamelayer
 
             BeginDrawing();
             ClearBackground(BLACK);
-            BeginMode2D(world_cam.get_camera());
+            BeginMode2D(camera_system.get_camera());
             system_drawables();
             EndMode2D();
             EndDrawing();

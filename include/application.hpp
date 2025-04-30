@@ -45,8 +45,8 @@ namespace bden::applicationlayer
 
             while (!WindowShouldClose()) // Detect window close button or ESC key
             {
-                int prev_width = GetScreenWidth();
-                int prev_height = GetScreenHeight();
+                win_width = GetScreenWidth();
+                win_height = GetScreenHeight();
                 notify();
 
                 game->loop();
