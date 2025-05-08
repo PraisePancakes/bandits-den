@@ -7,6 +7,7 @@
 #include "systems/system_camera.hpp"
 #include "systems/system_physics.hpp"
 #include "systems/system_input.hpp"
+#include "systems/system_health.hpp"
 
 #include "algorithm"
 #include <string>
@@ -31,6 +32,8 @@ namespace bden::gamelayer
         systems::CameraManager<WorldType::world_policy> camera_system;
         systems::PhysicsManager<WorldType::world_policy> physics_system;
         systems::InputManager<WorldType::world_policy> input_system;
+        systems::HealthManager<WorldType::world_policy> health_system;
+
         int screen_width = 0;
         int screen_height = 0;
 
@@ -41,22 +44,6 @@ namespace bden::gamelayer
                 world.kill(e);
             }
             to_delete.clear();
-        }
-
-        void system_updateables_health()
-        {
-            static const auto health_bottom_space = 50;
-            auto updateables = world.view<SquareComponent, RigidBodyComponent, HealthComponent>();
-            updateables.for_each([this](WorldType::entity_type e, const SquareComponent &sqc, const RigidBodyComponent &rbc, HealthComponent &hc)
-                                 {
-                                    hc.health_bar.x = rbc.transform.translation.x - (sqc.rect.width / 2);
-                                    hc.health_bar.y = rbc.transform.translation.y - (sqc.rect.height / 2) - health_bottom_space;
-                                    hc.health_bar.width -= (int)hc.health_bar.width % (int)hc.hit_points ;
-                                   
-                if(hc.hit_points <= 1) {
-                 
-                       this->to_delete.push_back(e);
-                }; });
         }
 
         WorldType::entity_type spawn_player(float w, float h, float x, float y, Color player_color, Color glow_color)
@@ -153,8 +140,8 @@ namespace bden::gamelayer
             camera_system.update(dt, player);
             // TO DO separate player speed and camera system from input system
             input_system.update(player, camera_system, PLAYER_SPEED);
+            health_system.update(dt, player);
 
-            system_updateables_health();
             system_updateables_aggro();
             system_updateables_delete_entities();
         };
@@ -202,7 +189,8 @@ namespace bden::gamelayer
                  test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
                  camera_system(world),
                  physics_system(world),
-                 input_system(world) {
+                 input_system(world),
+                 health_system(world, to_delete) {
 
                  };
 

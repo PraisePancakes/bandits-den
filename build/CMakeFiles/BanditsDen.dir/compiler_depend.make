@@ -250,6 +250,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/internal.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_camera.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_health.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_input.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_physics.hpp
 
@@ -475,6 +476,8 @@ C:/mingw64/include/c++/13.2.0/bits/specfun.h:
 C:/mingw64/include/c++/13.2.0/bits/std_abs.h:
 
 C:/mingw64/include/c++/13.2.0/bits/std_function.h:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_health.hpp:
 
 C:/mingw64/include/c++/13.2.0/bits/std_mutex.h:
 
