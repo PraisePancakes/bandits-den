@@ -249,6 +249,7 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/square.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/internal.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_ai.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_camera.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_health.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_input.hpp \
@@ -756,5 +757,7 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/health.h
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/internal.hpp:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_ai.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_physics.hpp:

@@ -8,6 +8,7 @@
 #include "systems/system_physics.hpp"
 #include "systems/system_input.hpp"
 #include "systems/system_health.hpp"
+#include "systems/system_ai.hpp"
 
 #include "algorithm"
 #include <string>
@@ -33,6 +34,7 @@ namespace bden::gamelayer
         systems::PhysicsManager<WorldType::world_policy> physics_system;
         systems::InputManager<WorldType::world_policy> input_system;
         systems::HealthManager<WorldType::world_policy> health_system;
+        systems::AiManager<WorldType::world_policy> ai_system;
 
         int screen_width = 0;
         int screen_height = 0;
@@ -87,49 +89,6 @@ namespace bden::gamelayer
             camera_system.update_app_listener(w, h);
         }
 #define PLAYER_SPEED 250
-        void system_updateables_aggro()
-        {
-            auto updateables = world.view<RigidBodyComponent, AggroComponent>();
-            auto &prb = world.get_ref<RigidBodyComponent>(player);
-
-            updateables.for_each([&prb, this](RigidBodyComponent &rb, AggroComponent &ac)
-                                 {
-                                
-                                        float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
-                                        float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
-                                        float dist = std::sqrt(xsquared + ysquared);
-                                        bool aggroed = dist < prb.collision_radius + ac.aggro_radius;
-                                        rb.velocity.x = 0;
-                                        rb.velocity.y = 0;
-                                    if(aggroed) {
-                                        auto player_pos = Vector2(prb.transform.translation.x, prb.transform.translation.y);
-                                        float x =  player_pos.x - rb.transform.translation.x ;
-                                        float y = player_pos.y - rb.transform.translation.y ;
-                                        auto &ang = rb.transform.rotation.x;
-                                        float rad = atan2(x, y);
-                                        float deg = (rad * 180.0) / PI;
-                                       
-                                        ang = -deg;
-                                        rlPushMatrix();
-                                        rlRotatef(ang, x, y, 0);
-                                        rlPopMatrix();
-
-                                        //move
-                                           rb.velocity.x += (x > 0 ? 1 : -1);
-                                           rb.velocity.y += (y > 0 ? 1 : -1);
-                                           auto mag = std::sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y  * rb.velocity.y );
-    
-                                           if (mag != 0.0)
-                                           {
-                                            rb.velocity.x = (rb.velocity.x / mag);
-                                            rb.velocity.y = (rb.velocity.y / mag);
-                                           }
-                                        rb.velocity.x *= PLAYER_SPEED / 2;
-                                        rb.velocity.y *= PLAYER_SPEED / 2;
-                                     
-                                      
-                                    } });
-        };
 
         void system_updateables(float dt)
         {
@@ -141,8 +100,7 @@ namespace bden::gamelayer
             // TO DO separate player speed and camera system from input system
             input_system.update(player, camera_system, PLAYER_SPEED);
             health_system.update(dt, player);
-
-            system_updateables_aggro();
+            ai_system.update(dt, player, PLAYER_SPEED);
             system_updateables_delete_entities();
         };
 
@@ -190,7 +148,8 @@ namespace bden::gamelayer
                  camera_system(world),
                  physics_system(world),
                  input_system(world),
-                 health_system(world, to_delete) {
+                 health_system(world, to_delete),
+                 ai_system(world) {
 
                  };
 
