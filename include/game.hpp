@@ -92,10 +92,6 @@ namespace bden::gamelayer
             world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius);
             return test;
         };
-#define PLAYER_SPEED 250
-        void system_updateables_input_player_keys()
-        {
-        }
 
         void update_app_listener(int w, int h) override
         {
@@ -103,7 +99,7 @@ namespace bden::gamelayer
             screen_height = h;
             camera_system.update_app_listener(w, h);
         }
-
+#define PLAYER_SPEED 250
         void system_updateables_aggro()
         {
             auto updateables = world.view<RigidBodyComponent, AggroComponent>();
@@ -157,6 +153,7 @@ namespace bden::gamelayer
             camera_system.update(dt, player);
             // TO DO separate player speed and camera system from input system
             input_system.update(player, camera_system, PLAYER_SPEED);
+
             system_updateables_health();
             system_updateables_aggro();
             system_updateables_delete_entities();
