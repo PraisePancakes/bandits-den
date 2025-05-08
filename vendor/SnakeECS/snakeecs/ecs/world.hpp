@@ -20,6 +20,7 @@ namespace snek
     public:
         using world_policy = Policy;
         using entity_type = Policy::entity_type;
+        using version_type = Policy::version_type;
         using component_list = Policy::component_list;
         using allocator_type = Policy::allocator_type;
 
@@ -42,10 +43,11 @@ namespace snek
         [[nodiscard]] entity_type spawn()
         {
             entity_type id = world_policy::generate_entity_id();
-            bool overflowed = (id >= snek::traits::tombstone_t<entity_type>::null_v);
+            bool overflowed = (world_policy::to_entity(id) >= snek::traits::tombstone_t<entity_type>::null_v);
 
             if (overflowed) [[unlikely]]
             {
+
                 // first check if the store is not empty
                 if (!entity_store.empty())
                 {
@@ -60,14 +62,13 @@ namespace snek
             entities.push_back(id);
             _tagged_entities[-1].push_back(id);
 
-            return id;
+            return world_policy::to_entity(id);
         };
 
         [[nodiscard]] entity_type spawn(entity_type tag)
         {
             entity_type id = world_policy::generate_entity_id();
             bool overflowed = (id >= snek::traits::tombstone_t<entity_type>::null_v);
-
             if (overflowed) [[unlikely]]
             {
                 // first check if the store is not empty
@@ -80,17 +81,16 @@ namespace snek
                 };
                 // if its empty then no choice but to continue the ring of id's so back to 0 we go
             }
-
             entities.push_back(id);
             _tagged_entities[tag].push_back(id);
-
-            return id;
+            return world_policy::to_entity(id); // return index of entity
         };
 
         [[nodiscard]] bool contains(entity_type id)
         {
+
             return id < entities.size() &&
-                   entities[id] != snek::traits::tombstone_t<entity_type>::null_v;
+                   !world_policy::is_tombstone(entities[id]);
         }
 
         template <typename C>
@@ -104,6 +104,16 @@ namespace snek
                 return ss->contains(e);
             }
             return false;
+        }
+
+        [[nodiscard]] entity_type to_version(const entity_type index)
+        {
+            return world_policy::to_version(entities[index]);
+        }
+
+        [[nodiscard]] entity_type to_id(const entity_type index)
+        {
+            return world_policy::to_entity(entities[index]);
         }
 
         template <typename T>
@@ -132,7 +142,7 @@ namespace snek
 
         std::vector<entity_type> get_tagged_entities(entity_type tag) const
         {
-            return this->_tagged_entities.at(tag);
+            return this->_tagged_entities[tag];
         }
 
         template <typename C, typename... Args>
@@ -168,21 +178,21 @@ namespace snek
         }
 
         template <typename C>
-        C &get_ref(entity_type e)
-        {
-            SNEK_ASSERT(world_policy::template is_valid_component<C>(), "C must be a registered component. ");
-            size_t c_id = world_policy::template get_component_type_id<C>();
-            auto ss = static_cast<snek::storage::sparse_set<C> *>(_component_pools[c_id]);
-            return ss->get_ref(e);
-        }
-
-        template <typename C>
         C *get(entity_type e)
         {
             SNEK_ASSERT(world_policy::template is_valid_component<C>(), "C must be a registered component. ");
             size_t c_id = world_policy::template get_component_type_id<C>();
             auto ss = static_cast<snek::storage::sparse_set<C> *>(_component_pools[c_id]);
             return ss->get(e);
+        }
+
+        template <typename C>
+        C &get_ref(entity_type e)
+        {
+            SNEK_ASSERT(world_policy::template is_valid_component<C>(), "C must be a registered component. ");
+            size_t c_id = world_policy::template get_component_type_id<C>();
+            auto ss = static_cast<snek::storage::sparse_set<C> *>(_component_pools[c_id]);
+            return ss->get_ref(e);
         }
 
         [[nodiscard]] size_t size() const noexcept
@@ -192,11 +202,9 @@ namespace snek
 
         void kill(entity_type e)
         {
-            if (!contains(e))
-                return;
-
-            entity_store.push(e);
-            entities[e] = snek::traits::tombstone_t<entity_type>::null_v;
+            world_policy::increment_version(entities[e]);
+            entity_store.push(entities[e]);
+            world_policy::to_tombstone(entities[e]); // converts entity bits to tombstone, leaves version untouched
 
             for (auto &s : _component_pools)
             {
