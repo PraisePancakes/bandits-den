@@ -4,11 +4,13 @@
 #include "internal.hpp"
 #include "raymath.h"
 #include "app_observer.hpp"
-#include "systems/system_camera.hpp"
-#include "systems/system_physics.hpp"
-#include "systems/system_input.hpp"
-#include "systems/system_health.hpp"
-#include "systems/system_ai.hpp"
+#include "systems/updateables/system_camera.hpp"
+#include "systems/updateables/system_physics.hpp"
+#include "systems/updateables/system_input.hpp"
+#include "systems/updateables/system_health.hpp"
+#include "systems/updateables/system_ai.hpp"
+#include "systems/drawables/system_drawables.hpp"
+#include "systems/drawables/system_ui.hpp"
 
 #include "algorithm"
 #include <string>
@@ -35,6 +37,8 @@ namespace bden::gamelayer
         systems::InputManager<WorldType::world_policy> input_system;
         systems::HealthManager<WorldType::world_policy> health_system;
         systems::AiManager<WorldType::world_policy> ai_system;
+        systems::DrawableManager<WorldType::world_policy> render_system;
+        systems::UIManager<WorldType::world_policy> ui_system;
 
         int screen_width = 0;
         int screen_height = 0;
@@ -90,7 +94,24 @@ namespace bden::gamelayer
         }
 #define PLAYER_SPEED 250
 
-        void system_updateables(float dt)
+        void system_drawables()
+        {
+            render_system.render(player);
+            ui_system.render();
+        };
+
+    public:
+        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
+                 test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
+                 camera_system(world),
+                 physics_system(world),
+                 input_system(world),
+                 health_system(world, to_delete),
+                 ai_system(world), render_system(world), ui_system(world) {
+
+                 };
+
+        void update(float dt)
         {
             if (!world.contains(player))
                 return;
@@ -104,63 +125,8 @@ namespace bden::gamelayer
             system_updateables_delete_entities();
         };
 
-        void system_drawables_shapes()
-        {
-            auto drawable_entities = world.view<SquareComponent, CircleComponent>();
-            drawable_entities.for_each([this](WorldType::entity_type e, SquareComponent &sc, CircleComponent &cc)
-                                       {
-                                      
-                                   // DrawRectangle(c.x, c.y, c.width, c.height, c.color);
-                                   if(!world.contains(e)) return;
-                                   DrawCircleGradient(sc.rect.x, sc.rect.y, cc.radius, WHITE, cc.color);
-                                   DrawRectanglePro({sc.rect.x, sc.rect.y, sc.rect.width, sc.rect.height}, {sc.rect.width / 2, sc.rect.height / 2}, sc.ang, sc.color); });
-        };
-
-        Color get_health_color(float hp)
-        {
-            if (hp >= 50 && hp < 75)
-                return YELLOW;
-            else if (hp < 50 && hp >= 0)
-                return RED;
-            return GREEN;
-        };
-
-        void system_drawables_health()
-        {
-            auto drawable_entities = world.view<HealthComponent>();
-            drawable_entities.for_each([this](WorldType::entity_type e, const HealthComponent &hc)
-                                       {
-                                        if (!world.contains(e)) return;
-                                        DrawRectangleLines(hc.health_bar.x, hc.health_bar.y, hc.health_bar.width + 1, hc.health_bar.height + 1, BEIGE);
-                                        DrawText(TextFormat("%d", hc.hit_points), hc.health_bar.x + hc.health_bar.width + 5, hc.health_bar.y, 20, WHITE);
-                                        DrawRectangleRec(hc.health_bar, get_health_color(hc.hit_points)); });
-        };
-
-        void system_drawables()
-        {
-            system_drawables_shapes();
-            system_drawables_health();
-        };
-
-    public:
-        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
-                 test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
-                 camera_system(world),
-                 physics_system(world),
-                 input_system(world),
-                 health_system(world, to_delete),
-                 ai_system(world) {
-
-                 };
-
-        void update(float dt)
-        {
-            system_updateables(dt);
-        };
-
         void render()
         {
-
             BeginDrawing();
             ClearBackground(BLACK);
             BeginMode2D(camera_system.get_camera());
@@ -168,12 +134,11 @@ namespace bden::gamelayer
             EndMode2D();
             EndDrawing();
         };
+
         void loop()
         {
-
             float dt = GetFrameTime();
             update(dt);
-
             render();
         };
         ~game() = default;

@@ -240,12 +240,14 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: \
  C:/mingw64/include/c++/13.2.0/list \
  C:/mingw64/include/c++/13.2.0/bits/stl_list.h \
  C:/mingw64/include/c++/13.2.0/bits/list.tcc \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/system_camera.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/updateables/system_camera.hpp \
  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/build/_deps/raylib-src/src/rlgl.h \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/system_physics.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/system_input.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/system_health.hpp \
- C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/system_ai.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/updateables/system_physics.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/updateables/system_input.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/updateables/system_health.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/updateables/system_ai.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/drawables/system_drawables.hpp \
+ C:\Users\aryas\OneDrive\Desktop\CPPGames\Bandits-den\include/systems/drawables/system_ui.hpp \
  C:/mingw64/include/c++/13.2.0/algorithm \
  C:/mingw64/include/c++/13.2.0/bits/ranges_algo.h \
  C:/mingw64/include/c++/13.2.0/pstl/glue_algorithm_defs.h

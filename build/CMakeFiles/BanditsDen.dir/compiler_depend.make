@@ -249,11 +249,13 @@ CMakeFiles/BanditsDen.dir/main.cpp.obj: C:/Users/aryas/OneDrive/Desktop/CPPGames
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/components/square.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp \
   C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/internal.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_ai.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_camera.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_health.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_input.hpp \
-  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_physics.hpp
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/drawables/system_drawables.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/drawables/system_ui.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/updateables/system_ai.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/updateables/system_camera.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/updateables/system_health.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/updateables/system_input.hpp \
+  C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/updateables/system_physics.hpp
 
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/vendor/SnakeECS/snakeecs/core/storage/sparse_set.hpp:
@@ -342,6 +344,8 @@ C:/mingw64/include/c++/13.2.0/bits/atomic_base.h:
 
 C:/mingw64/include/c++/13.2.0/bit:
 
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/drawables/system_drawables.hpp:
+
 C:/mingw64/include/c++/13.2.0/tr1/beta_function.tcc:
 
 C:/mingw64/include/c++/13.2.0/bits/algorithmfwd.h:
@@ -378,6 +382,8 @@ C:/mingw64/include/c++/13.2.0/x86_64-w64-mingw32/bits/c++allocator.h:
 
 C:/mingw64/include/c++/13.2.0/bits/hashtable.h:
 
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/updateables/system_input.hpp:
+
 C:/mingw64/include/c++/13.2.0/bits/char_traits.h:
 
 C:/mingw64/include/c++/13.2.0/bits/concept_check.h:
@@ -407,6 +413,8 @@ C:/mingw64/include/c++/13.2.0/bits/ranges_algobase.h:
 C:/mingw64/include/c++/13.2.0/bits/enable_special_members.h:
 
 C:/mingw64/include/c++/13.2.0/bits/exception.h:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/updateables/system_health.hpp:
 
 C:/mingw64/include/c++/13.2.0/bits/exception_ptr.h:
 
@@ -477,8 +485,6 @@ C:/mingw64/include/c++/13.2.0/bits/specfun.h:
 C:/mingw64/include/c++/13.2.0/bits/std_abs.h:
 
 C:/mingw64/include/c++/13.2.0/bits/std_function.h:
-
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_health.hpp:
 
 C:/mingw64/include/c++/13.2.0/bits/std_mutex.h:
 
@@ -556,8 +562,6 @@ C:/mingw64/include/c++/13.2.0/cstddef:
 
 C:/mingw64/include/c++/13.2.0/cstdint:
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_input.hpp:
-
 C:/mingw64/include/c++/13.2.0/cstdio:
 
 C:/mingw64/x86_64-w64-mingw32/include/malloc.h:
@@ -621,8 +625,6 @@ C:/mingw64/x86_64-w64-mingw32/include/crtdefs.h:
 C:/mingw64/include/c++/13.2.0/stdexcept:
 
 C:/mingw64/include/c++/13.2.0/stdlib.h:
-
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_camera.hpp:
 
 C:/mingw64/include/c++/13.2.0/streambuf:
 
@@ -758,6 +760,10 @@ C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/game.hpp:
 
 C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/internal.hpp:
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_ai.hpp:
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/drawables/system_ui.hpp:
 
-C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/system_physics.hpp:
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/updateables/system_ai.hpp:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/updateables/system_camera.hpp:
+
+C:/Users/aryas/OneDrive/Desktop/CPPGames/Bandits-den/include/systems/updateables/system_physics.hpp:
