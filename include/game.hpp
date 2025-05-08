@@ -32,6 +32,7 @@ namespace bden::gamelayer
         WorldType::entity_type player;
         WorldType::entity_type test;
         std::vector<WorldType::entity_type> to_delete;
+
         systems::CameraManager<WorldType::world_policy> camera_system;
         systems::PhysicsManager<WorldType::world_policy> physics_system;
         systems::InputManager<WorldType::world_policy> input_system;
@@ -74,6 +75,7 @@ namespace bden::gamelayer
         WorldType::entity_type spawn_test(float w, float h, float x, float y, Color test_color, Color glow_color)
         {
             auto test = world.spawn((WorldType::entity_type)TagEnum::TAG_ENEMIES);
+
             SquareComponent square{w, h, x, y, test_color, 0.0};
             world.bind<SquareComponent>(test, square);
             Transform test_transform{};
@@ -119,8 +121,10 @@ namespace bden::gamelayer
             physics_system.update(dt, player);
             camera_system.update(dt, player);
             // TO DO separate player speed and camera system from input system
+
             input_system.update(player, camera_system, PLAYER_SPEED);
             health_system.update(dt, player);
+
             ai_system.update(dt, player, PLAYER_SPEED);
             system_updateables_delete_entities();
         };

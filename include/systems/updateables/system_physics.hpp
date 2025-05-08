@@ -33,8 +33,6 @@ namespace bden::gamelayer::systems
                                             prb.transform.translation.y += (-prb.velocity.y * dt);
                                             rb.transform.translation.x += (-rb.velocity.x * dt);
                                             rb.transform.translation.y += (-rb.velocity.y * dt);
-                                            
-                                           world.template get_ref<HealthComponent>(player).hit_points--;
                                         }
                                     } });
         };
