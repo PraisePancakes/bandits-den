@@ -19,8 +19,11 @@ namespace bden::gamelayer::internal
     {
         TAG_PLAYER,
         TAG_ENEMIES,
+        TAG_FRIENDLIES
     } Tags;
 
     using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
+
+    
 
 }

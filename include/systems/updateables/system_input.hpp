@@ -4,6 +4,7 @@
 #include "rlgl.h"
 #include "raymath.h"
 #include "system_camera.hpp"
+#include "../../config.hpp"
 
 namespace bden::gamelayer::systems
 {
@@ -16,7 +17,7 @@ namespace bden::gamelayer::systems
 
         snek::world<WorldPolicy> &world;
 
-        void system_updateables_input_player_keys(WorldPolicy::entity_type player, float PLAYER_SPEED)
+        void system_updateables_input_player_keys(WorldPolicy::entity_type player)
         {
             // update players velocity/movement
             auto &rb = world.template get_ref<RigidBodyComponent>(player);
@@ -50,8 +51,8 @@ namespace bden::gamelayer::systems
                 vel.y = (vel.y / mag);
             }
             // apply speed to the velocity
-            vel.x *= PLAYER_SPEED;
-            vel.y *= PLAYER_SPEED;
+            vel.x *= config::PLAYER_SPEED;
+            vel.y *= config::PLAYER_SPEED;
         };
 
         void system_updateables_input_player_mouse(WorldPolicy::entity_type player, CameraManager<WorldPolicy> &camera_system)
@@ -78,9 +79,9 @@ namespace bden::gamelayer::systems
     public:
         InputManager(snek::world<WorldPolicy> &w) : world(w) {};
 
-              void update(WorldPolicy::entity_type player, CameraManager<WorldPolicy> &camera_system, float PLAYER_SPEED)
+        void update(WorldPolicy::entity_type player, CameraManager<WorldPolicy> &camera_system)
         {
-            system_updateables_input_player_keys(player, PLAYER_SPEED);
+            system_updateables_input_player_keys(player);
             system_updateables_input_player_mouse(player, camera_system);
         }
     };

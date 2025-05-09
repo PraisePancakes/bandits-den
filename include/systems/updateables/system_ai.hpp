@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
+#include "../../config.hpp"
 
 namespace bden::gamelayer::systems
 {
@@ -14,12 +15,12 @@ namespace bden::gamelayer::systems
     {
         snek::world<WorldPolicy> &world;
 
-        void system_updateables_aggro(typename WorldPolicy::entity_type player, float PLAYER_SPEED)
+        void system_updateables_aggro(typename WorldPolicy::entity_type player)
         {
             auto updateables = world.template view<RigidBodyComponent, AggroComponent>();
             auto &prb = world.template get_ref<RigidBodyComponent>(player);
 
-            updateables.for_each([&prb, this, &PLAYER_SPEED](RigidBodyComponent &rb, AggroComponent &ac)
+            updateables.for_each([&prb, this](RigidBodyComponent &rb, AggroComponent &ac)
                                  {
                                 
                                         float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
@@ -51,8 +52,8 @@ namespace bden::gamelayer::systems
                                             rb.velocity.x = (rb.velocity.x / mag);
                                             rb.velocity.y = (rb.velocity.y / mag);
                                            }
-                                        rb.velocity.x *= PLAYER_SPEED / 2;
-                                        rb.velocity.y *= PLAYER_SPEED / 2;
+                                        rb.velocity.x *= config::ENEMY_SPEED;
+                                        rb.velocity.y *= config::ENEMY_SPEED;
                                      
                                       
                                     } });
@@ -61,9 +62,9 @@ namespace bden::gamelayer::systems
     public:
         AiManager(snek::world<WorldPolicy> &w) : world(w) {};
 
-        void update(float dt, WorldPolicy::entity_type player, float PLAYER_SPEED)
+        void update(float dt, WorldPolicy::entity_type player)
         {
-            system_updateables_aggro(player, PLAYER_SPEED);
+            system_updateables_aggro(player);
         }
     };
 }

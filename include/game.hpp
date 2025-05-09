@@ -120,10 +120,9 @@ namespace bden::gamelayer
 
             physics_system.update(dt, player);
             camera_system.update(dt, player);
-            // TO DO separate player speed and camera system from input system
-            input_system.update(player, camera_system, PLAYER_SPEED);
+            input_system.update(player, camera_system);
             health_system.update(dt, player);
-            ai_system.update(dt, player, PLAYER_SPEED);
+            ai_system.update(dt, player);
             system_updateables_delete_entities();
         };
 
