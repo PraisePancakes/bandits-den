@@ -52,8 +52,8 @@ namespace bden::gamelayer::systems
                                             rb.velocity.x = (rb.velocity.x / mag);
                                             rb.velocity.y = (rb.velocity.y / mag);
                                            }
-                                        rb.velocity.x *= config::ENEMY_SPEED;
-                                        rb.velocity.y *= config::ENEMY_SPEED;
+                                        rb.velocity.x *= config::enemies::ENEMY_SPEED;
+                                        rb.velocity.y *= config::enemies::ENEMY_SPEED;
                                      
                                       
                                     } });

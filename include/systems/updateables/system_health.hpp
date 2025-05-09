@@ -39,7 +39,6 @@ namespace bden::gamelayer::systems
 
             for (const auto &e : enemies)
             {
-
                 const auto &weapon = world.template get_ref<components::WeaponComponent>(e);
                 const auto &rb = world.template get_ref<components::RigidBodyComponent>(e);
                 const auto r = weapon.radius;

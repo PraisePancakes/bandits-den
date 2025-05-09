@@ -51,8 +51,8 @@ namespace bden::gamelayer::systems
                 vel.y = (vel.y / mag);
             }
             // apply speed to the velocity
-            vel.x *= config::PLAYER_SPEED;
-            vel.y *= config::PLAYER_SPEED;
+            vel.x *= config::player::PLAYER_SPEED;
+            vel.y *= config::player::PLAYER_SPEED;
         };
 
         void system_updateables_input_player_mouse(WorldPolicy::entity_type player, CameraManager<WorldPolicy> &camera_system)

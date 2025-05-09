@@ -2,10 +2,23 @@
 
 namespace bden::gamelayer::internal::config
 {
-    // player
-    constexpr static float PLAYER_SPEED = 250.f;
+    namespace player
+    {
+        constexpr static float PLAYER_SPEED = 250.f;
+    } // player
+    namespace enemies
+    {
+        constexpr static float ENEMY_SPEED = player::PLAYER_SPEED / 2;
+    } // enemies
 
-    // enemies
-    constexpr static float ENEMY_SPEED = PLAYER_SPEED / 2;
+    namespace ui
+    {
+        namespace weapons
+        {
+            constexpr static float START_ANGLE = 0.f;
+            constexpr static float END_ANGLE = 360.f;
+            constexpr static int NSEGS = 10;
+        } // weapons
+    } // ui
 
 };

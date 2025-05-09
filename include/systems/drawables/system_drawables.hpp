@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
+#include "../../config.hpp"
 
 namespace bden::gamelayer::systems
 {
@@ -34,7 +35,7 @@ namespace bden::gamelayer::systems
             auto drawable_weapons = world.template view<RigidBodyComponent, WeaponComponent>();
             drawable_weapons.for_each([this](RigidBodyComponent &rb, WeaponComponent &wc)
                                       { Vector2 center = {rb.transform.translation.x , rb.transform.translation.y};
-                                        DrawCircleSectorLines(center, wc.radius,start_angle, end_angle, nsegs, wc.radius_color); });
+                                        DrawCircleSectorLines(center, wc.radius,config::ui::weapons::START_ANGLE, config::ui::weapons::END_ANGLE, config::ui::weapons::NSEGS, wc.radius_color); });
         };
 
     public:
