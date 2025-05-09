@@ -82,7 +82,7 @@ namespace bden::gamelayer
             test_transform.translation.x = x;
             test_transform.translation.y = y;
             world.bind<AggroComponent>(test, w * 2, false);
-
+            world.bind<WeaponComponent>(test, w * 1.5f, 1.f, RED);
             auto c = world.bind<CircleComponent>(test, square.rect.width, glow_color);
             world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius);
             return test;

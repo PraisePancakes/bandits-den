@@ -5,6 +5,7 @@
 #include "components/circle.hpp"
 #include "components/health.hpp"
 #include "components/agro.hpp"
+#include "components/weapon.hpp"
 #include "../types.hpp"
 
 namespace bden::gamelayer::internal
@@ -13,7 +14,8 @@ namespace bden::gamelayer::internal
                                                 components::RigidBodyComponent,
                                                 components::HealthComponent,
                                                 components::CircleComponent,
-                                                components::AggroComponent>;
+                                                components::AggroComponent,
+                                                components::WeaponComponent>;
 
     enum class TagEnum : u64
     {
@@ -23,7 +25,5 @@ namespace bden::gamelayer::internal
     } Tags;
 
     using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
-
-    
 
 }

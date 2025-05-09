@@ -40,16 +40,11 @@ namespace bden::gamelayer::systems
             for (const auto &e : enemies)
             {
 
+                const auto &weapon = world.template get_ref<components::WeaponComponent>(e);
                 const auto &rb = world.template get_ref<components::RigidBodyComponent>(e);
-                const auto r = rb.collision_radius;
-
-                float prev_player_x = prb.transform.translation.x + (prb.velocity.x * dt);
-                float prev_player_y = prb.transform.translation.y + (prb.velocity.y * dt);
-                float prev_rb_x = rb.transform.translation.x + (rb.velocity.x * dt);
-                float prev_rb_y = rb.transform.translation.y + (rb.velocity.y * dt);
-
-                const float xsquared = (prev_rb_x - prev_player_x) * (prev_rb_x - prev_player_x);
-                const float ysquared = (prev_rb_y - prev_player_y) * (prev_rb_y - prev_player_y);
+                const auto r = weapon.radius;
+                const float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
+                const float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
                 const float dist = std::sqrt(xsquared + ysquared);
 
                 const bool collided = dist < prb.collision_radius + r;

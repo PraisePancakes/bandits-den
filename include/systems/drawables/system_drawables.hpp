@@ -25,12 +25,25 @@ namespace bden::gamelayer::systems
                                    DrawRectanglePro({sc.rect.x, sc.rect.y, sc.rect.width, sc.rect.height}, {sc.rect.width / 2, sc.rect.height / 2}, sc.ang, sc.color); });
         };
 
+        void system_drawables_weapons()
+        {
+            constexpr static float start_angle = 0.f;
+            constexpr static float end_angle = 360.f;
+            constexpr static int nsegs = 10;
+
+            auto drawable_weapons = world.template view<RigidBodyComponent, WeaponComponent>();
+            drawable_weapons.for_each([this](RigidBodyComponent &rb, WeaponComponent &wc)
+                                      { Vector2 center = {rb.transform.translation.x , rb.transform.translation.y};
+                                        DrawCircleSectorLines(center, wc.radius,start_angle, end_angle, nsegs, wc.radius_color); });
+        };
+
     public:
         DrawableManager(snek::world<WorldPolicy> &w) : world(w) {};
 
         void render(WorldPolicy::entity_type player)
         {
             system_drawables_shapes();
+            system_drawables_weapons();
         }
     };
 }
