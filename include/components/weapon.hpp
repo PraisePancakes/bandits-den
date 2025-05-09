@@ -7,9 +7,11 @@ namespace bden::gamelayer::components
     {
         float radius;
         float damage;
+        float speed;
         Color radius_color;
+        
         WeaponComponent() = default;
-        WeaponComponent(float r, float d, Color rc) : radius(r), damage(d), radius_color(rc) {};
+        WeaponComponent(float r, float d, float s, Color rc) : radius(r), damage(d), speed(s), radius_color(rc) {};
         ~WeaponComponent() = default;
     };
 

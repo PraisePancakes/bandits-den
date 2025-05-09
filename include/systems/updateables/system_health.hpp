@@ -50,7 +50,12 @@ namespace bden::gamelayer::systems
 
                 if (collided)
                 {
-                    world.template get_ref<HealthComponent>(player).hit_points--;
+
+                    if ((int)GetTime() % (int)weapon.speed == 0)
+                    {
+                        world.template get_ref<HealthComponent>(player).hit_points--;
+                      
+                    }
                 }
             }
         };
