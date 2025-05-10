@@ -1,13 +1,13 @@
 #pragma once
-#include "../../internal.hpp"
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
 #include "../../config.hpp"
+#include "../../utils.hpp"
 
 namespace bden::gamelayer::systems
 {
-    using namespace internal;
+
     using namespace components;
 
     template <typename WorldPolicy>
@@ -26,15 +26,17 @@ namespace bden::gamelayer::systems
                                    DrawRectanglePro({sc.rect.x, sc.rect.y, sc.rect.width, sc.rect.height}, {sc.rect.width / 2, sc.rect.height / 2}, sc.ang, sc.color); });
         };
 
-        void system_drawables_weapons()
+        void system_drawables_weapons(WorldPolicy::entity_type player)
         {
             constexpr static float start_angle = 0.f;
             constexpr static float end_angle = 360.f;
             constexpr static int nsegs = 10;
+            auto &prb = world.template get_ref<RigidBodyComponent>(player);
 
             auto drawable_weapons = world.template view<RigidBodyComponent, WeaponComponent>();
             drawable_weapons.for_each([this](RigidBodyComponent &rb, WeaponComponent &wc)
                                       { Vector2 center = {rb.transform.translation.x , rb.transform.translation.y};
+                                        
                                         DrawCircleSectorLines(center, wc.radius,config::ui::weapons::START_ANGLE, config::ui::weapons::END_ANGLE, config::ui::weapons::NSEGS, wc.radius_color); });
         };
 
@@ -44,7 +46,7 @@ namespace bden::gamelayer::systems
         void render(WorldPolicy::entity_type player)
         {
             system_drawables_shapes();
-            system_drawables_weapons();
+            system_drawables_weapons(player);
         }
     };
 }

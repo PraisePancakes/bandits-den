@@ -1,12 +1,12 @@
 #pragma once
-#include "../../internal.hpp"
+#include "../../config.hpp"
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
 
 namespace bden::gamelayer::systems
 {
-    using namespace internal;
+
     using namespace components;
 
     template <typename WorldPolicy>

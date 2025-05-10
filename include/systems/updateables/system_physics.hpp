@@ -1,13 +1,13 @@
 #pragma once
-#include "../../internal.hpp"
+#include "../../config.hpp"
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
+#include "../../utils.hpp"
 
 namespace bden::gamelayer::systems
 {
-    using namespace internal;
-    using namespace components;
+    using namespace config;
 
     template <typename WorldPolicy>
     class PhysicsManager final
@@ -24,11 +24,7 @@ namespace bden::gamelayer::systems
                                   {
                                     if(id != player) {
                                         auto r = rb.collision_radius;
-                                        float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
-                                        float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
-                                        float dist = std::sqrt(xsquared + ysquared);
-                                        bool collided = dist < prb.collision_radius + r;
-                                        if(collided) {
+                                        if(utils::collided(rb, prb, r)) {
                                             prb.transform.translation.x += (-prb.velocity.x * dt);
                                             prb.transform.translation.y += (-prb.velocity.y * dt);
                                             rb.transform.translation.x += (-rb.velocity.x * dt);

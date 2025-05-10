@@ -1,13 +1,14 @@
 #pragma once
-#include "../../internal.hpp"
+
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
 #include "../../config.hpp"
+#include "../../utils.hpp"
 
 namespace bden::gamelayer::systems
 {
-    using namespace internal;
+
     using namespace components;
 
     template <typename WorldPolicy>
@@ -23,13 +24,9 @@ namespace bden::gamelayer::systems
             updateables.for_each([&prb, this](RigidBodyComponent &rb, AggroComponent &ac)
                                  {
                                 
-                                        float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
-                                        float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
-                                        float dist = std::sqrt(xsquared + ysquared);
-                                        bool aggroed = dist < prb.collision_radius + ac.aggro_radius;
                                         rb.velocity.x = 0;
                                         rb.velocity.y = 0;
-                                    if(aggroed) {
+                                    if(utils::collided(rb, prb, ac.aggro_radius)) {
                                         auto player_pos = Vector2(prb.transform.translation.x, prb.transform.translation.y);
                                         float x =  player_pos.x - rb.transform.translation.x ;
                                         float y = player_pos.y - rb.transform.translation.y ;

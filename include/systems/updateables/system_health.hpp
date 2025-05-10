@@ -1,12 +1,13 @@
 #pragma once
-#include "../../internal.hpp"
+#include "../../config.hpp"
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
+#include "../../utils.hpp"
 
 namespace bden::gamelayer::systems
 {
-    using namespace internal;
+
     using namespace components;
 
     template <typename WorldPolicy>
@@ -33,30 +34,32 @@ namespace bden::gamelayer::systems
 
         void system_updateables_damage(float dt, WorldPolicy::entity_type player)
         {
-            const std::vector<typename WorldPolicy::entity_type> enemies = world.template get_tagged_entities((typename WorldPolicy::entity_type)internal::TagEnum::TAG_ENEMIES);
+            const std::vector<typename WorldPolicy::entity_type> enemies = world.template get_tagged_entities((typename WorldPolicy::entity_type)config::world_config::TagEnum::TAG_ENEMIES);
 
             auto &prb = world.template get_ref<RigidBodyComponent>(player);
 
             for (const auto &e : enemies)
             {
-                const auto &weapon = world.template get_ref<components::WeaponComponent>(e);
+                auto &weapon = world.template get_ref<components::WeaponComponent>(e);
                 const auto &rb = world.template get_ref<components::RigidBodyComponent>(e);
                 const auto r = weapon.radius;
-                const float xsquared = (rb.transform.translation.x - prb.transform.translation.x) * (rb.transform.translation.x - prb.transform.translation.x);
-                const float ysquared = (rb.transform.translation.y - prb.transform.translation.y) * (rb.transform.translation.y - prb.transform.translation.y);
-                const float dist = std::sqrt(xsquared + ysquared);
 
-                const bool collided = dist < prb.collision_radius + r;
-
-                if (collided)
+                if (utils::collided(rb, prb, r))
                 {
                     static float interval = 0;
                     if (interval >= weapon.speed)
                     {
                         world.template get_ref<HealthComponent>(player).hit_points -= weapon.damage;
                         interval = 0;
+                        weapon.radius_color.a = 150;
                     }
+
+                    weapon.radius_color.a++;
                     interval += dt;
+                }
+                else
+                {
+                    weapon.radius_color.a = 150;
                 }
             }
         };

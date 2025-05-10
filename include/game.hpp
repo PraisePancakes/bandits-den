@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "raylib.h"
-#include "internal.hpp"
+#include "config.hpp"
 #include "raymath.h"
 #include "app_observer.hpp"
 #include "systems/updateables/system_camera.hpp"
@@ -20,14 +20,15 @@
 namespace bden::gamelayer
 {
     using namespace components;
-    using namespace internal;
+    using namespace config;
+    using namespace config::world_config;
 
     // TODO create glow effect for entites
 
     class game final : public applicationlayer::application_observer
     {
 
-        using WorldType = snek::world<configuration_policy>;
+        using WorldType = snek::world<world_config::configuration_policy>;
         WorldType world;
         WorldType::entity_type player;
         WorldType::entity_type test;
@@ -82,7 +83,7 @@ namespace bden::gamelayer
             test_transform.translation.x = x;
             test_transform.translation.y = y;
             world.bind<AggroComponent>(test, w * 3, false);
-            world.bind<WeaponComponent>(test, w * 1.5f, 5.f, 3.f, RED);
+            world.bind<WeaponComponent>(test, w * 1.5f, 5.f, 2.f, RED);
             auto c = world.bind<CircleComponent>(test, square.rect.width, glow_color);
             world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius);
             return test;
