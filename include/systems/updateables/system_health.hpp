@@ -50,12 +50,13 @@ namespace bden::gamelayer::systems
 
                 if (collided)
                 {
-
-                    if ((int)GetTime() % (int)weapon.speed == 0)
+                    static float interval = 0;
+                    if (interval >= weapon.speed)
                     {
-                        world.template get_ref<HealthComponent>(player).hit_points--;
-                      
+                        world.template get_ref<HealthComponent>(player).hit_points -= weapon.damage;
+                        interval = 0;
                     }
+                    interval += dt;
                 }
             }
         };
