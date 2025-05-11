@@ -7,8 +7,11 @@ namespace bden::applicationlayer
 
     struct application_observer
     {
-        virtual void update_app_listener(int x, int y) = 0;
 
+    public:
+        virtual void on_update(float) = 0;
+        virtual void on_render() = 0;
+        virtual void update_app_listener(int, int) = 0;
         virtual ~application_observer() {};
     };
 

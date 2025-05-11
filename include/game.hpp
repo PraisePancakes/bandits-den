@@ -25,7 +25,7 @@ namespace bden::gamelayer
 
     // TODO create glow effect for entites
 
-    class game final : public applicationlayer::application_observer
+    class state_game final : public applicationlayer::application_observer
     {
 
         using WorldType = snek::world<world_config::configuration_policy>;
@@ -104,17 +104,16 @@ namespace bden::gamelayer
         };
 
     public:
-        game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
-                 test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
-                 camera_system(world),
-                 physics_system(world),
-                 input_system(world),
-                 health_system(world, to_delete),
-                 ai_system(world), render_system(world), ui_system(world) {
+        state_game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
+                       test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
+                       camera_system(world),
+                       physics_system(world),
+                       input_system(world),
+                       health_system(world, to_delete),
+                       ai_system(world), render_system(world), ui_system(world) {
 
-                 };
-
-        void update(float dt)
+                       };
+        void on_update(float dt) override
         {
             if (!world.contains(player))
                 return;
@@ -127,7 +126,7 @@ namespace bden::gamelayer
             system_updateables_delete_entities();
         };
 
-        void render()
+        void on_render() override
         {
             BeginDrawing();
             ClearBackground(BLACK);
@@ -136,13 +135,6 @@ namespace bden::gamelayer
             EndMode2D();
             EndDrawing();
         };
-
-        void loop()
-        {
-            float dt = GetFrameTime();
-            update(dt);
-            render();
-        };
-        ~game() = default;
+        ~state_game() = default;
     };
 };
