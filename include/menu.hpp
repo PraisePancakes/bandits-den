@@ -20,9 +20,23 @@ namespace bden::gamelayer
         }
 
     public:
-        state_menu() {};
-        void on_update(float dt) override {};
-        void on_render() override {};
+        state_menu(applicationlayer::application_subject *ctx) : application_observer(ctx) {
+
+                                                                 };
+        void on_update(float dt) override
+        {
+            if (IsKeyPressed(KEY_ENTER))
+            {
+                this->context->set_state(applicationlayer::ApplicationState::STATE_GAME);
+            }
+        };
+
+        void on_render() override
+        {
+            BeginDrawing();
+            ClearBackground(RAYWHITE);
+            EndDrawing();
+        };
 
         ~state_menu() {};
     };

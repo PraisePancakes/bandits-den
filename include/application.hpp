@@ -9,7 +9,7 @@
 
 namespace bden::applicationlayer
 {
-    class application final : private application_subject
+    class application final : public application_subject
     {
     public:
         int win_width;
@@ -43,6 +43,14 @@ namespace bden::applicationlayer
             current_state->on_render();
         }
 
+        void notify() override
+        {
+            for (auto &o : states)
+            {
+                o->update_app_listener(win_width, win_height);
+            }
+        };
+
     public:
         application(int w, int h, const std::string &t, unsigned int flags) : win_width(w), win_height(h), win_title(t), config_flags(flags)
         {
@@ -50,11 +58,26 @@ namespace bden::applicationlayer
             InitWindow(w, h, t.c_str());
             SetTargetFPS(60);
 
-            game = new bden::gamelayer::state_game();
-            menu = new bden::gamelayer::state_menu();
-            current_state = game;
+            game = new bden::gamelayer::state_game(this);
+            menu = new bden::gamelayer::state_menu(this);
             attach(game);
             attach(menu);
+            current_state = menu;
+        };
+
+        void set_state(ApplicationState state) override
+        {
+
+            auto loc = states.begin();
+            std::advance(loc, (int)state);
+            current_state = *loc;
+        };
+
+        application_observer *get_state(ApplicationState state) override
+        {
+            auto loc = states.begin();
+            std::advance(loc, (int)state);
+            return *loc;
         };
 
         void run()
@@ -66,18 +89,12 @@ namespace bden::applicationlayer
                 win_width = GetScreenWidth();
                 win_height = GetScreenHeight();
                 notify();
+
                 update(dt);
                 render();
             }
         };
 
-        void notify() override
-        {
-            for (auto &o : states)
-            {
-                o->update_app_listener(win_width, win_height);
-            }
-        };
         ~application() = default;
     };
 };

@@ -95,7 +95,6 @@ namespace bden::gamelayer
             screen_height = h;
             camera_system.update_app_listener(w, h);
         }
-#define PLAYER_SPEED 250
 
         void system_drawables()
         {
@@ -104,15 +103,15 @@ namespace bden::gamelayer
         };
 
     public:
-        state_game() : player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
-                       test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
-                       camera_system(world),
-                       physics_system(world),
-                       input_system(world),
-                       health_system(world, to_delete),
-                       ai_system(world), render_system(world), ui_system(world) {
+        state_game(applicationlayer::application_subject *ctx) : application_observer(ctx), player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
+                                                                 test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
+                                                                 camera_system(world),
+                                                                 physics_system(world),
+                                                                 input_system(world),
+                                                                 health_system(world, to_delete),
+                                                                 ai_system(world), render_system(world), ui_system(world) {
 
-                       };
+                                                                 };
         void on_update(float dt) override
         {
             if (!world.contains(player))
