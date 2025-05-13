@@ -3,13 +3,14 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "app_observer.hpp"
+#include "state_manager.hpp"
 #include "algorithm"
 #include <string>
 #include <cmath>
 
 namespace bden::gamelayer
 {
-    class state_menu final : public applicationlayer::application_observer
+    class state_menu final : public applicationlayer::application_observer, public AppStateType
     {
         int screen_width = 0;
         int screen_height = 0;
@@ -20,14 +21,14 @@ namespace bden::gamelayer
         }
 
     public:
-        state_menu(applicationlayer::application_subject *ctx) : application_observer(ctx) {
+        state_menu(AppStateManagerType *ctx) : State(ctx) {
 
-                                                                 };
+                                               };
         void on_update(float dt) override
         {
             if (IsKeyPressed(KEY_ENTER))
             {
-                this->context->set_state(applicationlayer::ApplicationState::STATE_GAME);
+                this->get_context()->set_state(AppStateManagerType::states_type::STATE_GAME);
             }
         };
 

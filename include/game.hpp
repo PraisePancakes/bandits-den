@@ -11,6 +11,7 @@
 #include "systems/updateables/system_ai.hpp"
 #include "systems/drawables/system_drawables.hpp"
 #include "systems/drawables/system_ui.hpp"
+#include "state_manager.hpp"
 
 #include "algorithm"
 #include <string>
@@ -25,7 +26,7 @@ namespace bden::gamelayer
 
     // TODO create glow effect for entites
 
-    class state_game final : public applicationlayer::application_observer
+    class state_game final : public applicationlayer::application_observer, public bden::fsm::State<bden::fsm::states::APP_STATES>
     {
 
         using WorldType = snek::world<world_config::configuration_policy>;
@@ -103,15 +104,15 @@ namespace bden::gamelayer
         };
 
     public:
-        state_game(applicationlayer::application_subject *ctx) : application_observer(ctx), player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
-                                                                 test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
-                                                                 camera_system(world),
-                                                                 physics_system(world),
-                                                                 input_system(world),
-                                                                 health_system(world, to_delete),
-                                                                 ai_system(world), render_system(world), ui_system(world) {
+        state_game(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx) : State(ctx), player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
+                                                                                  test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
+                                                                                  camera_system(world),
+                                                                                  physics_system(world),
+                                                                                  input_system(world),
+                                                                                  health_system(world, to_delete),
+                                                                                  ai_system(world), render_system(world), ui_system(world) {
 
-                                                                 };
+                                                                                  };
         void on_update(float dt) override
         {
             if (!world.contains(player))

@@ -5,10 +5,12 @@
 #include "game.hpp"
 #include "menu.hpp"
 #include "app_observer.hpp"
+#include "state_manager.hpp"
 #include <list>
 
 namespace bden::applicationlayer
 {
+
     class application final : public application_subject
     {
     public:
@@ -20,32 +22,23 @@ namespace bden::applicationlayer
         unsigned int config_flags;
         bden::gamelayer::state_game *game;
         bden::gamelayer::state_menu *menu;
-        std::list<application_observer *> states;
-        application_observer *current_state{nullptr};
+        std::list<application_observer *> observers;
+
+        AppStateManagerType state_manager;
 
         void attach(application_observer *observer) override
         {
-            states.push_back(observer);
+            observers.push_back(observer);
         }
 
         void detach(application_observer *observer) override
         {
-            states.remove(observer);
+            observers.remove(observer);
         };
-
-        void update(float dt)
-        {
-            current_state->on_update(dt);
-        };
-
-        void render()
-        {
-            current_state->on_render();
-        }
 
         void notify() override
         {
-            for (auto &o : states)
+            for (auto &o : observers)
             {
                 o->update_app_listener(win_width, win_height);
             }
@@ -58,26 +51,14 @@ namespace bden::applicationlayer
             InitWindow(w, h, t.c_str());
             SetTargetFPS(60);
 
-            game = new bden::gamelayer::state_game(this);
-            menu = new bden::gamelayer::state_menu(this);
+            game = new bden::gamelayer::state_game(&state_manager);
+            menu = new bden::gamelayer::state_menu(&state_manager);
+            state_manager.insert_state(AppStateManagerType::states_type::STATE_MENU, menu);
+            state_manager.insert_state(AppStateManagerType::states_type::STATE_GAME, game);
+
             attach(game);
             attach(menu);
-            current_state = menu;
-        };
-
-        void set_state(ApplicationState state) override
-        {
-
-            auto loc = states.begin();
-            std::advance(loc, (int)state);
-            current_state = *loc;
-        };
-
-        application_observer *get_state(ApplicationState state) override
-        {
-            auto loc = states.begin();
-            std::advance(loc, (int)state);
-            return *loc;
+            state_manager.set_state(AppStateManagerType::states_type::STATE_MENU);
         };
 
         void run()
@@ -89,9 +70,8 @@ namespace bden::applicationlayer
                 win_width = GetScreenWidth();
                 win_height = GetScreenHeight();
                 notify();
-
-                update(dt);
-                render();
+                state_manager.get_current_state()->on_update(dt);
+                state_manager.get_current_state()->on_render();
             }
         };
 
