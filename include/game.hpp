@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include "config.hpp"
 #include "raymath.h"
-#include "app_observer.hpp"
+
 #include "systems/updateables/system_camera.hpp"
 #include "systems/updateables/system_physics.hpp"
 #include "systems/updateables/system_input.hpp"
@@ -26,7 +26,7 @@ namespace bden::state
 
     // TODO create glow effect for entites
 
-    class state_game final : public applicationlayer::application_observer, public bden::fsm::State<bden::fsm::states::APP_STATES>
+    class state_game final : public bden::fsm::State<bden::fsm::states::APP_STATES>
     {
 
         using WorldType = snek::world<game_config::game_configuration_policy>;
@@ -42,9 +42,6 @@ namespace bden::state
         systems::AiManager<WorldType::world_policy> ai_system;
         systems::DrawableManager<WorldType::world_policy> render_system;
         systems::UIManager<WorldType::world_policy> ui_system;
-
-        int screen_width = 0;
-        int screen_height = 0;
 
         void system_updateables_delete_entities()
         {
@@ -90,12 +87,7 @@ namespace bden::state
             return test;
         };
 
-        void update_app_listener(int w, int h) override
-        {
-            screen_width = w;
-            screen_height = h;
-            camera_system.update_app_listener(w, h);
-        }
+      
 
         void system_drawables()
         {

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "raylib.h"
 #include "raymath.h"
-#include "app_observer.hpp"
+
 #include "state_manager.hpp"
 #include "algorithm"
 #include <string>
@@ -10,15 +10,9 @@
 
 namespace bden::state
 {
-    class state_menu final : public applicationlayer::application_observer, public AppStateType
+    class state_menu final : public AppStateType
     {
-        int screen_width = 0;
-        int screen_height = 0;
-        void update_app_listener(int w, int h) override
-        {
-            screen_width = w;
-            screen_height = h;
-        }
+
         snek::world<bden::config::menu_config::menu_configuration_policy> world;
 
     public:
