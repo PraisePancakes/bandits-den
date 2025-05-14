@@ -7,26 +7,18 @@
 
 namespace bden::systems
 {
- 
+
     using namespace components;
 
     template <typename WorldPolicy>
     class CameraManager final
     {
         Camera2D cam{};
-        int screen_width = 0;
-        int screen_height = 0;
 
         snek::world<WorldPolicy> &world;
 
     public:
         CameraManager(snek::world<WorldPolicy> &w) : world(w) {};
-
-        void update_app_listener(int w, int h)
-        {
-            screen_width = w;
-            screen_height = h;
-        }
 
         void update(float dt, WorldPolicy::entity_type player)
         {
@@ -37,7 +29,7 @@ namespace bden::systems
             auto lerpy = Lerp(cam.target.y, ptc.translation.y, dt * LERP_FACTOR);
 
             cam.target = {lerpx, lerpy};
-            cam.offset = {screen_width / 2.0f, screen_height / 2.0f};
+            cam.offset = {GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f};
             cam.rotation = 0.0f;
             cam.zoom = 1.0f;
         }
