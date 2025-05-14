@@ -5,7 +5,7 @@
 #include "raymath.h"
 #include "../../utils.hpp"
 
-namespace bden::gamelayer::systems
+namespace bden::systems
 {
     using namespace config;
 

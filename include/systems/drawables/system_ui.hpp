@@ -4,7 +4,7 @@
 #include "rlgl.h"
 #include "raymath.h"
 
-namespace bden::gamelayer::systems
+namespace bden::systems
 {
 
     using namespace components;

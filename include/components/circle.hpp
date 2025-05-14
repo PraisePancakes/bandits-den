@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "raylib.h"
-namespace bden::gamelayer::components
+namespace bden::components
 {
     struct CircleComponent
     {

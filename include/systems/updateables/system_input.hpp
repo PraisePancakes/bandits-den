@@ -5,7 +5,7 @@
 #include "system_camera.hpp"
 #include "../../config.hpp"
 
-namespace bden::gamelayer::systems
+namespace bden::systems
 {
    
     using namespace components;

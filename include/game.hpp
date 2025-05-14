@@ -18,18 +18,18 @@
 #include <cmath>
 #include "rlgl.h"
 
-namespace bden::gamelayer
+namespace bden::state
 {
     using namespace components;
     using namespace config;
-    using namespace config::world_config;
+    using namespace config::game_config;
 
     // TODO create glow effect for entites
 
     class state_game final : public applicationlayer::application_observer, public bden::fsm::State<bden::fsm::states::APP_STATES>
     {
 
-        using WorldType = snek::world<world_config::configuration_policy>;
+        using WorldType = snek::world<game_config::game_configuration_policy>;
         WorldType world;
         WorldType::entity_type player;
         WorldType::entity_type test;

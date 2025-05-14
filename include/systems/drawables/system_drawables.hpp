@@ -5,7 +5,7 @@
 #include "../../config.hpp"
 #include "../../utils.hpp"
 
-namespace bden::gamelayer::systems
+namespace bden::systems
 {
 
     using namespace components;

@@ -5,7 +5,7 @@
 #include "raymath.h"
 #include "../../utils.hpp"
 
-namespace bden::gamelayer::systems
+namespace bden::systems
 {
 
     using namespace components;
@@ -34,7 +34,7 @@ namespace bden::gamelayer::systems
 
         void system_updateables_damage(float dt, WorldPolicy::entity_type player)
         {
-            const std::vector<typename WorldPolicy::entity_type> enemies = world.template get_tagged_entities((typename WorldPolicy::entity_type)config::world_config::TagEnum::TAG_ENEMIES);
+            const std::vector<typename WorldPolicy::entity_type> enemies = world.template get_tagged_entities((typename WorldPolicy::entity_type)config::game_config::TagEnum::TAG_ENEMIES);
 
             auto &prb = world.template get_ref<RigidBodyComponent>(player);
 

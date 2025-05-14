@@ -6,18 +6,19 @@
 #include "components/square.hpp"
 #include "components/triangle.hpp"
 #include "components/weapon.hpp"
+#include "components/button.hpp"
 #include "../vendor/SnakeECS/snakeecs/snakeecs.hpp"
 
-namespace bden::gamelayer::config
+namespace bden::config
 {
-    namespace world_config
+    namespace game_config
     {
-        using component_list = snek::component_list<components::SquareComponent,
-                                                    components::RigidBodyComponent,
-                                                    components::HealthComponent,
-                                                    components::CircleComponent,
-                                                    components::AggroComponent,
-                                                    components::WeaponComponent>;
+        using game_component_list = snek::component_list<components::SquareComponent,
+                                                         components::RigidBodyComponent,
+                                                         components::HealthComponent,
+                                                         components::CircleComponent,
+                                                         components::AggroComponent,
+                                                         components::WeaponComponent>;
 
         enum class TagEnum : u64
         {
@@ -26,7 +27,14 @@ namespace bden::gamelayer::config
             TAG_FRIENDLIES
         } Tags;
 
-        using configuration_policy = snek::world_policy<u64, component_list, std::allocator<u64>>;
+        using game_configuration_policy = snek::world_policy<u64, game_component_list, std::allocator<u64>>;
+    }
+
+    namespace menu_config
+    {
+        using menu_component_list = snek::component_list<components::ButtonComponent>;
+
+        using menu_configuration_policy = snek::world_policy<u64, menu_component_list, std::allocator<u64>>;
     }
 
     namespace player

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "components/rigidbody.hpp"
 
-namespace bden::gamelayer::utils
+namespace bden::utils
 {
     bool collided(const components::RigidBodyComponent &rb1, const components::RigidBodyComponent &rb2, float radius)
     {

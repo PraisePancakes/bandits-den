@@ -1,6 +1,6 @@
 #pragma once
 
-namespace bden::gamelayer::components
+namespace  bden::components
 {
     struct AggroComponent
     {

@@ -20,8 +20,8 @@ namespace bden::applicationlayer
     private:
         std::string win_title;
         unsigned int config_flags;
-        bden::gamelayer::state_game *game;
-        bden::gamelayer::state_menu *menu;
+        bden::state::state_game *game;
+        bden::state::state_menu *menu;
         std::list<application_observer *> observers;
 
         AppStateManagerType state_manager;
@@ -51,8 +51,8 @@ namespace bden::applicationlayer
             InitWindow(w, h, t.c_str());
             SetTargetFPS(60);
 
-            game = new bden::gamelayer::state_game(&state_manager);
-            menu = new bden::gamelayer::state_menu(&state_manager);
+            game = new bden::state::state_game(&state_manager);
+            menu = new bden::state::state_menu(&state_manager);
             state_manager.insert_state(AppStateManagerType::states_type::STATE_MENU, menu);
             state_manager.insert_state(AppStateManagerType::states_type::STATE_GAME, game);
 

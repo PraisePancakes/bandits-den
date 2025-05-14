@@ -8,7 +8,7 @@
 #include <string>
 #include <cmath>
 
-namespace bden::gamelayer
+namespace bden::state
 {
     class state_menu final : public applicationlayer::application_observer, public AppStateType
     {
@@ -19,6 +19,7 @@ namespace bden::gamelayer
             screen_width = w;
             screen_height = h;
         }
+        snek::world<bden::config::menu_config::menu_configuration_policy> world;
 
     public:
         state_menu(AppStateManagerType *ctx) : State(ctx) {
