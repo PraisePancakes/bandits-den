@@ -29,14 +29,20 @@ namespace bden::config
             TAG_FRIENDLIES
         } Tags;
 
-        using game_configuration_policy = snek::world_policy<u64, game_component_list, std::allocator<u64>>;
+        using game_configuration_policy = snek::world_policy<u64, game_component_list, std::allocator<u64>, TagEnum>;
     }
 
     namespace menu_config
     {
         using menu_component_list = snek::component_list<components::ButtonComponent, components::TextComponent>;
-
-        using menu_configuration_policy = snek::world_policy<u64, menu_component_list, std::allocator<u64>>;
+        enum class TagEnum : u64
+        {
+            TAG_TITLE,
+            TAG_PLAY,
+            TAG_QUIT,
+            TAG_PARTICLE
+        } Tags;
+        using menu_configuration_policy = snek::world_policy<u64, menu_component_list, std::allocator<u64>, TagEnum>;
     }
 
     namespace player

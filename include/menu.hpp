@@ -13,18 +13,30 @@ namespace bden::state
 {
     class state_menu final : public AppStateType
     {
+        using world_policy = bden::config::menu_config::menu_configuration_policy;
+        snek::world<world_policy> world;
+        bden::systems::DrawableManager<world_policy> render_system; // for menu particles
+        bden::systems::UIManager<world_policy> ui_system;           // for menu ui
+        world_policy::entity_type title;
 
-        snek::world<bden::config::menu_config::menu_configuration_policy> world;
-        bden::systems::DrawableManager<bden::config::menu_config::menu_configuration_policy> render_system; // for menu particles
-        bden::systems::UIManager<bden::config::menu_config::menu_configuration_policy> ui_system;           // for menu ui
-        void init_menu_entities()
+        void init_menu_title()
         {
-            auto title = world.spawn();
+            auto e = world.spawn(world_policy::tag_type::TAG_TITLE);
+            title = e;
             Transform loc{};
             loc.translation.x = GetScreenWidth() / 2;
             loc.translation.y = GetScreenHeight() / 2;
+            world.bind<TextComponent>(e, loc, "bandits-den", RED, 40);
+        };
 
-            world.bind<TextComponent>(title, loc, "bandits-den", RED, 40);
+        void init_menu_play_text()
+        {
+            auto title_text = world.get<TextComponent>(title);
+        };
+
+        void init_menu_entities()
+        {
+            init_menu_title();
         };
 
     public:

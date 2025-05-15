@@ -8,6 +8,7 @@ const int h = 960;
 
 int main()
 {
+    // TO DO IMPLEMENT TAG SYSTEM FOR SNAKEECS WORLD POLICY
     bden::applicationlayer::application a(w, h, "BanditsDen", FLAG_WINDOW_RESIZABLE);
     a.run();
 
