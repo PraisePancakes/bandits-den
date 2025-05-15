@@ -27,7 +27,7 @@ namespace bden::fsm
     public:
         State(StateManager<T> *ctx) : context(ctx) {};
         virtual void on_update(float) = 0;
-        virtual void on_render(RenderTexture2D &target) = 0;
+        virtual void on_render() = 0;
         virtual void on_exit() = 0;
         StateManager<T> *get_context() const
         {

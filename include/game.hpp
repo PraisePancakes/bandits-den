@@ -113,7 +113,7 @@ namespace bden::state
             system_updateables_delete_entities();
         };
 
-        void on_render(RenderTexture2D &target) override
+        void on_render() override
         {
             float scale = std::min((float)GetScreenWidth() / app_config::VIRTUAL_WIDTH, (float)GetScreenHeight() / app_config::VIRTUAL_HEIGHT);
             BeginDrawing();

@@ -62,12 +62,30 @@ namespace bden::state
             }
         };
 
-        void on_render(RenderTexture2D &target) override
+        void on_render() override
         {
-            BeginDrawing();
+            float scale = std::min((float)GetScreenWidth() / app_config::VIRTUAL_WIDTH, (float)GetScreenHeight() / app_config::VIRTUAL_HEIGHT);
+            BeginTextureMode(target);
             ClearBackground(RAYWHITE);
             render_system.render();
             ui_system.render();
+            EndTextureMode();
+
+            BeginDrawing();
+            ClearBackground(BLACK);
+            Rectangle src = {0.f, 0.f, (float)target.texture.width, (float)-target.texture.height};
+            Vector2 dest_pos = {(GetScreenWidth() - ((float)app_config::VIRTUAL_WIDTH * scale)) * 0.5f, (GetScreenHeight() - ((float)app_config::VIRTUAL_HEIGHT * scale)) * 0.5f};
+            Vector2 dest_dim = {(float)app_config::VIRTUAL_WIDTH * scale, (float)app_config::VIRTUAL_HEIGHT * scale};
+            Rectangle dest = {
+                dest_pos.x,
+                dest_pos.y,
+                dest_dim.x,
+                dest_dim.y};
+            Vector2 origin = {0, 0};
+
+            DrawTexturePro(target.texture, src,
+                           dest,
+                           origin, 0.0f, WHITE);
             EndDrawing();
         };
 

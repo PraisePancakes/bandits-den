@@ -48,10 +48,10 @@ namespace bden::applicationlayer
 
             while (!WindowShouldClose()) // Detect window close button or ESC key
             {
-               
+
                 float dt = GetFrameTime();
                 state_manager.get_current_state()->on_update(dt);
-                state_manager.get_current_state()->on_render(render_target);
+                state_manager.get_current_state()->on_render();
             }
         };
 
