@@ -14,6 +14,16 @@ namespace snek
     // #ALLOCATOR_TYPE
     using namespace traits;
 
+    namespace helper
+    {
+        template <typename Policy, typename C>
+        [[nodiscard]] static constexpr bool check_valid_component_index()
+        {
+            return (snek::utils::index_of<std::remove_cv_t<C>, typename Policy::component_list>() != -1);
+        }
+
+    }
+
     template <typename EntityT, typename ComponentList, typename AllocatorT>
     struct world_policy;
 
@@ -21,6 +31,7 @@ namespace snek
     struct world_policy
     {
 
+        using this_type = world_policy<EntityT, ComponentList, AllocatorT>;
         using component_list = ComponentList;
         using allocator_type = AllocatorT;
         using traits = entity::entity_traits<EntityT>;
@@ -42,11 +53,16 @@ namespace snek
             return snek::utils::index_of<C, component_list>();
         }
 
-        template <typename C>
+        template <typename Cs>
         [[nodiscard]] static constexpr bool is_valid_component()
         {
+            return (helper::check_valid_component_index<this_type, Cs>());
+        }
 
-            return (snek::utils::index_of<C, component_list>() != -1);
+        template <typename... Cs>
+        [[nodiscard]] static constexpr bool is_valid_component_set()
+        {
+            return (helper::check_valid_component_index<this_type, Cs>() && ...);
         }
 
         [[nodiscard]] static entity_type to_entity(entity_type id)

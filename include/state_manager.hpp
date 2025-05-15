@@ -28,6 +28,7 @@ namespace bden::fsm
         State(StateManager<T> *ctx) : context(ctx) {};
         virtual void on_update(float) = 0;
         virtual void on_render() = 0;
+        virtual void on_exit() = 0;
         StateManager<T> *get_context() const
         {
             return context;
@@ -54,6 +55,7 @@ namespace bden::fsm
 
         void set_state(STATE_ENUM id)
         {
+
             current_state = states[id];
         };
 

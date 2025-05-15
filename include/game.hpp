@@ -10,7 +10,6 @@
 #include "systems/updateables/system_health.hpp"
 #include "systems/updateables/system_ai.hpp"
 #include "systems/drawables/system_drawables.hpp"
-#include "systems/drawables/system_ui.hpp"
 #include "state_manager.hpp"
 
 #include "algorithm"
@@ -41,7 +40,6 @@ namespace bden::state
         systems::HealthManager<WorldType::world_policy> health_system;
         systems::AiManager<WorldType::world_policy> ai_system;
         systems::DrawableManager<WorldType::world_policy> render_system;
-        systems::UIManager<WorldType::world_policy> ui_system;
 
         void system_updateables_delete_entities()
         {
@@ -87,12 +85,9 @@ namespace bden::state
             return test;
         };
 
-      
-
         void system_drawables()
         {
-            render_system.render(player);
-            ui_system.render();
+            render_system.render();
         };
 
     public:
@@ -102,7 +97,7 @@ namespace bden::state
                                                                                   physics_system(world),
                                                                                   input_system(world),
                                                                                   health_system(world, to_delete),
-                                                                                  ai_system(world), render_system(world), ui_system(world) {
+                                                                                  ai_system(world), render_system(world) {
 
                                                                                   };
         void on_update(float dt) override
@@ -127,6 +122,9 @@ namespace bden::state
             EndMode2D();
             EndDrawing();
         };
+
+        void on_exit() override {};
+
         ~state_game() = default;
     };
 };

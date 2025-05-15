@@ -7,6 +7,7 @@
 #include "components/triangle.hpp"
 #include "components/weapon.hpp"
 #include "components/button.hpp"
+#include "components/text.hpp"
 #include "../vendor/SnakeECS/snakeecs/snakeecs.hpp"
 
 namespace bden::config
@@ -18,7 +19,8 @@ namespace bden::config
                                                          components::HealthComponent,
                                                          components::CircleComponent,
                                                          components::AggroComponent,
-                                                         components::WeaponComponent>;
+                                                         components::WeaponComponent,
+                                                         components::ButtonComponent>;
 
         enum class TagEnum : u64
         {
@@ -32,7 +34,7 @@ namespace bden::config
 
     namespace menu_config
     {
-        using menu_component_list = snek::component_list<components::ButtonComponent>;
+        using menu_component_list = snek::component_list<components::ButtonComponent, components::TextComponent>;
 
         using menu_configuration_policy = snek::world_policy<u64, menu_component_list, std::allocator<u64>>;
     }
