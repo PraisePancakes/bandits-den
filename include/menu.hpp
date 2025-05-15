@@ -22,7 +22,7 @@ namespace bden::state
         void init_menu_title()
         {
 
-            auto e = world.spawn(world_policy::tag_type::TAG_TITLE);
+            auto e = world.spawn();
             title = e;
             Transform loc{};
             auto text_dim = MeasureTextEx(GetFontDefault(), "bandits-den", 40, 1);
@@ -31,11 +31,11 @@ namespace bden::state
             world.bind<TextComponent>(e, loc, "bandits-den", RED, 40);
 
             // backtext
-            auto e2 = world.spawn(world_policy::tag_type::TAG_TITLE);
+            auto e2 = world.spawn();
             Transform loc2{};
             loc2.translation.x = (GetScreenWidth() / 2) - (text_dim.x / 2) + 2;
             loc2.translation.y = (GetScreenHeight() / 2) + (text_dim.y / 2) - 2;
-            world.bind<TextComponent>(e2, loc2, "bandits-den", BLACK, 40);
+            world.bind<TextComponent>(e2, loc2, "bandits-den...", BLACK, 40);
         };
 
         void init_menu_play_text()
@@ -43,7 +43,7 @@ namespace bden::state
             auto title_text = world.get<TextComponent>(title);
         };
 
-        void init_menu_entities()
+        void init_menu_gui()
         {
             init_menu_title();
         };
@@ -51,7 +51,7 @@ namespace bden::state
     public:
         state_menu(AppStateManagerType *ctx) : State(ctx), render_system(world), ui_system(world)
         {
-            init_menu_entities();
+            init_menu_gui();
         };
         void on_update(float dt) override
         {
