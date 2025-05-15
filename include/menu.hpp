@@ -21,12 +21,21 @@ namespace bden::state
 
         void init_menu_title()
         {
+
             auto e = world.spawn(world_policy::tag_type::TAG_TITLE);
             title = e;
             Transform loc{};
-            loc.translation.x = GetScreenWidth() / 2;
-            loc.translation.y = GetScreenHeight() / 2;
+            auto text_dim = MeasureTextEx(GetFontDefault(), "bandits-den", 40, 1);
+            loc.translation.x = (GetScreenWidth() / 2) - (text_dim.x / 2);
+            loc.translation.y = (GetScreenHeight() / 2) + (text_dim.y / 2);
             world.bind<TextComponent>(e, loc, "bandits-den", RED, 40);
+
+            // backtext
+            auto e2 = world.spawn(world_policy::tag_type::TAG_TITLE);
+            Transform loc2{};
+            loc2.translation.x = (GetScreenWidth() / 2) - (text_dim.x / 2) + 2;
+            loc2.translation.y = (GetScreenHeight() / 2) + (text_dim.y / 2) - 2;
+            world.bind<TextComponent>(e2, loc2, "bandits-den", BLACK, 40);
         };
 
         void init_menu_play_text()
