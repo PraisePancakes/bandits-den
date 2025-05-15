@@ -11,7 +11,8 @@ namespace bden::fsm
             STATE_NULL = -1,
             STATE_MENU,
             STATE_GAME,
-            STATE_PAUSE
+            STATE_PAUSE,
+
         };
     };
 
@@ -25,10 +26,12 @@ namespace bden::fsm
         static_assert(std::is_enum_v<T>, "StateManager requires an enum type");
 
     public:
+        using type = T;
         State(StateManager<T> *ctx) : context(ctx) {};
         virtual void on_update(float) = 0;
         virtual void on_render() = 0;
         virtual void on_exit() = 0;
+        bool is_active = false;
         StateManager<T> *get_context() const
         {
             return context;
@@ -55,9 +58,24 @@ namespace bden::fsm
 
         void set_state(STATE_ENUM id)
         {
+            if (current_state)
+                current_state->is_active = false;
 
             current_state = states[id];
+            current_state->is_active = true;
         };
+
+        states_type get_current_state_type() const
+        {
+            for (auto &s : states)
+            {
+                if (s.second == current_state)
+                {
+                    return s.first;
+                }
+            }
+            return states::APP_STATES::STATE_NULL;
+        }
 
         State<STATE_ENUM> *get_state(STATE_ENUM id)
         {

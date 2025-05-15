@@ -18,6 +18,7 @@ namespace bden::state
         bden::systems::DrawableManager<world_policy> render_system; // for menu particles
         bden::systems::UIManager<world_policy> ui_system;           // for menu ui
         world_policy::entity_type title;
+        world_policy::entity_type play;
         RenderTexture2D target;
 
         void init_menu_title()
@@ -42,11 +43,26 @@ namespace bden::state
         void init_menu_play_text()
         {
             auto title_text = world.get<TextComponent>(title);
+            auto play_text = world.spawn();
+            play = play_text;
+            Transform loc{title_text->transform.translation.x + 50, title_text->transform.translation.y + 50};
+            world.bind<TextComponent>(play_text, loc, "Press ENTER to play...", BLACK, 20);
+        };
+
+        void init_menu_quit_text()
+        {
+            auto play_text = world.get<TextComponent>(play);
+            auto quit_text = world.spawn();
+
+            Transform loc{play_text->transform.translation.x, play_text->transform.translation.y + 50};
+            world.bind<TextComponent>(quit_text, loc, "Press ESC to quit...", BLACK, 20);
         };
 
         void init_menu_gui()
         {
             init_menu_title();
+            init_menu_play_text();
+            init_menu_quit_text();
         };
 
     public:
@@ -56,6 +72,7 @@ namespace bden::state
         };
         void on_update(float dt) override
         {
+
             if (IsKeyPressed(KEY_ENTER))
             {
                 this->get_context()->set_state(AppStateManagerType::states_type::STATE_GAME);

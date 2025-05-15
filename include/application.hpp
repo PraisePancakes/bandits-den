@@ -39,16 +39,13 @@ namespace bden::applicationlayer
             menu = new bden::state::state_menu(&state_manager, render_target);
             state_manager.insert_state(AppStateManagerType::states_type::STATE_MENU, menu);
             state_manager.insert_state(AppStateManagerType::states_type::STATE_GAME, game);
-
             state_manager.set_state(AppStateManagerType::states_type::STATE_MENU);
         };
 
         void run()
         {
-
             while (!WindowShouldClose()) // Detect window close button or ESC key
             {
-
                 float dt = GetFrameTime();
                 state_manager.get_current_state()->on_update(dt);
                 state_manager.get_current_state()->on_render();
