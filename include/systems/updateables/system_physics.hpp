@@ -52,8 +52,14 @@ namespace bden::systems
 
         void update(float dt, WorldPolicy::entity_type player)
         {
-            system_updateables_position(dt);
-            system_updateables_collider(dt, player);
+            if constexpr (WorldPolicy::template is_valid_component_set<SquareComponent, RigidBodyComponent>())
+            {
+                system_updateables_position(dt);
+            }
+            if constexpr (WorldPolicy::template is_valid_component<RigidBodyComponent>())
+            {
+                system_updateables_collider(dt, player);
+            }
         }
     };
 }

@@ -34,7 +34,7 @@ namespace bden::systems
 
         void system_updateables_damage(float dt, WorldPolicy::entity_type player)
         {
-            const std::vector<typename WorldPolicy::entity_type> enemies = world.template get_tagged_entities((typename WorldPolicy::entity_type)config::game_config::TagEnum::TAG_ENEMIES);
+            const std::vector<typename WorldPolicy::entity_type> enemies = world.template get_tagged_entities(config::game_config::TagEnum::TAG_ENEMIES);
 
             auto &prb = world.template get_ref<RigidBodyComponent>(player);
 
@@ -70,8 +70,15 @@ namespace bden::systems
         void update(float dt, WorldPolicy::entity_type player)
         {
 
-            system_updateables_health_ui();
-            system_updateables_damage(dt, player);
+            if constexpr (WorldPolicy::template is_valid_component_set<SquareComponent, RigidBodyComponent, HealthComponent>())
+            {
+                system_updateables_health_ui();
+            }
+
+            if constexpr (WorldPolicy::template is_valid_component_set<WeaponComponent, RigidBodyComponent>())
+            {
+                system_updateables_damage(dt, player);
+            }
         }
     };
 }

@@ -61,7 +61,10 @@ namespace bden::systems
 
         void update(float dt, WorldPolicy::entity_type player)
         {
-            system_updateables_aggro(player);
+            if constexpr (WorldPolicy::template is_valid_component_set<RigidBodyComponent, AggroComponent>())
+            {
+                system_updateables_aggro(player);
+            }
         }
     };
 }

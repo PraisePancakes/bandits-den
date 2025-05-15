@@ -91,15 +91,15 @@ namespace bden::state
         };
 
     public:
-        state_game(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx) : State(ctx), player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
-                                                                                  test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
-                                                                                  camera_system(world),
-                                                                                  physics_system(world),
-                                                                                  input_system(world),
-                                                                                  health_system(world, to_delete),
-                                                                                  ai_system(world), render_system(world) {
+        state_game(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx, RenderTexture2D &render_target) : State(ctx), player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
+                                                                                                                  test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
+                                                                                                                  camera_system(world),
+                                                                                                                  physics_system(world),
+                                                                                                                  input_system(world),
+                                                                                                                  health_system(world, to_delete),
+                                                                                                                  ai_system(world), render_system(world) {
 
-                                                                                  };
+                                                                                                                  };
         void on_update(float dt) override
         {
             if (!world.contains(player))
@@ -113,8 +113,9 @@ namespace bden::state
             system_updateables_delete_entities();
         };
 
-        void on_render() override
+        void on_render(RenderTexture2D &target) override
         {
+            float scale = std::min((float)GetScreenWidth() / app_config::VIRTUAL_WIDTH, (float)GetScreenHeight() / app_config::VIRTUAL_HEIGHT);
             BeginDrawing();
             ClearBackground(BLACK);
             BeginMode2D(camera_system.get_camera());

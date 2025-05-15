@@ -16,11 +16,7 @@ namespace bden::systems
         Camera2D cam{};
 
         snek::world<WorldPolicy> &world;
-
-    public:
-        CameraManager(snek::world<WorldPolicy> &w) : world(w) {};
-
-        void update(float dt, WorldPolicy::entity_type player)
+        void update_cam(float dt, WorldPolicy::entity_type player)
         {
             const float LERP_FACTOR = 5;
             auto &rb = world.template get_ref<RigidBodyComponent>(player);
@@ -32,6 +28,17 @@ namespace bden::systems
             cam.offset = {GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f};
             cam.rotation = 0.0f;
             cam.zoom = 1.0f;
+        };
+
+    public:
+        CameraManager(snek::world<WorldPolicy> &w) : world(w) {};
+
+        void update(float dt, WorldPolicy::entity_type player)
+        {
+            if constexpr (WorldPolicy::template is_valid_component<RigidBodyComponent>())
+            {
+                update_cam(dt, player);
+            }
         }
 
         const Camera2D &get_camera() const

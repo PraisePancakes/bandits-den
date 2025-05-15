@@ -18,6 +18,7 @@ namespace bden::state
         bden::systems::DrawableManager<world_policy> render_system; // for menu particles
         bden::systems::UIManager<world_policy> ui_system;           // for menu ui
         world_policy::entity_type title;
+        RenderTexture2D target;
 
         void init_menu_title()
         {
@@ -49,7 +50,7 @@ namespace bden::state
         };
 
     public:
-        state_menu(AppStateManagerType *ctx) : State(ctx), render_system(world), ui_system(world)
+        state_menu(AppStateManagerType *ctx, RenderTexture2D rt) : State(ctx), render_system(world), ui_system(world), target(rt)
         {
             init_menu_gui();
         };
@@ -61,7 +62,7 @@ namespace bden::state
             }
         };
 
-        void on_render() override
+        void on_render(RenderTexture2D &target) override
         {
             BeginDrawing();
             ClearBackground(RAYWHITE);

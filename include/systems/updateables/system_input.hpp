@@ -7,7 +7,7 @@
 
 namespace bden::systems
 {
-   
+
     using namespace components;
 
     template <typename WorldPolicy>
@@ -80,8 +80,14 @@ namespace bden::systems
 
         void update(WorldPolicy::entity_type player, CameraManager<WorldPolicy> &camera_system)
         {
-            system_updateables_input_player_keys(player);
-            system_updateables_input_player_mouse(player, camera_system);
+            if constexpr (WorldPolicy::template is_valid_component<RigidBodyComponent>())
+            {
+                system_updateables_input_player_keys(player);
+            }
+            if constexpr (WorldPolicy::template is_valid_component_set<RigidBodyComponent, SquareComponent>())
+            {
+                system_updateables_input_player_mouse(player, camera_system);
+            }
         }
     };
 }

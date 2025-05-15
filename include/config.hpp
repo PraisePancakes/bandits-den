@@ -12,6 +12,14 @@
 
 namespace bden::config
 {
+    namespace app_config
+    {
+        constexpr static int VIRTUAL_WIDTH = 1280;
+        constexpr static int VIRTUAL_HEIGHT = 720;
+        constexpr static int WINDOW_FLAGS = FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI;
+        const static std::string WINDOW_TITLE("bandits-den");
+    }
+
     namespace game_config
     {
         using game_component_list = snek::component_list<components::SquareComponent,

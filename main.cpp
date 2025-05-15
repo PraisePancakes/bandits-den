@@ -3,13 +3,11 @@
 #include "include/application.hpp"
 #include <vector>
 
-const int w = 1280;
-const int h = 960;
-
 int main()
 {
+    using namespace bden::config;
     // TO DO IMPLEMENT TAG SYSTEM FOR SNAKEECS WORLD POLICY
-    bden::applicationlayer::application a(w, h, "BanditsDen", FLAG_WINDOW_RESIZABLE);
+    bden::applicationlayer::application a(app_config::VIRTUAL_WIDTH, app_config::VIRTUAL_HEIGHT, app_config::WINDOW_TITLE, app_config::WINDOW_FLAGS);
     a.run();
 
     return 0;
