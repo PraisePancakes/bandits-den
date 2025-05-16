@@ -17,6 +17,7 @@ namespace bden::state
         snek::world<world_policy> world;
         bden::systems::DrawableManager<world_policy> render_system; // for menu particles
         bden::systems::UIManager<world_policy> ui_system;           // for menu ui
+        bden::systems::PhysicsManager<world_policy> physics_system;
         world_policy::entity_type title;
         world_policy::entity_type play;
         RenderTexture2D target;
@@ -29,14 +30,14 @@ namespace bden::state
             Transform loc{};
             auto text_dim = MeasureTextEx(GetFontDefault(), "bandits-den", 40, 1);
             loc.translation.x = (GetScreenWidth() / 2) - (text_dim.x / 2);
-            loc.translation.y = (GetScreenHeight() / 2) + (text_dim.y / 2);
+            loc.translation.y = (GetScreenHeight() / 3) + (text_dim.y / 2);
             world.bind<TextComponent>(e, loc, "bandits-den", RED, 40);
 
             // backtext
             auto e2 = world.spawn();
             Transform loc2{};
             loc2.translation.x = (GetScreenWidth() / 2) - (text_dim.x / 2) + 2;
-            loc2.translation.y = (GetScreenHeight() / 2) + (text_dim.y / 2) - 2;
+            loc2.translation.y = (GetScreenHeight() / 3) + (text_dim.y / 2) - 2;
             world.bind<TextComponent>(e2, loc2, "bandits-den...", BLACK, 40);
         };
 
@@ -45,8 +46,16 @@ namespace bden::state
             auto title_text = world.get<TextComponent>(title);
             auto play_text = world.spawn();
             play = play_text;
-            Transform loc{title_text->transform.translation.x + 50, title_text->transform.translation.y + 50};
-            world.bind<TextComponent>(play_text, loc, "Press ENTER to play...", BLACK, 20);
+            Transform loc{title_text->transform.translation.x + 50, title_text->transform.translation.y + 75};
+            world.bind<TextComponent>(play_text, loc, "Press", BLACK, 20);
+            // ENTER
+            auto enter_text = world.spawn();
+            Transform loc2{loc.translation.x + 75, loc.translation.y};
+            world.bind<TextComponent>(enter_text, loc2, "ENTER", LIME, 20);
+            // to play
+            auto to_play_text = world.spawn();
+            Transform loc3{loc2.translation.x + 85, loc2.translation.y};
+            world.bind<TextComponent>(to_play_text, loc3, "to play", BLACK, 20);
         };
 
         void init_menu_quit_text()
@@ -55,7 +64,34 @@ namespace bden::state
             auto quit_text = world.spawn();
 
             Transform loc{play_text->transform.translation.x, play_text->transform.translation.y + 50};
-            world.bind<TextComponent>(quit_text, loc, "Press ESC to quit...", BLACK, 20);
+            world.bind<TextComponent>(quit_text, loc, "Press", BLACK, 20);
+            // ESC
+            auto esc_text = world.spawn();
+            Transform loc2{loc.translation.x + 75, loc.translation.y};
+            world.bind<TextComponent>(esc_text, loc2, "ESC", RED, 20);
+            // to play
+            auto to_quit_text = world.spawn();
+            Transform loc3{loc2.translation.x + 55, loc2.translation.y};
+            world.bind<TextComponent>(to_quit_text, loc3, "to quit", BLACK, 20);
+        };
+
+        void init_menu_particles()
+        {
+
+            for (size_t i = 0; i < menu_config::PARTICLE_COUNT; i++)
+            {
+                auto e = world.spawn();
+
+                Transform particle_transform{};
+                particle_transform.translation.x = ((std::rand() % GetScreenWidth()) + 1);
+                particle_transform.translation.y = ((std::rand() % GetScreenHeight()) + 1);
+                Vector2 particle_vel{};
+                float particle_collider_r = 2.f;
+                RigidBodyComponent rb{particle_transform, particle_vel, particle_collider_r};
+                Color particle_color(GREEN);
+
+                world.bind<ParticleComponent>(e, rb, particle_color);
+            }
         };
 
         void init_menu_gui()
@@ -66,17 +102,19 @@ namespace bden::state
         };
 
     public:
-        state_menu(AppStateManagerType *ctx, RenderTexture2D rt) : State(ctx), render_system(world), ui_system(world), target(rt)
+        state_menu(AppStateManagerType *ctx, RenderTexture2D rt) : State(ctx), render_system(world), ui_system(world), physics_system(world), target(rt)
         {
             init_menu_gui();
+            init_menu_particles();
         };
         void on_update(float dt) override
         {
-
             if (IsKeyPressed(KEY_ENTER))
             {
                 this->get_context()->set_state(AppStateManagerType::states_type::STATE_GAME);
             }
+
+            physics_system.update(dt);
         };
 
         void on_render() override

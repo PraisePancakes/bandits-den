@@ -63,6 +63,15 @@ namespace bden::systems
                                         DrawRectangleRec(hc.health_bar, get_health_color(hc.hit_points)); });
         }
 
+        void system_drawables_particles()
+        {
+            auto drawable_entities = world.template view<ParticleComponent>();
+            drawable_entities.for_each([this](WorldPolicy::entity_type e, const ParticleComponent &particle)
+                                       {
+                                   if(!world.contains(e)) return;
+                                   DrawCircleGradient(particle.rigidbody.transform.translation.x, particle.rigidbody.transform.translation.y, particle.rigidbody.collision_radius, WHITE, particle.color); });
+        }
+
     public:
         DrawableManager(const snek::world<WorldPolicy> &w) : world(w) {};
 
@@ -80,6 +89,11 @@ namespace bden::systems
             {
                 system_drawables_health();
             };
+
+            if constexpr (WorldPolicy::template is_valid_component<ParticleComponent>())
+            {
+                system_drawables_particles();
+            }
         }
     };
 }

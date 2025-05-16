@@ -8,6 +8,7 @@
 #include "components/weapon.hpp"
 #include "components/button.hpp"
 #include "components/text.hpp"
+#include "components/particle.hpp"
 #include "../vendor/SnakeECS/snakeecs/snakeecs.hpp"
 
 namespace bden::config
@@ -42,7 +43,7 @@ namespace bden::config
 
     namespace menu_config
     {
-        using menu_component_list = snek::component_list<components::ButtonComponent, components::TextComponent>;
+        using menu_component_list = snek::component_list<components::ButtonComponent, components::TextComponent, components::ParticleComponent>;
         enum class TagEnum : u64
         {
             TAG_TITLE,
@@ -50,6 +51,8 @@ namespace bden::config
             TAG_QUIT,
             TAG_PARTICLE
         } Tags;
+        constexpr static int PARTICLE_COUNT = 500;
+        constexpr static int PARTICLE_SPEED = 5;
         using menu_configuration_policy = snek::world_policy<u64, menu_component_list, std::allocator<u64>, TagEnum>;
     }
 

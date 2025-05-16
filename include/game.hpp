@@ -85,11 +85,6 @@ namespace bden::state
             return test;
         };
 
-        void system_drawables()
-        {
-            render_system.render();
-        };
-
     public:
         state_game(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx, RenderTexture2D &render_target) : State(ctx), player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
                                                                                                                   test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
@@ -105,7 +100,7 @@ namespace bden::state
             if (!world.contains(player))
                 return;
 
-            physics_system.update(dt, player);
+            physics_system.update(dt);
             camera_system.update(dt, player);
             input_system.update(player, camera_system);
             health_system.update(dt, player);
@@ -119,7 +114,7 @@ namespace bden::state
             BeginDrawing();
             ClearBackground(BLACK);
             BeginMode2D(camera_system.get_camera());
-            system_drawables();
+            render_system.render();
             EndMode2D();
             EndDrawing();
         };
