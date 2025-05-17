@@ -38,7 +38,6 @@ namespace bden::systems
                         first.transform.translation.y -= first.velocity.y * dt;
                         second.transform.translation.x -= second.velocity.x * dt;
                         second.transform.translation.y -= second.velocity.y * dt;
-                        system_updateables_position(dt);
                     }
                 }
             }

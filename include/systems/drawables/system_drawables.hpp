@@ -30,16 +30,14 @@ namespace bden::systems
 
         void system_drawables_weapons()
         {
-
-            constexpr static float start_angle = 0.f;
-            constexpr static float end_angle = 360.f;
-            constexpr static int nsegs = 10;
+            using namespace config::ui;
 
             auto drawable_weapons = world.template view<RigidBodyComponent, WeaponComponent>();
             drawable_weapons.for_each([this](RigidBodyComponent &rb, WeaponComponent &wc)
-                                      { Vector2 center = {rb.transform.translation.x , rb.transform.translation.y};
-                                        
-                                        DrawCircleSectorLines(center, wc.radius,config::ui::weapons::START_ANGLE, config::ui::weapons::END_ANGLE, config::ui::weapons::NSEGS, wc.radius_color); });
+                                      { Vector2 center = {rb.transform.translation.x, rb.transform.translation.y};
+                                       
+                                       
+                                        DrawCircleSector(center, wc.radius,weapon_animations::START_ANGLE, weapon_animations::END_ANGLE, weapon_animations::NSEGS, wc.radius_color); });
         };
 
         Color get_health_color(float hp)

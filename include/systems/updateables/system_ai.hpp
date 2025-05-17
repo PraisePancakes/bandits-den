@@ -31,17 +31,16 @@ namespace bden::systems
                                         float x =  player_pos.x - rb.transform.translation.x ;
                                         float y = player_pos.y - rb.transform.translation.y ;
                                         auto &ang = rb.transform.rotation.x;
-                                        float rad = atan2(x, y);
+                                        float rad = atan2(y, x);
                                         float deg = (rad * 180.0) / PI;
                                        
-                                        ang = -deg;
+                                        ang = deg;
                                         rlPushMatrix();
                                         rlRotatef(ang, x, y, 0);
                                         rlPopMatrix();
 
                                         rb.velocity.x = (x > 0 ? 1 : -1);
                                         rb.velocity.y = (y > 0 ? 1 : -1);
-                                          
                                      
                                       
                                     } });

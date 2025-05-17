@@ -85,10 +85,11 @@ namespace bden::state
                 Transform particle_transform{};
                 particle_transform.translation.x = ((std::rand() % GetScreenWidth()) + 1);
                 particle_transform.translation.y = ((std::rand() % GetScreenHeight()) + 1);
+
                 Vector2 particle_vel{};
                 float particle_collider_r = 2.f;
                 RigidBodyComponent rb{particle_transform, particle_vel, particle_collider_r, menu_config::PARTICLE_SPEED};
-                Color particle_color(GREEN);
+                Color particle_color(menu_config::PARTICLE_COLOR);
 
                 world.bind<ParticleComponent>(e, rb, particle_color);
             }
@@ -97,9 +98,9 @@ namespace bden::state
         void update_menu_particles()
         {
             auto particles = world.view<ParticleComponent>();
+
             particles.for_each([](ParticleComponent &pc)
                                {
-                               
                 if(pc.rigidbody.transform.translation.x > GetScreenWidth() && pc.rigidbody.transform.translation.y > GetScreenHeight()) {
                     pc.rigidbody.transform.translation.x = -((std::rand() % GetScreenWidth()) + 1);
                     pc.rigidbody.transform.translation.y = -((std::rand() % GetScreenHeight()) + 1);

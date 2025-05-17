@@ -72,16 +72,18 @@ namespace bden::state
         WorldType::entity_type spawn_test(float w, float h, float x, float y, Color test_color, Color glow_color)
         {
             auto test = world.spawn((WorldType::entity_type)TagEnum::TAG_ENEMIES);
+            using namespace config;
 
             SquareComponent square{w, h, x, y, test_color, 0.0};
             world.bind<SquareComponent>(test, square);
             Transform test_transform{};
+            Vector2 weapon_ray{};
             test_transform.translation.x = x;
             test_transform.translation.y = y;
             world.bind<AggroComponent>(test, w * 3, false);
-            world.bind<WeaponComponent>(test, w * 1.5f, 5.f, 2.f, RED);
+            world.bind<WeaponComponent>(test, w * 1.5f, weapons::spear::damage, weapons::spear::speed, weapons::spear::color, weapon_ray);
             auto c = world.bind<CircleComponent>(test, square.rect.width, glow_color);
-            world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius, config::enemies::ENEMY_SPEED);
+            world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius, enemies::ENEMY_SPEED);
             return test;
         };
 

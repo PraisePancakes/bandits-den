@@ -53,7 +53,18 @@ namespace bden::config
         } Tags;
         constexpr static int PARTICLE_COUNT = 500;
         constexpr static float PARTICLE_SPEED = 250.f;
+        constexpr static Color PARTICLE_COLOR = BLACK;
         using menu_configuration_policy = snek::world_policy<u64, menu_component_list, std::allocator<u64>, TagEnum>;
+    }
+
+    namespace weapons
+    {
+        namespace spear
+        {
+            constexpr static Color color = RED;
+            constexpr static float damage = 5.f;
+            constexpr static float speed = 2.f;
+        }
     }
 
     namespace player
@@ -67,11 +78,12 @@ namespace bden::config
 
     namespace ui
     {
-        namespace weapons
+        namespace weapon_animations
         {
             constexpr static float START_ANGLE = 0.f;
             constexpr static float END_ANGLE = 360.f;
             constexpr static int NSEGS = 10;
+
         } // weapons
     } // ui
 
