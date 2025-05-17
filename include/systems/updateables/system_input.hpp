@@ -49,7 +49,6 @@ namespace bden::systems
             auto &sc = world.template get_ref<SquareComponent>(player);
 
             auto &tc = rb.transform;
-            auto &ang = tc.rotation.x;
             const Vector2 abs_mouse_pos = GetMousePosition();
             const Vector2 rel_screen_mouse = GetScreenToWorld2D(abs_mouse_pos, camera_system.get_camera());
             const float x = rel_screen_mouse.x - tc.translation.x;
@@ -58,9 +57,9 @@ namespace bden::systems
             float rad = atan2(x, y);
             float deg = (rad * 180.0) / PI;
 
-            ang = -deg;
+            tc.rotation.x = -deg;
             rlPushMatrix();
-            rlRotatef(ang, x, y, 0);
+            rlRotatef(tc.rotation.x, x, y, 0);
             rlPopMatrix();
         };
 

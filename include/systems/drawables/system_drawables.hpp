@@ -34,10 +34,13 @@ namespace bden::systems
 
             auto drawable_weapons = world.template view<RigidBodyComponent, WeaponComponent>();
             drawable_weapons.for_each([this](RigidBodyComponent &rb, WeaponComponent &wc)
-                                      { Vector2 center = {rb.transform.translation.x, rb.transform.translation.y};
-                                       
-                                       
-                                        DrawCircleSector(center, wc.radius,weapon_animations::START_ANGLE, weapon_animations::END_ANGLE, weapon_animations::NSEGS, wc.radius_color); });
+                                      { 
+                                        Vector2 center = {rb.transform.translation.x, rb.transform.translation.y};
+                                        float theta = rb.transform.rotation.x * DEG2RAD;
+                                        Vector2 direction = { std::cos(theta), std::sin(theta) };
+                                        Vector2 new_v = { center.x + direction.x * wc.radius, center.y + direction.y * wc.radius };
+                                        DrawLineEx(center, new_v, 2, WHITE);
+                                        DrawCircleSector(center, wc.radius, weapon_animations::START_ANGLE, weapon_animations::END_ANGLE, weapon_animations::NSEGS, wc.radius_color); });
         };
 
         Color get_health_color(float hp)

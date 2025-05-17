@@ -23,20 +23,19 @@ namespace bden::systems
 
             updateables.for_each([&prb, this](RigidBodyComponent &rb, AggroComponent &ac)
                                  {
-                                
                                         rb.velocity.x = 0;
                                         rb.velocity.y = 0;
                                     if(utils::collided(rb, prb, ac.aggro_radius)) {
                                         auto player_pos = Vector2(prb.transform.translation.x, prb.transform.translation.y);
                                         float x =  player_pos.x - rb.transform.translation.x ;
                                         float y = player_pos.y - rb.transform.translation.y ;
-                                        auto &ang = rb.transform.rotation.x;
+                                       
                                         float rad = atan2(y, x);
                                         float deg = (rad * 180.0) / PI;
-                                       
-                                        ang = deg;
+
+                                        rb.transform.rotation.x = deg;
                                         rlPushMatrix();
-                                        rlRotatef(ang, x, y, 0);
+                                        rlRotatef(rb.transform.rotation.x, x, y, 0);
                                         rlPopMatrix();
 
                                         rb.velocity.x = (x > 0 ? 1 : -1);
