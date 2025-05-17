@@ -39,18 +39,9 @@ namespace bden::systems
                                         rlRotatef(ang, x, y, 0);
                                         rlPopMatrix();
 
-                                        //move
-                                           rb.velocity.x += (x > 0 ? 1 : -1);
-                                           rb.velocity.y += (y > 0 ? 1 : -1);
-                                           auto mag = std::sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y  * rb.velocity.y );
-    
-                                           if (mag != 0.0)
-                                           {
-                                            rb.velocity.x = (rb.velocity.x / mag);
-                                            rb.velocity.y = (rb.velocity.y / mag);
-                                           }
-                                        rb.velocity.x *= config::enemies::ENEMY_SPEED;
-                                        rb.velocity.y *= config::enemies::ENEMY_SPEED;
+                                        rb.velocity.x = (x > 0 ? 1 : -1);
+                                        rb.velocity.y = (y > 0 ? 1 : -1);
+                                          
                                      
                                       
                                     } });

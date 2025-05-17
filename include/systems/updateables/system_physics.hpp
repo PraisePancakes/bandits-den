@@ -38,22 +38,25 @@ namespace bden::systems
                         first.transform.translation.y -= first.velocity.y * dt;
                         second.transform.translation.x -= second.velocity.x * dt;
                         second.transform.translation.y -= second.velocity.y * dt;
-                                        }
+                        system_updateables_position(dt);
+                    }
                 }
             }
         };
 
         void system_updateables_position(float dt)
         {
+
             auto updateables = world.template view<SquareComponent, RigidBodyComponent>();
             updateables.for_each([&dt](SquareComponent &s, RigidBodyComponent &rb)
                                  {
-                                     float xvel = rb.velocity.x;
-                                     float yvel = rb.velocity.y;
-
-                                     
-                                     rb.transform.translation.x += (xvel * dt);
-                                     rb.transform.translation.y += (yvel * dt);
+                                    float mag = std::sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y * rb.velocity.y);
+                                    if (mag > 0.0f) {
+                                        rb.velocity.x = (rb.velocity.x / mag) * rb.speed;
+                                        rb.velocity.y = (rb.velocity.y / mag) * rb.speed;
+                                    }
+                                     rb.transform.translation.x += (rb.velocity.x * dt);
+                                     rb.transform.translation.y += (rb.velocity.y * dt);
                                      s.ang = rb.transform.rotation.x;
                                      s.rect.x = rb.transform.translation.x;
                                      s.rect.y = rb.transform.translation.y; });
@@ -64,12 +67,14 @@ namespace bden::systems
             auto updateables = world.template view<ParticleComponent>();
             updateables.for_each([&dt](ParticleComponent &pc)
                                  {
-                                   
-                                     float xvel = pc.rigidbody.velocity.x;
-                                     float yvel = pc.rigidbody.velocity.y;
+                                    float mag = std::sqrt(pc.rigidbody.velocity.x * pc.rigidbody.velocity.x + pc.rigidbody.velocity.y * pc.rigidbody.velocity.y);
+                                    if (mag > 0.0f) {
+                                        pc.rigidbody.velocity.x = (pc.rigidbody.velocity.x / mag) * pc.rigidbody.speed;
+                                        pc.rigidbody.velocity.y = (pc.rigidbody.velocity.y / mag) * pc.rigidbody.speed;
+                                    }
                                     
-                                     pc.rigidbody.transform.translation.x += (xvel * dt);
-                                     pc.rigidbody.transform.translation.y += (yvel * dt); });
+                                     pc.rigidbody.transform.translation.x += ( pc.rigidbody.velocity.x * dt);
+                                     pc.rigidbody.transform.translation.y += ( pc.rigidbody.velocity.y * dt); });
         }
 
     public:

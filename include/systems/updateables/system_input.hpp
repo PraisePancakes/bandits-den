@@ -41,17 +41,6 @@ namespace bden::systems
             {
                 vel.x += 1;
             }
-            // normalize velocity vector
-            auto mag = std::sqrt(vel.x * vel.x + vel.y * vel.y);
-
-            if (mag != 0.0)
-            {
-                vel.x = (vel.x / mag);
-                vel.y = (vel.y / mag);
-            }
-            // apply speed to the velocity
-            vel.x *= config::player::PLAYER_SPEED;
-            vel.y *= config::player::PLAYER_SPEED;
         };
 
         void system_updateables_input_player_mouse(WorldPolicy::entity_type player, CameraManager<WorldPolicy> &camera_system)

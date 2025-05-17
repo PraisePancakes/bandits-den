@@ -52,7 +52,7 @@ namespace bden::config
             TAG_PARTICLE
         } Tags;
         constexpr static int PARTICLE_COUNT = 500;
-        constexpr static int PARTICLE_SPEED = 5;
+        constexpr static float PARTICLE_SPEED = 250.f;
         using menu_configuration_policy = snek::world_policy<u64, menu_component_list, std::allocator<u64>, TagEnum>;
     }
 

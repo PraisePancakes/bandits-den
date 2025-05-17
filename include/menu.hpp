@@ -94,8 +94,19 @@ namespace bden::state
             }
         };
 
-        void update_menu_particles() {
+        void update_menu_particles()
+        {
+            auto particles = world.view<ParticleComponent>();
+            particles.for_each([](ParticleComponent &pc)
+                               {
+                               
+                if(pc.rigidbody.transform.translation.x > GetScreenWidth() && pc.rigidbody.transform.translation.y > GetScreenHeight()) {
+                    pc.rigidbody.transform.translation.x = -((std::rand() % GetScreenWidth()) + 1);
+                    pc.rigidbody.transform.translation.y = -((std::rand() % GetScreenHeight()) + 1);
 
+                }
+                pc.rigidbody.velocity.x = 1;
+                pc.rigidbody.velocity.y = 1; });
         };
 
         void init_menu_gui()
@@ -117,7 +128,7 @@ namespace bden::state
             {
                 this->get_context()->set_state(AppStateManagerType::states_type::STATE_GAME);
             }
-
+            update_menu_particles();
             physics_system.update(dt);
         };
 
