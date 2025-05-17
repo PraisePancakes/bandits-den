@@ -38,7 +38,7 @@ namespace bden::systems
                         first.transform.translation.y -= first.velocity.y * dt;
                         second.transform.translation.x -= second.velocity.x * dt;
                         second.transform.translation.y -= second.velocity.y * dt;
-                    }
+                                        }
                 }
             }
         };
@@ -46,15 +46,17 @@ namespace bden::systems
         void system_updateables_position(float dt)
         {
             auto updateables = world.template view<SquareComponent, RigidBodyComponent>();
-            updateables.for_each([&dt](SquareComponent &s, RigidBodyComponent &t)
+            updateables.for_each([&dt](SquareComponent &s, RigidBodyComponent &rb)
                                  {
-                                     float xvel = t.velocity.x;
-                                     float yvel = t.velocity.y;
-                                     t.transform.translation.x += (xvel * dt);
-                                     t.transform.translation.y += (yvel * dt);
-                                     s.ang = t.transform.rotation.x;
-                                     s.rect.x = t.transform.translation.x;
-                                     s.rect.y = t.transform.translation.y; });
+                                     float xvel = rb.velocity.x;
+                                     float yvel = rb.velocity.y;
+
+                                     
+                                     rb.transform.translation.x += (xvel * dt);
+                                     rb.transform.translation.y += (yvel * dt);
+                                     s.ang = rb.transform.rotation.x;
+                                     s.rect.x = rb.transform.translation.x;
+                                     s.rect.y = rb.transform.translation.y; });
         }
 
         void system_updateables_particles(float dt)
@@ -62,8 +64,10 @@ namespace bden::systems
             auto updateables = world.template view<ParticleComponent>();
             updateables.for_each([&dt](ParticleComponent &pc)
                                  {
+                                   
                                      float xvel = pc.rigidbody.velocity.x;
                                      float yvel = pc.rigidbody.velocity.y;
+                                    
                                      pc.rigidbody.transform.translation.x += (xvel * dt);
                                      pc.rigidbody.transform.translation.y += (yvel * dt); });
         }

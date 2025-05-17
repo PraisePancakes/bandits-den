@@ -64,7 +64,7 @@ namespace bden::state
             Vector2 health_bar_size(w, 15.f);
             Rectangle health_bar_rect(health_bar_pos.x, health_bar_pos.y, health_bar_size.x, health_bar_size.y);
             world.bind<HealthComponent>(p, 100, health_bar_rect);
-            world.bind<RigidBodyComponent>(p, player_transform, Vector2(0, 0), c.radius);
+            world.bind<RigidBodyComponent>(p, player_transform, Vector2(0, 0), c.radius, config::player::PLAYER_SPEED);
 
             return p;
         };
@@ -81,7 +81,7 @@ namespace bden::state
             world.bind<AggroComponent>(test, w * 3, false);
             world.bind<WeaponComponent>(test, w * 1.5f, 5.f, 2.f, RED);
             auto c = world.bind<CircleComponent>(test, square.rect.width, glow_color);
-            world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius);
+            world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius, config::enemies::ENEMY_SPEED);
             return test;
         };
 
