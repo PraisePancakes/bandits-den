@@ -54,10 +54,10 @@ namespace bden::systems
             const float x = rel_screen_mouse.x - tc.translation.x;
             const float y = rel_screen_mouse.y - tc.translation.y;
 
-            float rad = atan2(x, y);
+            float rad = atan2(y, x);
             float deg = (rad * 180.0) / PI;
 
-            tc.rotation.x = -deg;
+            tc.rotation.x = deg;
             rlPushMatrix();
             rlRotatef(tc.rotation.x, x, y, 0);
             rlPopMatrix();

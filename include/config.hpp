@@ -15,9 +15,9 @@ namespace bden::config
 {
     namespace app_config
     {
-        constexpr static int VIRTUAL_WIDTH = 1280;
-        constexpr static int VIRTUAL_HEIGHT = 720;
-        constexpr static int WINDOW_FLAGS = FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI;
+        constexpr static int VIRTUAL_WIDTH{1280};
+        constexpr static int VIRTUAL_HEIGHT{720};
+        constexpr static int WINDOW_FLAGS{FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI};
         const static std::string WINDOW_TITLE("bandits-den");
     }
 
@@ -51,9 +51,9 @@ namespace bden::config
             TAG_QUIT,
             TAG_PARTICLE
         } Tags;
-        constexpr static int PARTICLE_COUNT = 500;
-        constexpr static float PARTICLE_SPEED = 250.f;
-        constexpr static Color PARTICLE_COLOR = BLACK;
+        constexpr static int PARTICLE_COUNT{500};
+        constexpr static float PARTICLE_SPEED{250.f};
+        constexpr static Color PARTICLE_COLOR{BLACK};
         using menu_configuration_policy = snek::world_policy<u64, menu_component_list, std::allocator<u64>, TagEnum>;
     }
 
@@ -61,28 +61,33 @@ namespace bden::config
     {
         namespace spear
         {
-            constexpr static Color color = RED;
-            constexpr static float damage = 5.f;
-            constexpr static float speed = 2.f;
+            constexpr static float radius{1.5f};
+            constexpr static Color color{RED};
+            constexpr static float damage{5.f};
+            constexpr static float speed{2.f};
         }
     }
 
     namespace player
     {
-        constexpr static float PLAYER_SPEED = 250.f;
+        constexpr static float PLAYER_SPEED{250.f};
+        constexpr static Color PLAYER_COLOR{BLUE};
+        constexpr static Color PLAYER_GLOW{253, 243, 214, 100};
     } // player
     namespace enemies
     {
-        constexpr static float ENEMY_SPEED = player::PLAYER_SPEED / 2;
+        constexpr static float ENEMY_SPEED{150.f};
+        constexpr static Color ENEMY_GLOW{253, 243, 214, 100};
+        constexpr static Color ENEMY_COLOR{RED};
     } // enemies
 
     namespace ui
     {
         namespace weapon_animations
         {
-            constexpr static float START_ANGLE = 0.f;
-            constexpr static float END_ANGLE = 360.f;
-            constexpr static int NSEGS = 10;
+            constexpr static float START_ANGLE{0.f};
+            constexpr static float END_ANGLE{360.f};
+            constexpr static int NSEGS{10};
 
         } // weapons
     } // ui

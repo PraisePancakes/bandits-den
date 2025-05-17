@@ -50,46 +50,48 @@ namespace bden::state
             to_delete.clear();
         }
 
-        WorldType::entity_type spawn_player(float w, float h, float x, float y, Color player_color, Color glow_color)
+        WorldType::entity_type spawn_player(float w, float h, float x, float y)
         {
+            using namespace config;
             auto p = world.spawn((WorldType::entity_type)TagEnum::TAG_PLAYER);
-            SquareComponent square{w, h, x, y, player_color, 0.0};
+            SquareComponent square{w, h, x, y, player::PLAYER_COLOR, 0.0};
             world.bind<SquareComponent>(p, square);
             Transform player_transform{};
             player_transform.translation.x = x;
             player_transform.translation.y = y;
 
-            const auto c = world.bind<CircleComponent>(p, square.rect.width, glow_color);
+            const auto c = world.bind<CircleComponent>(p, square.rect.width, player::PLAYER_GLOW);
             Vector2 health_bar_pos(player_transform.translation.x, player_transform.translation.y - c.radius);
             Vector2 health_bar_size(w, 15.f);
             Rectangle health_bar_rect(health_bar_pos.x, health_bar_pos.y, health_bar_size.x, health_bar_size.y);
             world.bind<HealthComponent>(p, 100, health_bar_rect);
             world.bind<RigidBodyComponent>(p, player_transform, Vector2(0, 0), c.radius, config::player::PLAYER_SPEED);
-
+            world.bind<WeaponComponent>(p, w * weapons::spear::radius, weapons::spear::damage, weapons::spear::speed, weapons::spear::color);
             return p;
         };
 
-        WorldType::entity_type spawn_test(float w, float h, float x, float y, Color test_color, Color glow_color)
+        WorldType::entity_type spawn_test(float w, float h, float x, float y)
         {
             auto test = world.spawn((WorldType::entity_type)TagEnum::TAG_ENEMIES);
             using namespace config;
 
-            SquareComponent square{w, h, x, y, test_color, 0.0};
+            SquareComponent square{w, h, x, y, enemies::ENEMY_COLOR, 0.0};
             world.bind<SquareComponent>(test, square);
             Transform test_transform{};
-            Vector2 weapon_ray{};
+
             test_transform.translation.x = x;
             test_transform.translation.y = y;
+
             world.bind<AggroComponent>(test, w * 3, false);
-            world.bind<WeaponComponent>(test, w * 1.5f, weapons::spear::damage, weapons::spear::speed, weapons::spear::color, weapon_ray);
-            auto c = world.bind<CircleComponent>(test, square.rect.width, glow_color);
+            world.bind<WeaponComponent>(test, w * weapons::spear::radius, weapons::spear::damage, weapons::spear::speed, weapons::spear::color);
+            auto c = world.bind<CircleComponent>(test, square.rect.width, enemies::ENEMY_GLOW);
             world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius, enemies::ENEMY_SPEED);
             return test;
         };
 
     public:
-        state_game(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx, RenderTexture2D &render_target) : State(ctx), player(spawn_player(100, 100, 500, 500, RED, {253, 76, 167, 47})),
-                                                                                                                  test(spawn_test(100, 100, 200, 200, BLUE, {253, 76, 167, 47})),
+        state_game(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx, RenderTexture2D &render_target) : State(ctx), player(spawn_player(100, 100, 500, 500)),
+                                                                                                                  test(spawn_test(100, 100, 200, 200)),
                                                                                                                   camera_system(world),
                                                                                                                   physics_system(world),
                                                                                                                   input_system(world),

@@ -39,8 +39,10 @@ namespace bden::systems
                                         float theta = rb.transform.rotation.x * DEG2RAD;
                                         Vector2 direction = { std::cos(theta), std::sin(theta) };
                                         Vector2 new_v = { center.x + direction.x * wc.radius, center.y + direction.y * wc.radius };
-                                        DrawLineEx(center, new_v, 2, WHITE);
-                                        DrawCircleSector(center, wc.radius, weapon_animations::START_ANGLE, weapon_animations::END_ANGLE, weapon_animations::NSEGS, wc.radius_color); });
+
+                                       
+                                        DrawCircleSector(center, wc.radius, weapon_animations::START_ANGLE, weapon_animations::END_ANGLE, weapon_animations::NSEGS, wc.radius_color); 
+                                     DrawLineEx(center, new_v, 2, WHITE); });
         };
 
         Color get_health_color(float hp)
@@ -78,14 +80,17 @@ namespace bden::systems
 
         void render()
         {
-            if constexpr (WorldPolicy::template is_valid_component_set<SquareComponent, CircleComponent>())
-            {
-                system_drawables_shapes();
-            };
+
             if constexpr (WorldPolicy::template is_valid_component_set<RigidBodyComponent, WeaponComponent>())
             {
                 system_drawables_weapons();
             }
+
+            if constexpr (WorldPolicy::template is_valid_component_set<SquareComponent, CircleComponent>())
+            {
+                system_drawables_shapes();
+            };
+
             if constexpr (WorldPolicy::template is_valid_component<HealthComponent>())
             {
                 system_drawables_health();

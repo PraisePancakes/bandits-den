@@ -161,7 +161,6 @@ namespace snek
         template <typename C, typename... Args>
         C &bind(entity_type e, Args &&...args)
         {
-
             SNEK_ASSERT(world_policy::template is_valid_component<C>(), "C must be a registered component. ");
             C *component = new C(std::forward<Args>(args)...);
             size_t c_id = world_policy::template get_component_type_id<C>();
