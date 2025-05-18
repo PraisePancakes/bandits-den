@@ -1,8 +1,9 @@
 #pragma once
-#include "../../config.hpp"
+
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
+#include "../../components/text.hpp"
 
 namespace bden::systems
 {

@@ -37,7 +37,7 @@ namespace bden::applicationlayer
             render_target = LoadRenderTexture(w, h);
             SetTextureFilter(render_target.texture, TEXTURE_FILTER_BILINEAR);
             SetTargetFPS(60);
-
+            SetExitKey(KEY_NULL);
             game = new bden::state::state_game(&state_manager, render_target);
             menu = new bden::state::state_menu(&state_manager, render_target);
             quit = new bden::state::state_quit(&state_manager); // will take reference to game to serialize its fields

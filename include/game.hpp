@@ -1,16 +1,22 @@
 #pragma once
 #include <iostream>
 #include "raylib.h"
-#include "config.hpp"
+#include "config/player_config.hpp"
+#include "config/game_config.hpp"
+#include "config/weapon_config.hpp"
+#include "config/app_config.hpp"
+#include "config/enemy_config.hpp"
+
 #include "raymath.h"
 
-#include "systems/updateables/system_camera.hpp"
-#include "systems/updateables/system_physics.hpp"
-#include "systems/updateables/system_input.hpp"
-#include "systems/updateables/system_health.hpp"
-#include "systems/updateables/system_ai.hpp"
-#include "systems/drawables/system_drawables.hpp"
 #include "state_manager.hpp"
+#include "systems/drawables/system_drawables.hpp"
+#include "systems/drawables/system_ui.hpp"
+#include "systems/updateables/system_ai.hpp"
+#include "systems/updateables/system_camera.hpp"
+#include "systems/updateables/system_health.hpp"
+#include "systems/updateables/system_input.hpp"
+#include "systems/updateables/system_physics.hpp"
 
 #include "algorithm"
 #include <string>
@@ -21,14 +27,13 @@ namespace bden::state
 {
     using namespace components;
     using namespace config;
-    using namespace config::game_config;
 
     // TODO create glow effect for entites
 
     class state_game final : public bden::fsm::State<bden::fsm::states::APP_STATES>
     {
 
-        using WorldType = snek::world<game_config::game_configuration_policy>;
+        using WorldType = snek::world<GameConfig::game_configuration_policy>;
         WorldType world;
         WorldType::entity_type player;
         WorldType::entity_type test;
@@ -53,29 +58,29 @@ namespace bden::state
         WorldType::entity_type spawn_player(float w, float h, float x, float y)
         {
             using namespace config;
-            auto p = world.spawn((WorldType::entity_type)TagEnum::TAG_PLAYER);
-            SquareComponent square{w, h, x, y, player::PLAYER_COLOR, 0.0};
+            auto p = world.spawn(GameConfig::TagEnum::TAG_PLAYER);
+            SquareComponent square{w, h, x, y, PlayerConfig::PLAYER_COLOR, 0.0};
             world.bind<SquareComponent>(p, square);
             Transform player_transform{};
             player_transform.translation.x = x;
             player_transform.translation.y = y;
 
-            const auto c = world.bind<CircleComponent>(p, square.rect.width, player::PLAYER_GLOW);
+            const auto c = world.bind<CircleComponent>(p, square.rect.width, PlayerConfig::PLAYER_GLOW);
             Vector2 health_bar_pos(player_transform.translation.x, player_transform.translation.y - c.radius);
             Vector2 health_bar_size(w, 15.f);
             Rectangle health_bar_rect(health_bar_pos.x, health_bar_pos.y, health_bar_size.x, health_bar_size.y);
             world.bind<HealthComponent>(p, 100, health_bar_rect);
-            world.bind<RigidBodyComponent>(p, player_transform, Vector2(0, 0), c.radius, config::player::PLAYER_SPEED);
-            world.bind<WeaponComponent>(p, w * weapons::spear::radius, weapons::spear::damage, weapons::spear::speed, weapons::spear::color);
+            world.bind<RigidBodyComponent>(p, player_transform, Vector2(0, 0), c.radius, PlayerConfig::PLAYER_SPEED);
+            world.bind<WeaponComponent>(p, w * WeaponConfig::spear::radius, WeaponConfig::spear::damage, WeaponConfig::spear::speed, WeaponConfig::spear::color);
             return p;
         };
 
         WorldType::entity_type spawn_test(float w, float h, float x, float y)
         {
-            auto test = world.spawn((WorldType::entity_type)TagEnum::TAG_ENEMIES);
+            auto test = world.spawn(GameConfig::TagEnum::TAG_ENEMIES);
             using namespace config;
 
-            SquareComponent square{w, h, x, y, enemies::ENEMY_COLOR, 0.0};
+            SquareComponent square{w, h, x, y, EnemyConfig::ENEMY_COLOR, 0.0};
             world.bind<SquareComponent>(test, square);
             Transform test_transform{};
 
@@ -83,9 +88,9 @@ namespace bden::state
             test_transform.translation.y = y;
 
             world.bind<AggroComponent>(test, w * 3, false);
-            world.bind<WeaponComponent>(test, w * weapons::spear::radius, weapons::spear::damage, weapons::spear::speed, weapons::spear::color);
-            auto c = world.bind<CircleComponent>(test, square.rect.width, enemies::ENEMY_GLOW);
-            world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius, enemies::ENEMY_SPEED);
+            world.bind<WeaponComponent>(test, w * WeaponConfig::spear::radius, WeaponConfig::spear::damage, WeaponConfig::spear::speed, WeaponConfig::spear::color);
+            auto c = world.bind<CircleComponent>(test, square.rect.width, EnemyConfig::ENEMY_GLOW);
+            world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius, EnemyConfig::ENEMY_SPEED);
             return test;
         };
 
@@ -110,6 +115,11 @@ namespace bden::state
             if (!world.contains(player))
                 return;
 
+            if (WindowShouldClose())
+            {
+                this->get_context()->set_state(AppStateManagerType::states_type::STATE_QUIT);
+            }
+
             physics_system.update(dt);
             camera_system.update(dt, player);
             input_system.update(player, camera_system);
@@ -120,7 +130,7 @@ namespace bden::state
 
         void on_render() override
         {
-            float scale = std::min((float)GetScreenWidth() / app_config::VIRTUAL_WIDTH, (float)GetScreenHeight() / app_config::VIRTUAL_HEIGHT);
+            float scale = std::min((float)GetScreenWidth() / AppConfig::VIRTUAL_WIDTH, (float)GetScreenHeight() / AppConfig::VIRTUAL_HEIGHT);
             BeginDrawing();
             ClearBackground(BLACK);
             BeginMode2D(camera_system.get_camera());

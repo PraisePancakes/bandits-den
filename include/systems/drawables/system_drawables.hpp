@@ -2,8 +2,14 @@
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
-#include "../../config.hpp"
+#include "../../config/ui_config.hpp"
 #include "../../utils.hpp"
+#include "../../components/particle.hpp"
+#include "../../components/square.hpp"
+#include "../../components/circle.hpp"
+#include "../../components/weapon.hpp"
+#include "../../components/rigidbody.hpp"
+#include "../../components/health.hpp"
 
 namespace bden::systems
 {
@@ -30,7 +36,7 @@ namespace bden::systems
 
         void system_drawables_weapons()
         {
-            using namespace config::ui;
+            using namespace config;
 
             auto drawable_weapons = world.template view<RigidBodyComponent, WeaponComponent>();
             drawable_weapons.for_each([this](RigidBodyComponent &rb, WeaponComponent &wc)
@@ -41,7 +47,7 @@ namespace bden::systems
                                         Vector2 new_v = { center.x + direction.x * wc.radius, center.y + direction.y * wc.radius };
 
                                        
-                                        DrawCircleSector(center, wc.radius, weapon_animations::START_ANGLE, weapon_animations::END_ANGLE, weapon_animations::NSEGS, wc.radius_color); 
+                                        DrawCircleSector(center, wc.radius, UIConfig::WeaponAnimations::START_ANGLE, UIConfig::WeaponAnimations::END_ANGLE, UIConfig::WeaponAnimations::NSEGS, wc.radius_color); 
                                      DrawLineEx(center, new_v, 2, WHITE); });
         };
 

@@ -5,6 +5,8 @@
 #include "state_manager.hpp"
 #include "systems/drawables/system_ui.hpp"
 #include "systems/drawables/system_drawables.hpp"
+#include "config/menu_config.hpp"
+
 #include "algorithm"
 #include <string>
 #include <cmath>
@@ -13,7 +15,7 @@ namespace bden::state
 {
     class state_menu final : public AppStateType
     {
-        using world_policy = bden::config::menu_config::menu_configuration_policy;
+        using world_policy = bden::config::MenuConfig::menu_configuration_policy;
         snek::world<world_policy> world;
         bden::systems::DrawableManager<world_policy> render_system; // for menu particles
         bden::systems::UIManager<world_policy> ui_system;           // for menu ui
@@ -78,7 +80,7 @@ namespace bden::state
         void init_menu_particles()
         {
 
-            for (size_t i = 0; i < menu_config::PARTICLE_COUNT; i++)
+            for (size_t i = 0; i < config::MenuConfig::PARTICLE_COUNT; i++)
             {
                 auto e = world.spawn();
 
@@ -88,8 +90,8 @@ namespace bden::state
 
                 Vector2 particle_vel{};
                 float particle_collider_r = 2.f;
-                RigidBodyComponent rb{particle_transform, particle_vel, particle_collider_r, menu_config::PARTICLE_SPEED};
-                Color particle_color(menu_config::PARTICLE_COLOR);
+                RigidBodyComponent rb{particle_transform, particle_vel, particle_collider_r, config::MenuConfig::PARTICLE_SPEED};
+                Color particle_color(config::MenuConfig::PARTICLE_COLOR);
 
                 world.bind<ParticleComponent>(e, rb, particle_color);
             }
@@ -134,7 +136,7 @@ namespace bden::state
             {
                 this->get_context()->set_state(AppStateManagerType::states_type::STATE_GAME);
             }
-            if (WindowShouldClose())
+            if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE))
             {
                 this->get_context()->set_state(AppStateManagerType::states_type::STATE_QUIT);
             }
@@ -145,7 +147,7 @@ namespace bden::state
 
         void on_render() override
         {
-            float scale = std::min((float)GetScreenWidth() / app_config::VIRTUAL_WIDTH, (float)GetScreenHeight() / app_config::VIRTUAL_HEIGHT);
+            float scale = std::min((float)GetScreenWidth() / config::AppConfig::VIRTUAL_WIDTH, (float)GetScreenHeight() / config::AppConfig::VIRTUAL_HEIGHT);
             BeginTextureMode(target);
             ClearBackground(RAYWHITE);
             render_system.render();
@@ -155,8 +157,8 @@ namespace bden::state
             BeginDrawing();
             ClearBackground(BLACK);
             Rectangle src = {0.f, 0.f, (float)target.texture.width, (float)-target.texture.height};
-            Vector2 dest_pos = {(GetScreenWidth() - ((float)app_config::VIRTUAL_WIDTH * scale)) * 0.5f, (GetScreenHeight() - ((float)app_config::VIRTUAL_HEIGHT * scale)) * 0.5f};
-            Vector2 dest_dim = {(float)app_config::VIRTUAL_WIDTH * scale, (float)app_config::VIRTUAL_HEIGHT * scale};
+            Vector2 dest_pos = {(GetScreenWidth() - ((float)config::AppConfig::VIRTUAL_WIDTH * scale)) * 0.5f, (GetScreenHeight() - ((float)config::AppConfig::VIRTUAL_HEIGHT * scale)) * 0.5f};
+            Vector2 dest_dim = {(float)config::AppConfig::VIRTUAL_WIDTH * scale, (float)config::AppConfig::VIRTUAL_HEIGHT * scale};
             Rectangle dest = {
                 dest_pos.x,
                 dest_pos.y,

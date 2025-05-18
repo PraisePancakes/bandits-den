@@ -12,18 +12,17 @@ namespace bden::state
         {
             return true;
         };
-        void on_update(float dt) override
-        {
-            if (WindowShouldClose())
-            {
-                CloseWindow();
-            }
+        void on_update(float dt) override {
+
         };
         void on_render() override {
-            
+
         };
-        void on_exit() override {
+        void on_exit() override
+        {
             // serialize game state;
+
+            CloseWindow();
         };
         ~state_quit() {};
     };

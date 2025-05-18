@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
-#include "../../config.hpp"
+
 #include "../../utils.hpp"
 
 namespace bden::systems

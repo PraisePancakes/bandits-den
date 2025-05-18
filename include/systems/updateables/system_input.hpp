@@ -3,7 +3,7 @@
 #include "rlgl.h"
 #include "raymath.h"
 #include "system_camera.hpp"
-#include "../../config.hpp"
+
 
 namespace bden::systems
 {

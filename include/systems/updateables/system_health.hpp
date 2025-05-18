@@ -1,9 +1,10 @@
 #pragma once
-#include "../../config.hpp"
+
 #include "raylib.h"
 #include "rlgl.h"
 #include "raymath.h"
 #include "../../utils.hpp"
+#include "../../config/game_config.hpp"
 
 namespace bden::systems
 {
@@ -34,7 +35,7 @@ namespace bden::systems
 
         void system_updateables_damage(float dt, WorldPolicy::entity_type player)
         {
-            const std::vector<typename WorldPolicy::entity_type> enemies = world.template get_tagged_entities(config::game_config::TagEnum::TAG_ENEMIES);
+            const std::vector<typename WorldPolicy::entity_type> enemies = world.template get_tagged_entities(config::GameConfig::TagEnum::TAG_ENEMIES);
 
             auto &prb = world.template get_ref<RigidBodyComponent>(player);
 
