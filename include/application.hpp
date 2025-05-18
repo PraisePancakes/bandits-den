@@ -4,6 +4,8 @@
 #include "raylib.h"
 #include "game.hpp"
 #include "menu.hpp"
+#include "quit.hpp"
+
 #include "raymath.h"
 
 #include "state_manager.hpp"
@@ -20,6 +22,7 @@ namespace bden::applicationlayer
         unsigned int config_flags;
         bden::state::state_game *game;
         bden::state::state_menu *menu;
+        bden::state::state_quit *quit;
 
         AppStateManagerType state_manager;
         RenderTexture2D render_target;
@@ -37,6 +40,8 @@ namespace bden::applicationlayer
 
             game = new bden::state::state_game(&state_manager, render_target);
             menu = new bden::state::state_menu(&state_manager, render_target);
+            quit = new bden::state::state_quit(&state_manager);
+
             state_manager.insert_state(AppStateManagerType::states_type::STATE_MENU, menu);
             state_manager.insert_state(AppStateManagerType::states_type::STATE_GAME, game);
             state_manager.set_state(AppStateManagerType::states_type::STATE_MENU);
@@ -47,8 +52,8 @@ namespace bden::applicationlayer
             while (!WindowShouldClose()) // Detect window close button or ESC key
             {
                 float dt = GetFrameTime();
-                state_manager.get_current_state()->on_update(dt);
-                state_manager.get_current_state()->on_render();
+                state_manager.update_current_state(dt);
+                state_manager.render_current_state();
             }
         };
 

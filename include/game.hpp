@@ -97,8 +97,13 @@ namespace bden::state
                                                                                                                   input_system(world),
                                                                                                                   health_system(world, to_delete),
                                                                                                                   ai_system(world), render_system(world) {
-
                                                                                                                   };
+
+        bool on_init() override
+        {
+            return true;
+        };
+
         void on_update(float dt) override
         {
             if (!world.contains(player))

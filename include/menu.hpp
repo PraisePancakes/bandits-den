@@ -118,11 +118,16 @@ namespace bden::state
         };
 
     public:
-        state_menu(AppStateManagerType *ctx, RenderTexture2D rt) : State(ctx), render_system(world), ui_system(world), physics_system(world), target(rt)
+        state_menu(AppStateManagerType *ctx, RenderTexture2D rt) : State(ctx), render_system(world), ui_system(world), physics_system(world), target(rt) {
+                                                                   };
+
+        bool on_init() override
         {
             init_menu_gui();
             init_menu_particles();
+            return true;
         };
+
         void on_update(float dt) override
         {
             if (IsKeyPressed(KEY_ENTER))

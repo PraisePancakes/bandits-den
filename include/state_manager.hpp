@@ -28,6 +28,7 @@ namespace bden::fsm
     public:
         using type = T;
         State(StateManager<T> *ctx) : context(ctx) {};
+        virtual bool on_init() = 0;
         virtual void on_update(float) = 0;
         virtual void on_render() = 0;
         virtual void on_exit() = 0;
@@ -63,7 +64,18 @@ namespace bden::fsm
 
             current_state = states[id];
             current_state->is_active = true;
+            current_state->on_init();
         };
+
+        void update_current_state(float dt)
+        {
+            current_state->on_update(dt);
+        }
+
+        void render_current_state()
+        {
+            current_state->on_render();
+        }
 
         states_type get_current_state_type() const
         {
