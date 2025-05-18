@@ -8,10 +8,23 @@ namespace bden::state
 
     public:
         state_quit(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx) : State(ctx) {};
-        bool on_init() override { return true; };
-        void on_update(float dt) override {};
-        void on_render() override {};
-        void on_exit() override {};
+        bool on_init() override
+        {
+            return true;
+        };
+        void on_update(float dt) override
+        {
+            if (WindowShouldClose())
+            {
+                CloseWindow();
+            }
+        };
+        void on_render() override {
+            
+        };
+        void on_exit() override {
+            // serialize game state;
+        };
         ~state_quit() {};
     };
 

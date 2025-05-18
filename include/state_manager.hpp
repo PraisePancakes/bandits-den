@@ -12,6 +12,7 @@ namespace bden::fsm
             STATE_MENU,
             STATE_GAME,
             STATE_PAUSE,
+            STATE_QUIT
 
         };
     };
@@ -60,7 +61,10 @@ namespace bden::fsm
         void set_state(STATE_ENUM id)
         {
             if (current_state)
+            {
                 current_state->is_active = false;
+                current_state->on_exit();
+            }
 
             current_state = states[id];
             current_state->is_active = true;

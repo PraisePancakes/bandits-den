@@ -90,8 +90,7 @@ namespace bden::state
         };
 
     public:
-        state_game(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx, RenderTexture2D &render_target) : State(ctx), player(spawn_player(100, 100, 500, 500)),
-                                                                                                                  test(spawn_test(100, 100, 200, 200)),
+        state_game(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx, RenderTexture2D &render_target) : State(ctx),
                                                                                                                   camera_system(world),
                                                                                                                   physics_system(world),
                                                                                                                   input_system(world),
@@ -101,6 +100,8 @@ namespace bden::state
 
         bool on_init() override
         {
+            this->player = (spawn_player(100, 100, 500, 500));
+            this->test = (spawn_test(100, 100, 200, 200));
             return true;
         };
 

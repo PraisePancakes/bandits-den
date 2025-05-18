@@ -134,6 +134,11 @@ namespace bden::state
             {
                 this->get_context()->set_state(AppStateManagerType::states_type::STATE_GAME);
             }
+            if (WindowShouldClose())
+            {
+                this->get_context()->set_state(AppStateManagerType::states_type::STATE_QUIT);
+            }
+
             update_menu_particles();
             physics_system.update(dt);
         };
