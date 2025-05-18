@@ -12,32 +12,23 @@
 #include "../components/weapon.hpp"
 #include "../components/button.hpp"
 
-namespace bden::config
+namespace bden::config::GameConfig
 {
+    using game_component_list = snek::component_list<components::SquareComponent,
+                                                     components::RigidBodyComponent,
+                                                     components::HealthComponent,
+                                                     components::CircleComponent,
+                                                     components::AggroComponent,
+                                                     components::WeaponComponent,
+                                                     components::ButtonComponent>;
 
-    class GameConfig
+    enum class TagEnum : u64
     {
-    private:
-        GameConfig() {};
-        ~GameConfig() {};
+        TAG_PLAYER,
+        TAG_ENEMIES,
+        TAG_FRIENDLIES
+    } Tags;
 
-    public:
-        using game_component_list = snek::component_list<components::SquareComponent,
-                                                         components::RigidBodyComponent,
-                                                         components::HealthComponent,
-                                                         components::CircleComponent,
-                                                         components::AggroComponent,
-                                                         components::WeaponComponent,
-                                                         components::ButtonComponent>;
-
-        enum class TagEnum : u64
-        {
-            TAG_PLAYER,
-            TAG_ENEMIES,
-            TAG_FRIENDLIES
-        } Tags;
-
-        using game_configuration_policy = snek::world_policy<u64, game_component_list, std::allocator<u64>, TagEnum>;
-    };
+    using game_configuration_policy = snek::world_policy<u64, game_component_list, std::allocator<u64>, TagEnum>;
 
 }
