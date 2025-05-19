@@ -85,8 +85,8 @@ namespace bden::state
                 auto e = world.spawn();
 
                 Transform particle_transform{};
-                particle_transform.translation.x = ((std::rand() % GetScreenWidth()) + 1);
-                particle_transform.translation.y = ((std::rand() % GetScreenHeight()) + 1);
+                particle_transform.translation.x = -((std::rand() % config::AppConfig::VIRTUAL_WIDTH) + 1);
+                particle_transform.translation.y = ((std::rand() % config::AppConfig::VIRTUAL_HEIGHT) + 1);
 
                 Vector2 particle_vel{};
                 float particle_collider_r = 2.f;
@@ -103,13 +103,13 @@ namespace bden::state
 
             particles.for_each([](ParticleComponent &pc)
                                {
-                if(pc.rigidbody.transform.translation.x > GetScreenWidth() && pc.rigidbody.transform.translation.y > GetScreenHeight()) {
-                    pc.rigidbody.transform.translation.x = -((std::rand() % GetScreenWidth()) + 1);
-                    pc.rigidbody.transform.translation.y = -((std::rand() % GetScreenHeight()) + 1);
-
+                if(pc.rigidbody.transform.translation.x > config::AppConfig::VIRTUAL_WIDTH) {
+                
+                    pc.rigidbody.transform.translation.x = -((std::rand() % config::AppConfig::VIRTUAL_WIDTH / 4) + 1);
+                    pc.rigidbody.transform.translation.y = ((std::rand() % config::AppConfig::VIRTUAL_HEIGHT) + 1 );
                 }
                 pc.rigidbody.velocity.x = 1;
-                pc.rigidbody.velocity.y = 1; });
+                pc.rigidbody.velocity.y = std::sin(DEG2RAD * pc.rigidbody.transform.translation.x); });
         };
 
         void init_menu_gui()
