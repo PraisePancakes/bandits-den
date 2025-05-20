@@ -19,4 +19,13 @@ namespace bden::utils
         const float dist = std::sqrt(xsquared + ysquared);
         return dist < rb2.collision_radius + rb1.collision_radius;
     }
+
+    Color get_health_color(float hp)
+    {
+        if (hp >= 50 && hp < 75)
+            return YELLOW;
+        else if (hp < 50 && hp >= 0)
+            return RED;
+        return GREEN;
+    };
 }

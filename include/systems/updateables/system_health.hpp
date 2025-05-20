@@ -54,8 +54,15 @@ namespace bden::systems
                         interval = 0;
                         weapon.radius_color.a = 150;
                     }
+                    if (weapon.radius_color.a >= 254)
+                    {
+                        weapon.radius_color.a = 150;
+                    }
+                    else
+                    {
+                        weapon.radius_color.a++;
+                    }
 
-                    weapon.radius_color.a++;
                     interval += dt;
                 }
                 else

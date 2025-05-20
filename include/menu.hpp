@@ -77,16 +77,19 @@ namespace bden::state
             world.bind<TextComponent>(to_quit_text, loc3, "to quit", BLACK, 20);
         };
 
+        constexpr static int min_y_range = (config::AppConfig::VIRTUAL_HEIGHT / 8);
+        constexpr static int max_y_range = (config::AppConfig::VIRTUAL_HEIGHT / 2);
+
         void init_menu_particles()
         {
 
-            for (size_t i = 0; i < config::MenuConfig::PARTICLE_COUNT; i++)
+            for (size_t i = 0; i < config::MenuConfig::PARTICLE_COUNT * 2; i++)
             {
                 auto e = world.spawn();
 
                 Transform particle_transform{};
                 particle_transform.translation.x = -((std::rand() % config::AppConfig::VIRTUAL_WIDTH) + 1);
-                particle_transform.translation.y = ((std::rand() % config::AppConfig::VIRTUAL_HEIGHT) + 1);
+                particle_transform.translation.y = (std::rand() % (min_y_range) + max_y_range);
 
                 Vector2 particle_vel{};
                 float particle_collider_r = 2.f;
@@ -105,8 +108,8 @@ namespace bden::state
                                {
                 if(pc.rigidbody.transform.translation.x > config::AppConfig::VIRTUAL_WIDTH) {
                 
-                    pc.rigidbody.transform.translation.x = -((std::rand() % config::AppConfig::VIRTUAL_WIDTH / 4) + 1);
-                    pc.rigidbody.transform.translation.y = ((std::rand() % config::AppConfig::VIRTUAL_HEIGHT) + 1 );
+                    pc.rigidbody.transform.translation.x = -((std::rand() % config::AppConfig::VIRTUAL_WIDTH) + 1);
+                    pc.rigidbody.transform.translation.y = ((std::rand() % min_y_range) + max_y_range );
                 }
                 pc.rigidbody.velocity.x = 1;
                 pc.rigidbody.velocity.y = std::sin(DEG2RAD * pc.rigidbody.transform.translation.x); });
@@ -140,7 +143,6 @@ namespace bden::state
             {
                 this->get_context()->set_state(AppStateManagerType::states_type::STATE_QUIT);
             }
-
             update_menu_particles();
             physics_system.update(dt);
         };

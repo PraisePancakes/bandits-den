@@ -17,6 +17,7 @@
 #include "systems/updateables/system_health.hpp"
 #include "systems/updateables/system_input.hpp"
 #include "systems/updateables/system_physics.hpp"
+#include "systems/updateables/system_weapons.hpp"
 
 #include "algorithm"
 #include <string>
@@ -45,6 +46,7 @@ namespace bden::state
         systems::HealthManager<WorldType::world_policy> health_system;
         systems::AiManager<WorldType::world_policy> ai_system;
         systems::DrawableManager<WorldType::world_policy> render_system;
+        systems::WeaponManager<WorldType::world_policy> weapon_system;
 
         void system_updateables_delete_entities()
         {
@@ -71,7 +73,9 @@ namespace bden::state
             Rectangle health_bar_rect(health_bar_pos.x, health_bar_pos.y, health_bar_size.x, health_bar_size.y);
             world.bind<HealthComponent>(p, 100, health_bar_rect);
             world.bind<RigidBodyComponent>(p, player_transform, Vector2(0, 0), c.radius, PlayerConfig::PLAYER_SPEED);
-            world.bind<WeaponComponent>(p, w * WeaponConfig::spear::radius, WeaponConfig::spear::damage, WeaponConfig::spear::speed, WeaponConfig::spear::color);
+
+            Vector2 weapon_ray{x, y};
+            world.bind<WeaponComponent>(p, w * WeaponConfig::spear::radius, WeaponConfig::spear::damage, WeaponConfig::spear::speed, WeaponConfig::spear::color, weapon_ray);
             return p;
         };
 
@@ -86,9 +90,9 @@ namespace bden::state
 
             test_transform.translation.x = x;
             test_transform.translation.y = y;
-
+            Vector2 weapon_ray{x, y};
             world.bind<AggroComponent>(test, w * 3, false);
-            world.bind<WeaponComponent>(test, w * WeaponConfig::spear::radius, WeaponConfig::spear::damage, WeaponConfig::spear::speed, WeaponConfig::spear::color);
+            world.bind<WeaponComponent>(test, w * WeaponConfig::spear::radius, WeaponConfig::spear::damage, WeaponConfig::spear::speed, WeaponConfig::spear::color, weapon_ray);
             auto c = world.bind<CircleComponent>(test, square.rect.width, EnemyConfig::ENEMY_GLOW);
             world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius, EnemyConfig::ENEMY_SPEED);
             return test;
@@ -100,7 +104,7 @@ namespace bden::state
                                                                                                                   physics_system(world),
                                                                                                                   input_system(world),
                                                                                                                   health_system(world, to_delete),
-                                                                                                                  ai_system(world), render_system(world) {
+                                                                                                                  ai_system(world), render_system(world), weapon_system(world) {
                                                                                                                   };
 
         bool on_init() override
@@ -125,6 +129,7 @@ namespace bden::state
             input_system.update(player, camera_system);
             health_system.update(dt, player);
             ai_system.update(dt, player);
+            weapon_system.update(dt);
             system_updateables_delete_entities();
         };
 

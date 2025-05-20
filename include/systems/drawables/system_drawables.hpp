@@ -42,22 +42,9 @@ namespace bden::systems
             drawable_weapons.for_each([this](RigidBodyComponent &rb, WeaponComponent &wc)
                                       { 
                                         Vector2 center = {rb.transform.translation.x, rb.transform.translation.y};
-                                        float theta = rb.transform.rotation.x * DEG2RAD;
-                                        Vector2 direction = { std::cos(theta), std::sin(theta) };
-                                        Vector2 new_v = { center.x + direction.x * wc.radius, center.y + direction.y * wc.radius };
-
                                        
                                         DrawCircleSector(center, wc.radius, UIConfig::WeaponAnimations::START_ANGLE, UIConfig::WeaponAnimations::END_ANGLE, UIConfig::WeaponAnimations::NSEGS, wc.radius_color); 
-                                     DrawLineEx(center, new_v, 2, WHITE); });
-        };
-
-        Color get_health_color(float hp)
-        {
-            if (hp >= 50 && hp < 75)
-                return YELLOW;
-            else if (hp < 50 && hp >= 0)
-                return RED;
-            return GREEN;
+                                        DrawLineEx(center, wc.weapon_ray, 2, WHITE); });
         };
 
         void system_drawables_health()
@@ -69,7 +56,7 @@ namespace bden::systems
                                         if (!world.contains(e)) return;
                                         DrawRectangleLines(hc.health_bar.x, hc.health_bar.y, hc.health_bar.width + 1, hc.health_bar.height + 1, BEIGE);
                                         DrawText(TextFormat("%d", hc.hit_points), hc.health_bar.x + hc.health_bar.width + 5, hc.health_bar.y, 20, WHITE);
-                                        DrawRectangleRec(hc.health_bar, get_health_color(hc.hit_points)); });
+                                        DrawRectangleRec(hc.health_bar, utils::get_health_color(hc.hit_points)); });
         }
 
         void system_drawables_particles()
