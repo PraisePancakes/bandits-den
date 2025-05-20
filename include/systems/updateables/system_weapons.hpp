@@ -27,15 +27,36 @@ namespace bden::systems
                                      wc.weapon_ray = {center.x + direction.x * wc.radius, center.y + direction.y * wc.radius}; });
         };
 
+        void system_updateables_weapon_io(WorldPolicy::entity_type player)
+        {
+            auto updateables = world.template view<RigidBodyComponent, HealthComponent>();
+            auto &prb = world.template get_ref<RigidBodyComponent>(player);
+            auto &pwc = world.template get_ref<WeaponComponent>(player);
+
+            updateables.for_each([&prb, &pwc, &player](WorldPolicy::entity_type e, RigidBodyComponent &rb, HealthComponent &hc)
+                                 {
+                                   
+                                     if (utils::collided(prb, rb, pwc.radius) && e != player)
+                                     {
+                                        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                                            hc.hit_points -= pwc.damage;
+                                        }
+                                     } });
+        }
+
     public:
         WeaponManager(snek::world<WorldPolicy> &w) : world(w) {};
 
-        void update(float dt)
+        void update(float dt, WorldPolicy::entity_type player)
         {
 
             if constexpr (WorldPolicy::template is_valid_component_set<RigidBodyComponent, WeaponComponent>())
             {
                 system_updateables_weapon();
+            }
+            if constexpr (WorldPolicy::template is_valid_component_set<RigidBodyComponent, WeaponComponent, HealthComponent>())
+            {
+                system_updateables_weapon_io(player);
             }
         }
     };

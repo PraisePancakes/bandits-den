@@ -95,6 +95,12 @@ namespace bden::state
             world.bind<WeaponComponent>(test, w * WeaponConfig::spear::radius, WeaponConfig::spear::damage, WeaponConfig::spear::speed, WeaponConfig::spear::color, weapon_ray);
             auto c = world.bind<CircleComponent>(test, square.rect.width, EnemyConfig::ENEMY_GLOW);
             world.bind<RigidBodyComponent>(test, test_transform, Vector2(0, 0), c.radius, EnemyConfig::ENEMY_SPEED);
+
+            Vector2 health_bar_pos(test_transform.translation.x, test_transform.translation.y - c.radius);
+            Vector2 health_bar_size(w, 15.f);
+            Rectangle health_bar_rect(health_bar_pos.x, health_bar_pos.y, health_bar_size.x, health_bar_size.y);
+            world.bind<HealthComponent>(test, 100, health_bar_rect);
+
             return test;
         };
 
@@ -129,7 +135,7 @@ namespace bden::state
             input_system.update(player, camera_system);
             health_system.update(dt, player);
             ai_system.update(dt, player);
-            weapon_system.update(dt);
+            weapon_system.update(dt, player);
             system_updateables_delete_entities();
         };
 
