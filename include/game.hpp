@@ -133,9 +133,12 @@ namespace bden::state
             physics_system.update(dt);
             camera_system.update(dt, player);
             input_system.update(player, camera_system);
+
             health_system.update(dt, player);
+
             ai_system.update(dt, player);
             weapon_system.update(dt, player);
+
             system_updateables_delete_entities();
         };
 
@@ -145,7 +148,9 @@ namespace bden::state
             BeginDrawing();
             ClearBackground(BLACK);
             BeginMode2D(camera_system.get_camera());
+
             render_system.render();
+
             EndMode2D();
             EndDrawing();
         };

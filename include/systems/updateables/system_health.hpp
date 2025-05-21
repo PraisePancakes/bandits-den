@@ -23,13 +23,15 @@ namespace bden::systems
             auto updateables = world.template view<SquareComponent, RigidBodyComponent, HealthComponent>();
             updateables.for_each([this](WorldPolicy::entity_type e, const SquareComponent &sqc, const RigidBodyComponent &rbc, HealthComponent &hc)
                                  {
+                                    
                                     hc.health_bar.x = rbc.transform.translation.x - (sqc.rect.width / 2);
                                     hc.health_bar.y = rbc.transform.translation.y - (sqc.rect.height / 2) - health_bottom_space;
-                                    hc.health_bar.width -= (int)hc.health_bar.width % (int)hc.hit_points ;
-                                   
+                                    hc.health_bar.width -= (int)hc.health_bar.width % std::max((int)hc.hit_points, 1);
+                                    
                 if(hc.hit_points <= 1) {
-                 
+                   
                        this->to_delete.push_back(e);
+                        
                 }; });
         }
 
@@ -41,6 +43,8 @@ namespace bden::systems
 
             for (const auto &e : enemies)
             {
+                if (!world.contains(e))
+                    continue;
                 auto &weapon = world.template get_ref<components::WeaponComponent>(e);
                 const auto &rb = world.template get_ref<components::RigidBodyComponent>(e);
                 const auto r = weapon.radius;
