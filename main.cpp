@@ -1,7 +1,7 @@
 #include <iostream>
 #include "raylib.h"
-#include "include/application.hpp"
-#include "include/config/app_config.hpp"
+#include "src/application.hpp"
+#include "src/config/app_config.hpp"
 #include <vector>
 
 int main()

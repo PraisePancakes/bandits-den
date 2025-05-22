@@ -45,7 +45,7 @@ namespace bden::applicationlayer
             state_manager.insert_state(AppStateManagerType::states_type::STATE_QUIT, quit);
             state_manager.set_state(AppStateManagerType::states_type::STATE_MENU);
         };
-        ;
+
         void run()
         {
             while (state_manager.get_current_state() != quit)
