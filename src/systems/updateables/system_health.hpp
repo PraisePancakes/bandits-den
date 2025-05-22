@@ -43,8 +43,6 @@ namespace bden::systems
 
             for (const auto &e : enemies)
             {
-                if (!world.contains(e))
-                    continue;
                 auto &weapon = world.template get_ref<components::WeaponComponent>(e);
                 const auto &rb = world.template get_ref<components::RigidBodyComponent>(e);
                 const auto r = weapon.radius;

@@ -105,6 +105,7 @@ namespace snek::storage
             std::swap(_dense.back(), _dense[_sparse[elem]]);
             std::swap(_sparse[last], _sparse[elem]);
             _dense.pop_back();
+            _packed.pop_back();
         };
         void clear() override
         {
