@@ -29,6 +29,6 @@ namespace bden::config::GameConfig
         TAG_FRIENDLIES
     };
 
-    using game_configuration_policy = snek::world_policy<u64, game_component_list, std::allocator<u64>, TagEnum>;
+    using game_configuration_policy = snek::world_policy<u64, game_component_list, TagEnum>;
 
 }

@@ -22,6 +22,6 @@ namespace bden::config::MenuConfig
     constexpr static int PARTICLE_COUNT{500};
     constexpr static float PARTICLE_SPEED{250.f};
     constexpr static Color PARTICLE_COLOR{RED};
-    using menu_configuration_policy = snek::world_policy<u64, menu_component_list, std::allocator<u64>, TagEnum>;
+    using menu_configuration_policy = snek::world_policy<u64, menu_component_list, TagEnum>;
 
 }
