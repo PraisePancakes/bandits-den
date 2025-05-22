@@ -122,7 +122,7 @@ namespace snek
         }
 
         template <typename T>
-        constexpr static bool is_tagged()
+        constexpr static bool policy_is_tagged()
         {
             return std::is_same_v<T, PolicyTag>;
         }
