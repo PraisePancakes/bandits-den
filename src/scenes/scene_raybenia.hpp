@@ -13,6 +13,12 @@ namespace bden::scenes
         bool on_init() override
         {
             this->load_circ_file_path();
+
+            return true;
+        };
+        void on_update(float dt) override {};
+        void on_render() override
+        {
             for (size_t i = 0; i < this->get_tile_map().size(); i++)
             {
                 for (size_t j = 0; j < this->get_tile_map()[i].size(); j++)
@@ -20,10 +26,7 @@ namespace bden::scenes
                     std::cout << get_tile_map()[i][j];
                 }
             }
-            return true;
         };
-        void on_update(float dt) override {};
-        void on_render() override {};
         void on_exit() override {};
         ~scene_raybenia() {};
     };

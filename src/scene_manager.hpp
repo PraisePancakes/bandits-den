@@ -38,6 +38,9 @@ namespace bden::scenes
         const std::string scene_file_path;
 
     protected:
+        constexpr static int tile_width = 16;
+        constexpr static int tile_height = 16;
+
         void load_circ_file_path()
         {
             Circ::CFGLoader cfgl(scene_file_path);
