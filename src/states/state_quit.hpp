@@ -1,14 +1,14 @@
 #pragma once
-#include "state_manager.hpp"
+#include "../state_manager.hpp"
 #include "raylib.h"
 
 namespace bden::state
 {
-    class state_quit : public bden::fsm::State<bden::fsm::states::APP_STATES>
+    class state_quit : public bden::fsm::AppStateType
     {
 
     public:
-        state_quit(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx) : State(ctx) {};
+        state_quit(bden::fsm::AppStateManagerType *ctx) : State(ctx) {};
         bool on_init() override
         {
             return true;

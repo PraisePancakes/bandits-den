@@ -2,12 +2,12 @@
 #include <iostream>
 #include "raylib.h"
 #include "raymath.h"
-#include "state_manager.hpp"
-#include "systems/drawables/system_ui.hpp"
-#include "systems/drawables/system_drawables.hpp"
-#include "systems/updateables/system_physics.hpp"
-#include "config/menu_config.hpp"
-#include "config/app_config.hpp"
+#include "../state_manager.hpp"
+#include "../systems/drawables/system_ui.hpp"
+#include "../systems/drawables/system_drawables.hpp"
+#include "../systems/updateables/system_physics.hpp"
+#include "../config/menu_config.hpp"
+#include "../config/app_config.hpp"
 
 #include "algorithm"
 #include <string>
@@ -16,7 +16,7 @@
 namespace bden::state
 {
     using namespace components;
-    class state_menu final : public AppStateType
+    class state_menu final : public bden::fsm::AppStateType
     {
         using world_policy = bden::config::MenuConfig::menu_configuration_policy;
         snek::world<world_policy> world;
@@ -129,8 +129,8 @@ namespace bden::state
         };
 
     public:
-        state_menu(AppStateManagerType *ctx, RenderTexture2D rt) : State(ctx), render_system(world), ui_system(world), physics_system(world), target(rt) {
-                                                                   };
+        state_menu(bden::fsm::AppStateManagerType *ctx, RenderTexture2D rt) : State(ctx), render_system(world), ui_system(world), physics_system(world), target(rt) {
+                                                                              };
 
         bool on_init() override
         {
@@ -143,11 +143,11 @@ namespace bden::state
         {
             if (IsKeyPressed(KEY_ENTER))
             {
-                this->get_context()->set_state(AppStateManagerType::states_type::STATE_GAME);
+                this->get_context()->set_state(bden::fsm::AppStateManagerType::states_type::STATE_GAME);
             }
             if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE))
             {
-                this->get_context()->set_state(AppStateManagerType::states_type::STATE_QUIT);
+                this->get_context()->set_state(bden::fsm::AppStateManagerType::states_type::STATE_QUIT);
             }
             update_menu_particles();
             physics_system.update(dt);

@@ -5,9 +5,29 @@
 namespace bden::scenes
 {
 
+    // check texture mask for each unit of the map and render each flagged texture.
+    enum class SCENE_TEXTURES
+    {
+        TEXTURE_GRASS = 0x1,
+        TEXTURE_STONE = 0x2,
+        TEXTURE_BRICK = 0x4,
+        TEXTURE_BUSH = 0x8
+    };
+
+    enum class SCENES
+    {
+        SCENE_RAYBENIA,
+        SCENE_BENT_PINE,
+        SCENE_MONTERREY,
+        SCENE_LINJOHN,
+        SCENE_LYNCHBURG
+    };
+
+    // pass scenes enum here
     template <typename T>
     class SceneManager;
 
+    // binds class to enum type
     template <typename T>
     class Scene
     {
@@ -36,7 +56,7 @@ namespace bden::scenes
         using scenes_type = SCENES_ENUM;
 
     private:
-        static_assert(std::is_enum_v<scenes_type>, "StateManager requires an enum type");
+        static_assert(std::is_enum_v<scenes_type>, "SceneManager requires an enum type");
         std::unordered_map<states_type, Scene<scenes_type> *> scenes;
         Scene<scenes_type> *current_scene;
 
@@ -91,5 +111,6 @@ namespace bden::scenes
             return current_scene;
         }
     };
-
+    using GameSceneManagerType = bden::scenes::SceneManager<bden::scenes::SCENES>;
+    using GameSceneType = bden::scenes::Scene<bden::scenes::SCENES>;
 };

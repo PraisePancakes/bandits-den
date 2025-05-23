@@ -2,9 +2,9 @@
 #include "../types.hpp"
 #include <iostream>
 #include "raylib.h"
-#include "game.hpp"
-#include "menu.hpp"
-#include "quit.hpp"
+#include "states/state_game.hpp"
+#include "states/state_menu.hpp"
+#include "states/state_quit.hpp"
 #include "raymath.h"
 #include "state_manager.hpp"
 #include <list>
@@ -22,7 +22,7 @@ namespace bden::applicationlayer
         bden::state::state_menu *menu;
         bden::state::state_quit *quit;
 
-        AppStateManagerType state_manager;
+        bden::fsm::AppStateManagerType state_manager;
         RenderTexture2D render_target;
 
     public:
@@ -40,10 +40,10 @@ namespace bden::applicationlayer
             menu = new bden::state::state_menu(&state_manager, render_target);
             quit = new bden::state::state_quit(&state_manager); // will take reference to game to serialize its fields
 
-            state_manager.insert_state(AppStateManagerType::states_type::STATE_MENU, menu);
-            state_manager.insert_state(AppStateManagerType::states_type::STATE_GAME, game);
-            state_manager.insert_state(AppStateManagerType::states_type::STATE_QUIT, quit);
-            state_manager.set_state(AppStateManagerType::states_type::STATE_MENU);
+            state_manager.insert_state(bden::fsm::AppStateManagerType::states_type::STATE_MENU, menu);
+            state_manager.insert_state(bden::fsm::AppStateManagerType::states_type::STATE_GAME, game);
+            state_manager.insert_state(bden::fsm::AppStateManagerType::states_type::STATE_QUIT, quit);
+            state_manager.set_state(bden::fsm::AppStateManagerType::states_type::STATE_MENU);
         };
 
         void run()

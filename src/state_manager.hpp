@@ -104,7 +104,7 @@ namespace bden::fsm
             return current_state;
         }
     };
-}
 
-using AppStateManagerType = bden::fsm::StateManager<bden::fsm::states::APP_STATES>;
-using AppStateType = bden::fsm::State<bden::fsm::states::APP_STATES>;
+    using AppStateManagerType = bden::fsm::StateManager<bden::fsm::states::APP_STATES>;
+    using AppStateType = bden::fsm::State<bden::fsm::states::APP_STATES>;
+}

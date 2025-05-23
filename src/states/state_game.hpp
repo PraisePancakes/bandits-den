@@ -1,23 +1,23 @@
 #pragma once
 #include <iostream>
 #include "raylib.h"
-#include "config/player_config.hpp"
-#include "config/game_config.hpp"
-#include "config/weapon_config.hpp"
-#include "config/app_config.hpp"
-#include "config/enemy_config.hpp"
+#include "../config/player_config.hpp"
+#include "../config/game_config.hpp"
+#include "../config/weapon_config.hpp"
+#include "../config/app_config.hpp"
+#include "../config/enemy_config.hpp"
 
 #include "raymath.h"
 
-#include "state_manager.hpp"
-#include "systems/drawables/system_drawables.hpp"
-#include "systems/drawables/system_ui.hpp"
-#include "systems/updateables/system_ai.hpp"
-#include "systems/updateables/system_camera.hpp"
-#include "systems/updateables/system_health.hpp"
-#include "systems/updateables/system_input.hpp"
-#include "systems/updateables/system_physics.hpp"
-#include "systems/updateables/system_weapons.hpp"
+#include "../state_manager.hpp"
+#include "../systems/drawables/system_drawables.hpp"
+#include "../systems/drawables/system_ui.hpp"
+#include "../systems/updateables/system_ai.hpp"
+#include "../systems/updateables/system_camera.hpp"
+#include "../systems/updateables/system_health.hpp"
+#include "../systems/updateables/system_input.hpp"
+#include "../systems/updateables/system_physics.hpp"
+#include "../systems/updateables/system_weapons.hpp"
 
 #include "algorithm"
 #include <string>
@@ -31,7 +31,7 @@ namespace bden::state
 
     // TODO create entity contracts, player must have component_set x,y,z... , enemy must have component_set y, z... etc.
 
-    class state_game final : public bden::fsm::State<bden::fsm::states::APP_STATES>
+    class state_game final : public bden::fsm::AppStateType
     {
 
         using WorldType = snek::world<GameConfig::game_configuration_policy>;
@@ -127,7 +127,7 @@ namespace bden::state
 
             if (WindowShouldClose())
             {
-                this->get_context()->set_state(AppStateManagerType::states_type::STATE_QUIT);
+                this->get_context()->set_state(bden::fsm::AppStateManagerType::states_type::STATE_QUIT);
             }
 
             physics_system.update(dt);
