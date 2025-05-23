@@ -35,13 +35,32 @@ namespace bden::scenes
         SceneManager<T> &context;
         static_assert(std::is_enum_v<T>, "SceneManager requires an enum type");
         std::vector<std::vector<int>> tile_map;
+
         const std::string scene_file_path;
 
-    protected:
-        constexpr static int tile_width = 16;
-        constexpr static int tile_height = 16;
+        Color get_tile_color(SCENE_TILE_TEXTURES value) const
+        {
+            switch (value)
+            {
+            case SCENE_TILE_TEXTURES::TEXTURE_GRASS:
+                return GREEN;
+            case SCENE_TILE_TEXTURES::TEXTURE_BUSH:
+                return DARKGREEN;
+            case SCENE_TILE_TEXTURES::TEXTURE_BRICK:
+                return DARKBROWN;
+            case SCENE_TILE_TEXTURES::TEXTURE_STONE:
+                return DARKGRAY;
+            default:
+                return RAYWHITE;
+            }
+        };
 
-        void load_circ_file_path()
+    protected:
+        std::vector<std::pair<Color, Rectangle>> tiles;
+        constexpr static int tile_width = 128;
+        constexpr static int tile_height = 128;
+
+        void load_circ_scene_data()
         {
             Circ::CFGLoader cfgl(scene_file_path);
             auto grid_outer = cfgl.CFGAttr<std::vector<std::any>>({"scene_data", "grid"});
@@ -52,7 +71,14 @@ namespace bden::scenes
                 std::vector<int> row;
                 for (size_t j = 0; j < grid_inner.size(); j++)
                 {
+
                     auto el = std::any_cast<int>(grid_inner[j]);
+                    float xpos = i * tile_width;
+                    float ypos = j * tile_height;
+                    Rectangle tile_rect(xpos, ypos, tile_width, tile_height);
+
+                    std::pair<Color, Rectangle> tile_data = std::make_pair(get_tile_color((SCENE_TILE_TEXTURES)el), tile_rect);
+                    tiles.push_back(tile_data);
                     row.push_back(el);
                 }
                 tile_map.push_back(row);

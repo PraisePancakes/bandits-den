@@ -157,6 +157,7 @@ namespace bden::state
 
             ai_system.update(dt, player);
             weapon_system.update(dt, player);
+            scene_manager.get_current_scene()->on_update(dt);
 
             system_updateables_delete_entities();
         };
@@ -168,6 +169,7 @@ namespace bden::state
             ClearBackground(BLACK);
             BeginMode2D(camera_system.get_camera());
 
+            scene_manager.get_current_scene()->on_render();
             render_system.render();
 
             EndMode2D();

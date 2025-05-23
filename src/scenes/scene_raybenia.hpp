@@ -12,21 +12,22 @@ namespace bden::scenes
         scene_raybenia(GameSceneManagerType &ctx, const std::string &sfp, config::GameConfig::WorldType &w) : Scene(ctx, sfp), world(w) {};
         bool on_init() override
         {
-            this->load_circ_file_path();
+            this->load_circ_scene_data();
 
             return true;
         };
+        // update npcs ect...
         void on_update(float dt) override {};
+        // render npcs ect...
         void on_render() override
         {
-            for (size_t i = 0; i < this->get_tile_map().size(); i++)
+            for (size_t i = 0; i < this->tiles.size(); i++)
             {
-                for (size_t j = 0; j < this->get_tile_map()[i].size(); j++)
-                {
-                    std::cout << get_tile_map()[i][j];
-                }
+                auto pair = tiles[i];
+                DrawRectangle(pair.second.x, pair.second.y, pair.second.width, pair.second.height, pair.first);
             }
         };
+
         void on_exit() override {};
         ~scene_raybenia() {};
     };
