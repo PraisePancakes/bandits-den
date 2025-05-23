@@ -30,5 +30,5 @@ namespace bden::config::GameConfig
     };
 
     using game_configuration_policy = snek::world_policy<u64, game_component_list, TagEnum>;
-
+    using WorldType = snek::world<GameConfig::game_configuration_policy>;
 }

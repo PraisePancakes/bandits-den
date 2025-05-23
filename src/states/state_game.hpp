@@ -18,6 +18,8 @@
 #include "../systems/updateables/system_input.hpp"
 #include "../systems/updateables/system_physics.hpp"
 #include "../systems/updateables/system_weapons.hpp"
+#include "../scene_manager.hpp"
+#include "../scenes/scene_raybenia.hpp"
 
 #include "algorithm"
 #include <string>
@@ -34,19 +36,23 @@ namespace bden::state
     class state_game final : public bden::fsm::AppStateType
     {
 
-        using WorldType = snek::world<GameConfig::game_configuration_policy>;
-        WorldType world;
-        WorldType::entity_type player;
-        WorldType::entity_type test;
-        std::vector<WorldType::entity_type> to_delete;
+        // world
+        GameConfig::WorldType world;
+        GameConfig::WorldType::entity_type player;
+        GameConfig::WorldType::entity_type test;
+        std::vector<GameConfig::WorldType::entity_type> to_delete;
 
-        systems::CameraManager<WorldType::world_policy> camera_system;
-        systems::PhysicsManager<WorldType::world_policy> physics_system;
-        systems::InputManager<WorldType::world_policy> input_system;
-        systems::HealthManager<WorldType::world_policy> health_system;
-        systems::AiManager<WorldType::world_policy> ai_system;
-        systems::DrawableManager<WorldType::world_policy> render_system;
-        systems::WeaponManager<WorldType::world_policy> weapon_system;
+        // systems
+        systems::CameraManager<GameConfig::WorldType::world_policy> camera_system;
+        systems::PhysicsManager<GameConfig::WorldType::world_policy> physics_system;
+        systems::InputManager<GameConfig::WorldType::world_policy> input_system;
+        systems::HealthManager<GameConfig::WorldType::world_policy> health_system;
+        systems::AiManager<GameConfig::WorldType::world_policy> ai_system;
+        systems::DrawableManager<GameConfig::WorldType::world_policy> render_system;
+        systems::WeaponManager<GameConfig::WorldType::world_policy> weapon_system;
+
+        // managers
+        bden::scenes::GameSceneManagerType scene_manager;
 
         void system_updateables_delete_entities()
         {
@@ -57,7 +63,7 @@ namespace bden::state
             to_delete.clear();
         }
 
-        WorldType::entity_type spawn_player(float w, float h, float x, float y)
+        GameConfig::WorldType::entity_type spawn_player(float w, float h, float x, float y)
         {
             using namespace config;
             auto p = world.spawn(GameConfig::TagEnum::TAG_PLAYER);
@@ -79,7 +85,7 @@ namespace bden::state
             return p;
         };
 
-        WorldType::entity_type spawn_test(float w, float h, float x, float y)
+        GameConfig::WorldType::entity_type spawn_test(float w, float h, float x, float y)
         {
             auto test = world.spawn(GameConfig::TagEnum::TAG_ENEMIES);
             using namespace config;
@@ -104,19 +110,28 @@ namespace bden::state
             return test;
         };
 
+        void init_scenes()
+        {
+            bden::scenes::scene_raybenia *raybenia = new bden::scenes::scene_raybenia(scene_manager, "data/scene_data/scene_raybenia.circ", world);
+
+            scene_manager.insert_scene(scenes::SCENES::SCENE_RAYBENIA, raybenia);
+            scene_manager.set_scene(scenes::SCENES::SCENE_RAYBENIA);
+        };
+
     public:
         state_game(bden::fsm::StateManager<bden::fsm::states::APP_STATES> *ctx, RenderTexture2D &render_target) : State(ctx),
                                                                                                                   camera_system(world),
                                                                                                                   physics_system(world),
                                                                                                                   input_system(world),
                                                                                                                   health_system(world, to_delete),
-                                                                                                                  ai_system(world), render_system(world), weapon_system(world) {
+                                                                                                                  ai_system(world), render_system(world), weapon_system(world), scene_manager() {
                                                                                                                   };
 
         bool on_init() override
         {
             this->player = (spawn_player(100, 100, 500, 500));
             this->test = (spawn_test(100, 100, 200, 200));
+            init_scenes();
             return true;
         };
 
