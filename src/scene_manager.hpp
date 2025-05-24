@@ -35,8 +35,8 @@ namespace bden::scenes
         SceneManager<T> &context;
         static_assert(std::is_enum_v<T>, "SceneManager requires an enum type");
         std::vector<std::vector<int>> tile_map;
-
         const std::string scene_file_path;
+        bden::config::GameConfig::WorldType &world;
 
         Color get_tile_color(SCENE_TILE_TEXTURES value) const
         {
@@ -84,18 +84,25 @@ namespace bden::scenes
                 tile_map.push_back(row);
             }
         };
-        const std::vector<std::vector<int>> get_tile_map() const
-        {
-            return tile_map;
-        };
 
     public:
         using type = T;
-        Scene(SceneManager<T> &ctx, const std::string sfp) : context(ctx), scene_file_path(sfp) {};
-        virtual bool on_init() = 0;
-        virtual void on_update(float) = 0;
-        virtual void on_render() = 0;
-        virtual void on_exit() = 0;
+        Scene(SceneManager<T> &ctx, const std::string sfp, config::GameConfig::WorldType w) : context(ctx), scene_file_path(sfp), world(w) {};
+        void on_init()
+        {
+            this->load_circ_scene_data();
+        };
+        void on_update(float dt) {};
+        void on_render()
+        {
+            for (size_t i = 0; i < this->tiles.size(); i++)
+            {
+                auto pair = tiles[i];
+                DrawRectangle(pair.second.x, pair.second.y, pair.second.width, pair.second.height, pair.first);
+            }
+        };
+       
+        void on_exit() {};
         bool is_active = false;
         SceneManager<T> *get_context() const
         {

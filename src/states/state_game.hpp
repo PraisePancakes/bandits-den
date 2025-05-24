@@ -19,7 +19,6 @@
 #include "../systems/updateables/system_physics.hpp"
 #include "../systems/updateables/system_weapons.hpp"
 #include "../scene_manager.hpp"
-#include "../scenes/scene_raybenia.hpp"
 #include <fstream>
 #include <filesystem>
 #include "algorithm"
@@ -116,7 +115,7 @@ namespace bden::state
             std::filesystem::path exec_path = std::filesystem::current_path();
             std::filesystem::path relative_path = exec_path / "../data/scene_data/scene_raybenia.circ";
 
-            bden::scenes::scene_raybenia *raybenia = new bden::scenes::scene_raybenia(scene_manager, relative_path.string(), world);
+            bden::scenes::GameSceneType *raybenia = new bden::scenes::GameSceneType(scene_manager, relative_path.string(), world);
 
             scene_manager.insert_scene(scenes::SCENES::SCENE_RAYBENIA, raybenia);
             scene_manager.set_scene(scenes::SCENES::SCENE_RAYBENIA);
