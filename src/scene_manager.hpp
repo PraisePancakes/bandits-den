@@ -5,6 +5,10 @@
 
 namespace bden::scenes
 {
+    namespace directory
+    {
+        static std::string raybenia = GetApplicationDirectory() + std::string("../data/scene_data/scene_raybenia.circ");
+    }
 
     enum class SCENE_TILE_TEXTURES
     {
@@ -34,7 +38,11 @@ namespace bden::scenes
     {
         SceneManager<T> &context;
         static_assert(std::is_enum_v<T>, "SceneManager requires an enum type");
-        std::vector<std::vector<int>> tile_map;
+
+        std::vector<std::pair<Color, Rectangle>> tiles;
+        constexpr static int tile_width = 128;
+        constexpr static int tile_height = 128;
+
         const std::string scene_file_path;
         bden::config::GameConfig::WorldType &world;
 
@@ -55,11 +63,6 @@ namespace bden::scenes
             }
         };
 
-    protected:
-        std::vector<std::pair<Color, Rectangle>> tiles;
-        constexpr static int tile_width = 128;
-        constexpr static int tile_height = 128;
-
         void load_circ_scene_data()
         {
             Circ::CFGLoader cfgl(scene_file_path);
@@ -68,7 +71,6 @@ namespace bden::scenes
             for (size_t i = 0; i < grid_outer.size(); i++)
             {
                 auto grid_inner = std::any_cast<std::vector<std::any>>(grid_outer[i]);
-                std::vector<int> row;
                 for (size_t j = 0; j < grid_inner.size(); j++)
                 {
 
@@ -79,31 +81,33 @@ namespace bden::scenes
 
                     std::pair<Color, Rectangle> tile_data = std::make_pair(get_tile_color((SCENE_TILE_TEXTURES)el), tile_rect);
                     tiles.push_back(tile_data);
-                    row.push_back(el);
                 }
-                tile_map.push_back(row);
             }
         };
 
     public:
+        bool is_active = false;
         using type = T;
         Scene(SceneManager<T> &ctx, const std::string sfp, config::GameConfig::WorldType w) : context(ctx), scene_file_path(sfp), world(w) {};
         void on_init()
         {
             this->load_circ_scene_data();
+            is_active = true;
         };
         void on_update(float dt) {};
         void on_render()
         {
-            for (size_t i = 0; i < this->tiles.size(); i++)
+            for (std::pair<Color, Rectangle> tile_data : tiles)
             {
-                auto pair = tiles[i];
-                DrawRectangle(pair.second.x, pair.second.y, pair.second.width, pair.second.height, pair.first);
+                DrawRectangle(tile_data.second.x, tile_data.second.y, tile_data.second.width, tile_data.second.height, tile_data.first);
             }
         };
-       
-        void on_exit() {};
-        bool is_active = false;
+
+        void on_exit()
+        {
+            is_active = false;
+        };
+
         SceneManager<T> *get_context() const
         {
             return context;

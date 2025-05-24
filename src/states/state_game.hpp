@@ -112,10 +112,8 @@ namespace bden::state
 
         void init_scenes()
         {
-            std::filesystem::path exec_path = std::filesystem::current_path();
-            std::filesystem::path relative_path = exec_path / "../data/scene_data/scene_raybenia.circ";
 
-            bden::scenes::GameSceneType *raybenia = new bden::scenes::GameSceneType(scene_manager, relative_path.string(), world);
+            bden::scenes::GameSceneType *raybenia = new bden::scenes::GameSceneType(scene_manager, scenes::directory::raybenia, world);
 
             scene_manager.insert_scene(scenes::SCENES::SCENE_RAYBENIA, raybenia);
             scene_manager.set_scene(scenes::SCENES::SCENE_RAYBENIA);
