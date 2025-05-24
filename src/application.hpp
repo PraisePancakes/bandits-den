@@ -50,6 +50,7 @@ namespace bden::applicationlayer
         {
             while (state_manager.get_current_state() != quit)
             {
+                
                 float dt = GetFrameTime();
                 state_manager.update_current_state(dt);
                 state_manager.render_current_state();
